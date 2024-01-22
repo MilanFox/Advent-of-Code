@@ -12,7 +12,7 @@
 [![](https://img.shields.io/badge/Day_07-★★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/2023/day_07.mjs)
 [![](https://img.shields.io/badge/Day_08-★★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/2023/day_08.mjs)
 [![](https://img.shields.io/badge/Day_09-★★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/2023/day_09.mjs)
-[![](https://img.shields.io/badge/Day_10-★★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/2023/day_10.mjs)
+[![](https://img.shields.io/badge/Day_10-★★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/2023/day_10.mjs)  
 [![](https://img.shields.io/badge/Day_11-★★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/2023/day_11.mjs)
 [![](https://img.shields.io/badge/Day_12-★☆-silver)](https://github.com/MilanFox/Advent-of-Code/blob/main/2023/day_12.mjs)
 [![](https://img.shields.io/badge/Day_13-★★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/2023/day_13.mjs)
