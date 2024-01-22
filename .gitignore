@@ -1,0 +1,7 @@
+# Ignored Files
+
+.idea
+.DS_Store
+**/.DS_Store
+input.txt
+testInput.txt
