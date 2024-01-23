@@ -28,3 +28,7 @@
 [![](https://img.shields.io/badge/Day_23-★☆-silver)](https://github.com/MilanFox/Advent-of-Code/blob/main/2023/day_23.mjs)
 [![](https://img.shields.io/badge/Day_24-★☆-silver)](https://github.com/MilanFox/Advent-of-Code/blob/main/2023/day_24.mjs)
 [![](https://img.shields.io/badge/Day_25-★☆-silver)](https://github.com/MilanFox/Advent-of-Code/blob/main/2023/day_25.mjs)
+
+#### [Credit] External Libraries used:
+'[fs](https://nodejs.org/api/fs.html)' - Everywhere, to read input from filesystem.  
+'[crypto](https://nodejs.org/api/crypto.html)' - Once on day 14 to generate hashes for patterns to optimize performance
