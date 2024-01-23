@@ -29,6 +29,6 @@
 [![](https://img.shields.io/badge/Day_24-★☆-silver)](https://github.com/MilanFox/Advent-of-Code/blob/main/2023/day_24.mjs)
 [![](https://img.shields.io/badge/Day_25-★☆-silver)](https://github.com/MilanFox/Advent-of-Code/blob/main/2023/day_25.mjs)
 
-## 2022 - Javascript 04/50 ⭐
+## 2022 - Dart 04/50 ⭐
 [![](https://img.shields.io/badge/Day_01-★★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/2022/day_01.mjs)
 [![](https://img.shields.io/badge/Day_02-★★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/2022/day_02.mjs)
