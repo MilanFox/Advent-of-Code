@@ -19,43 +19,112 @@ const directions = {
 
 const isInBounds = ({x, y}) => y >= 0 && y < inputData.length && x >= 0 && x < inputData[0].length
 
-const possiblePaths = [];
+const buildGraph = ({start, end, ignoreSlopes = false}) => {
+  class Graph {
+    constructor() {
+      this.nodes = {};
+    }
 
-const stepForward = (pos, route = []) => {
-  const stack = [];
-  stack.push([pos, route]);
+    addNode(name) {
+      if (!this.nodes[name]) this.nodes[name] = {};
+    }
 
-  const tryStep = (x, y, dir, route) => {
-    const newX = x + directions[dir].offsetX;
-    const newY = y + directions[dir].offsetY;
-    if (!route.includes(`${newY}/${newX}`) &&
-      isInBounds({x: newX, y: newY}) &&
-      inputData[newY][newX] !== '#') {
-      stack.push([{x: newX, y: newY}, [...route, `${newY}/${newX}`]]);
+    defineAsStart(name) {
+      this.start = name;
+    }
+
+    defineAsEnd(name) {
+      this.end = name;
+    }
+
+    addEdge({node1, node2, weight, directed}) {
+      if (!directed) this.nodes[node1][node2] = weight;
+      this.nodes[node2][node1] = weight;
+    }
+
+    getNeighbors(node) {
+      return Object.entries(this.nodes[node]);
     }
   }
+
+  const graph = new Graph;
+  const stack = [];
+  stack.push([start, 0]);
 
   while (stack.length > 0) {
-    const [{x, y}, route] = stack.pop();
+    let [{x, y}, stepsTaken, visitedTiles = [], lastVisitedNode, directed = false] = stack.pop();
+    visitedTiles = [...visitedTiles];
+    const currentTile = `${y}-${x}`;
+
+    if (!lastVisitedNode) {
+      graph.addNode(currentTile);
+      graph.defineAsStart(currentTile);
+      lastVisitedNode = currentTile;
+    }
 
     if (x === end.x && y === end.y) {
-      possiblePaths.push(route);
+      graph.addNode(currentTile);
+      graph.addEdge({node1: currentTile, node2: lastVisitedNode, weight: stepsTaken, directed});
+      graph.defineAsEnd(currentTile);
       continue;
     }
 
-    if (inputData[y][x] === ">" || inputData[y][x] === "v") {
-      const dir = inputData[y][x] === ">" ? "east" : "south";
-      tryStep(x, y, dir, route);
-      continue;
+    let neighbors = Object
+      .entries(directions)
+      .map(([dir, {offsetX, offsetY}]) => ({x: x + offsetX, y: y + offsetY, dir}))
+      .filter(({x, y}) => !visitedTiles.includes(`${y}-${x}`) && isInBounds({x, y}) && inputData[y][x] !== '#');
+
+    visitedTiles.push(currentTile)
+
+
+    if (!ignoreSlopes && (inputData[y][x] === '>' || inputData[y][x] === 'v')) {
+      const onlyLegalDir = inputData[y][x] === '>' ? 'east' : 'south';
+      neighbors = neighbors.filter(neighbor => neighbor.dir === onlyLegalDir);
+      directed = true;
     }
 
-    for (let i = 0; i < Object.keys(directions).length; i++) {
-      const dir = Object.keys(directions)[i];
-      tryStep(x, y, dir, route);
+    if (neighbors.length > 1) {
+      graph.addNode(currentTile);
+      graph.addEdge({node1: currentTile, node2: lastVisitedNode, weight: stepsTaken, directed});
+      stepsTaken = 0;
+      lastVisitedNode = currentTile;
+      directed = false;
     }
+
+    neighbors.forEach(({x, y}) => {
+      stack.push([{x, y}, stepsTaken + 1, visitedTiles, lastVisitedNode, directed]);
+    })
   }
+
+  return graph;
 }
 
-stepForward(start);
+const findMostScenicRoute = (graph) => {
+  const stack = [];
+  stack.push([graph.start]);
+  let longestPath = 0;
 
-console.log(`Part 1: ${possiblePaths.map(path => path.length).toSorted().at(-1)}`);
+  while (stack.length > 0) {
+    const [currentNode, stepsTaken = 0, visitedNodes = []] = stack.pop();
+    const neighbors = graph.getNeighbors(currentNode);
+
+    if (currentNode === graph.end) {
+      longestPath = Math.max(stepsTaken, longestPath);
+      continue;
+    }
+
+    neighbors.forEach(([neighbor, distance]) => {
+      if (!visitedNodes.includes(neighbor)) stack.push([neighbor, stepsTaken + distance, [...visitedNodes, currentNode]]);
+    });
+  }
+
+  return longestPath;
+}
+
+
+console.time('Total time');
+const graphWithSlopes = buildGraph({start, end});
+console.log(`Part 1: ${findMostScenicRoute(graphWithSlopes)}`);
+
+const graphWithoutSlopes = buildGraph({start, end, ignoreSlopes: true});
+console.log(`Part 2: ${findMostScenicRoute(graphWithoutSlopes)}`);
