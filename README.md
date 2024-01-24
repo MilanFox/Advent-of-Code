@@ -2,7 +2,7 @@
 
 # Advent of Code
 
-## 2023 - Javascript 41/50 ⭐
+## 2023 - Javascript 42/50 ⭐
 [![](https://img.shields.io/badge/Day_01-★★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/2023/day_01.mjs)
 [![](https://img.shields.io/badge/Day_02-★★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/2023/day_02.mjs)
 [![](https://img.shields.io/badge/Day_03-★★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/2023/day_03.mjs)
@@ -25,7 +25,7 @@
 [![](https://img.shields.io/badge/Day_20-★☆-silver)](https://github.com/MilanFox/Advent-of-Code/blob/main/2023/day_20.mjs)  
 [![](https://img.shields.io/badge/Day_21-★☆-silver)](https://github.com/MilanFox/Advent-of-Code/blob/main/2023/day_21.mjs)
 [![](https://img.shields.io/badge/Day_22-★★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/2023/day_22.mjs)
-[![](https://img.shields.io/badge/Day_23-★☆-silver)](https://github.com/MilanFox/Advent-of-Code/blob/main/2023/day_23.mjs)
+[![](https://img.shields.io/badge/Day_23-★★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/2023/day_23.mjs)
 [![](https://img.shields.io/badge/Day_24-★☆-silver)](https://github.com/MilanFox/Advent-of-Code/blob/main/2023/day_24.mjs)
 [![](https://img.shields.io/badge/Day_25-★☆-silver)](https://github.com/MilanFox/Advent-of-Code/blob/main/2023/day_25.mjs)
 

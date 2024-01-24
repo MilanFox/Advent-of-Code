@@ -50,6 +50,7 @@ const buildGraph = ({start, end, ignoreSlopes = false}) => {
   const graph = new Graph;
   const stack = [];
   stack.push([start, 0]);
+  const visitedNodes = new Set;
 
   while (stack.length > 0) {
     let [{x, y}, stepsTaken, visitedTiles = [], lastVisitedNode, directed = false] = stack.pop();
@@ -89,6 +90,8 @@ const buildGraph = ({start, end, ignoreSlopes = false}) => {
       stepsTaken = 0;
       lastVisitedNode = currentTile;
       directed = false;
+      if (visitedNodes.has(currentTile)) continue;
+      visitedNodes.add(currentTile);
     }
 
     neighbors.forEach(({x, y}) => {
@@ -121,8 +124,6 @@ const findMostScenicRoute = (graph) => {
   return longestPath;
 }
 
-
-console.time('Total time');
 const graphWithSlopes = buildGraph({start, end});
 console.log(`Part 1: ${findMostScenicRoute(graphWithSlopes)}`);
 
