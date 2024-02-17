@@ -32,3 +32,7 @@
 #### [Credit] External Libraries used:
 '[fs](https://nodejs.org/api/fs.html)' - Everywhere, to read input from filesystem.  
 '[crypto](https://nodejs.org/api/crypto.html)' - Once on day 14 to generate hashes for patterns to optimize performance
+
+
+## 2022 - Javascript 41/50 ⭐
+[![](https://img.shields.io/badge/Day_01-★★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/2022/day_01.mjs)
