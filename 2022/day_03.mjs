@@ -1,14 +1,9 @@
 import fs from "fs";
 
-const inputData = fs
-  .readFileSync('input.txt', 'utf-8')
-  .trim()
-  .split('\n');
-
+const inputData = fs.readFileSync('input.txt', 'utf-8').trim().split('\n');
 const findDuplicateItem = (rucksacks) => rucksacks
   .map(rucksack => ([rucksack.substring(0, rucksack.length / 2), rucksack.substring(rucksack.length / 2)]))
   .map(([firstCompartment, secondCompartment]) => [...firstCompartment].find(item => [...secondCompartment].includes(item)))
-
 const isLowercase = (char) => char === char.toLowerCase();
 const getPriority = (id) => isLowercase(id) ? id.charCodeAt(0) - 96: id.charCodeAt(0) - 38;
 const sumOfPriorities = findDuplicateItem(inputData).map(item => getPriority(item)).reduce((acc, cur) => acc + cur, 0);
