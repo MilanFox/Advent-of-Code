@@ -45,7 +45,7 @@
 [![](https://img.shields.io/badge/Day_08-★★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/2022/day_08.mjs)
 [![](https://img.shields.io/badge/Day_09-★★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/2022/day_09.mjs)
 [![](https://img.shields.io/badge/Day_10-★★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/2022/day_10.mjs)  
-[![](https://img.shields.io/badge/Day_11-★★-silver)](https://github.com/MilanFox/Advent-of-Code/blob/main/2022/day_10.mjs)
+[![](https://img.shields.io/badge/Day_11-★★-silver)](https://github.com/MilanFox/Advent-of-Code/blob/main/2022/day_11.mjs)
 
 
 #### [Credit] External Libraries used:
