@@ -34,7 +34,7 @@
 '[crypto](https://nodejs.org/api/crypto.html)' - Once on day 14 to generate hashes for patterns to optimize performance
 
 
-## 2022 - Javascript 25/50 ⭐
+## 2022 - Javascript 26/50 ⭐
 [![](https://img.shields.io/badge/Day_01-★★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/2022/day_01.mjs)
 [![](https://img.shields.io/badge/Day_02-★★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/2022/day_02.mjs)
 [![](https://img.shields.io/badge/Day_03-★★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/2022/day_03.mjs)
@@ -48,7 +48,7 @@
 [![](https://img.shields.io/badge/Day_11-★☆-silver)](https://github.com/MilanFox/Advent-of-Code/blob/main/2022/day_11.mjs)
 [![](https://img.shields.io/badge/Day_12-★★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/2022/day_12.mjs)
 [![](https://img.shields.io/badge/Day_13-★★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/2022/day_13.mjs)
-![](https://img.shields.io/badge/Day_14-☆☆-black)
+[![](https://img.shields.io/badge/Day_14-★☆-silver)](https://github.com/MilanFox/Advent-of-Code/blob/main/2022/day_14.mjs)
 ![](https://img.shields.io/badge/Day_15-☆☆-black)  
 ![](https://img.shields.io/badge/Day_16-☆☆-black)
 ![](https://img.shields.io/badge/Day_17-☆☆-black)
