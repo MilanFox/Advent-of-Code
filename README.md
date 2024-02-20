@@ -48,6 +48,19 @@
 [![](https://img.shields.io/badge/Day_11-★☆-silver)](https://github.com/MilanFox/Advent-of-Code/blob/main/2022/day_11.mjs)
 [![](https://img.shields.io/badge/Day_12-★★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/2022/day_12.mjs)
 [![](https://img.shields.io/badge/Day_13-★★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/2022/day_13.mjs)
+![](https://img.shields.io/badge/Day_14-☆☆-black)
+![](https://img.shields.io/badge/Day_15-☆☆-black)  
+![](https://img.shields.io/badge/Day_16-☆☆-black)
+![](https://img.shields.io/badge/Day_17-☆☆-black)
+![](https://img.shields.io/badge/Day_18-☆☆-black)
+![](https://img.shields.io/badge/Day_19-☆☆-black)
+![](https://img.shields.io/badge/Day_20-☆☆-black)  
+![](https://img.shields.io/badge/Day_21-☆☆-black)
+![](https://img.shields.io/badge/Day_22-☆☆-black)
+![](https://img.shields.io/badge/Day_23-☆☆-black)
+![](https://img.shields.io/badge/Day_24-☆☆-black)
+![](https://img.shields.io/badge/Day_25-☆☆-black)
+
 
 
 
