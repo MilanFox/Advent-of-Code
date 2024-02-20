@@ -81,11 +81,13 @@ const simulateSand = (cave) => {
   return cave.reduce((acc, curLine) => acc + curLine.filter(cell => cell === content.SAND).length, 0);
 }
 
-const printCave = (cave) => fs.writeFileSync('visualization.txt', cave.map(line => line.join('')).join('\n'), {flag: 'w+'});
 
 const cave1 = generateCave();
 console.log(`Part 1: ${simulateSand(cave1)}`);
 
 const cave2 = generateCave(true);
 console.log(`Part 1: ${simulateSand(cave2)}`);
+
+// Why not...
+const printCave = (cave) => fs.writeFileSync('visualization.txt', cave.map(line => line.join('')).join('\n'), {flag: 'w+'});
 printCave(cave2);
