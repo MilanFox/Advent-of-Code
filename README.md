@@ -2,7 +2,7 @@
 
 # Advent of Code
 
-## 2023 - Javascript 42/50 ⭐
+## 2023 - Javascript 43/50 ⭐
 [![](https://img.shields.io/badge/Day_01-★★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/2023/day_01.mjs)
 [![](https://img.shields.io/badge/Day_02-★★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/2023/day_02.mjs)
 [![](https://img.shields.io/badge/Day_03-★★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/2023/day_03.mjs)
@@ -27,14 +27,14 @@
 [![](https://img.shields.io/badge/Day_22-★★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/2023/day_22.mjs)
 [![](https://img.shields.io/badge/Day_23-★★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/2023/day_23.mjs)
 [![](https://img.shields.io/badge/Day_24-★☆-silver)](https://github.com/MilanFox/Advent-of-Code/blob/main/2023/day_24.mjs)
-[![](https://img.shields.io/badge/Day_25-★☆-silver)](https://github.com/MilanFox/Advent-of-Code/blob/main/2023/day_25.mjs)
+[![](https://img.shields.io/badge/Day_25-★★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/2023/day_25.mjs)
 
 #### [Credit] External Libraries used:
 '[fs](https://nodejs.org/api/fs.html)' - Everywhere, to read input from filesystem.  
 '[crypto](https://nodejs.org/api/crypto.html)' - Once on day 14 to generate hashes for patterns to optimize performance
 
 
-## 2022 - Javascript 21/50 ⭐
+## 2022 - Javascript 23/50 ⭐
 [![](https://img.shields.io/badge/Day_01-★★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/2022/day_01.mjs)
 [![](https://img.shields.io/badge/Day_02-★★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/2022/day_02.mjs)
 [![](https://img.shields.io/badge/Day_03-★★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/2022/day_03.mjs)
@@ -45,7 +45,9 @@
 [![](https://img.shields.io/badge/Day_08-★★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/2022/day_08.mjs)
 [![](https://img.shields.io/badge/Day_09-★★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/2022/day_09.mjs)
 [![](https://img.shields.io/badge/Day_10-★★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/2022/day_10.mjs)  
-[![](https://img.shields.io/badge/Day_11-★★-silver)](https://github.com/MilanFox/Advent-of-Code/blob/main/2022/day_11.mjs)
+[![](https://img.shields.io/badge/Day_11-★☆-silver)](https://github.com/MilanFox/Advent-of-Code/blob/main/2022/day_11.mjs)
+[![](https://img.shields.io/badge/Day_11-★★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/2022/day_12.mjs)
+
 
 
 #### [Credit] External Libraries used:
