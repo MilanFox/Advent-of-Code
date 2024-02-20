@@ -89,5 +89,6 @@ const cave2 = generateCave(true);
 console.log(`Part 1: ${simulateSand(cave2)}`);
 
 // Why not...
-const printCave = (cave) => fs.writeFileSync('visualization.txt', cave.map(line => line.join('')).join('\n'), {flag: 'w+'});
-printCave(cave2);
+const printCave = (cave, name) => fs.writeFileSync(name, cave.map(line => line.join('').substring(500-floorLevel+1, 500+floorLevel)).join('\n'), {flag: 'w+'});
+printCave(cave1, 'visualization.txt');
+printCave(cave2, 'visualization2.txt');
