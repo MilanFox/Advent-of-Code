@@ -19,7 +19,7 @@ const getBeaconCoverage = ({ sensorX, sensorY, beaconX, beaconY }, line) => {
 const getBeaconsInLine = (line) => inputData.filter(({ beaconY }) => beaconY === line);
 
 const potentiallyBlocked = new Set(inputData.map((sensor) => getBeaconCoverage(sensor, 10)).flat());
-const existingBeaconsInRange = getBeaconsInLine(20_000).map(({ beaconX }) => beaconX);
+const existingBeaconsInRange = getBeaconsInLine(2_000_000).map(({ beaconX }) => beaconX);
 const blocked = [...potentiallyBlocked].filter((x) => !existingBeaconsInRange.includes(x));
 
 console.log(`Part 1: ${blocked.length}`);
