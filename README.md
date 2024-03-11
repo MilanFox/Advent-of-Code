@@ -3,6 +3,7 @@
 # Advent of Code
 
 ## 2023 - Javascript 43/50 ⭐
+
 [![](https://img.shields.io/badge/Day_01-★★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/2023/day_01.mjs)
 [![](https://img.shields.io/badge/Day_02-★★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/2023/day_02.mjs)
 [![](https://img.shields.io/badge/Day_03-★★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/2023/day_03.mjs)
@@ -30,11 +31,13 @@
 [![](https://img.shields.io/badge/Day_25-★★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/2023/day_25.mjs)
 
 #### [Credit] External Libraries used:
-'[fs](https://nodejs.org/api/fs.html)' - Everywhere, to read input from filesystem.  
-'[crypto](https://nodejs.org/api/crypto.html)' - Once on day 14 to generate hashes for patterns to optimize performance
 
+'[fs](https://nodejs.org/api/fs.html)' - Everywhere, to read input from filesystem.  
+'[crypto](https://nodejs.org/api/crypto.html)' - Once on day 14 to generate hashes for patterns to
+optimize performance
 
 ## 2022 - Javascript 26/50 ⭐
+
 [![](https://img.shields.io/badge/Day_01-★★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/2022/day_01.mjs)
 [![](https://img.shields.io/badge/Day_02-★★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/2022/day_02.mjs)
 [![](https://img.shields.io/badge/Day_03-★★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/2022/day_03.mjs)
@@ -49,7 +52,7 @@
 [![](https://img.shields.io/badge/Day_12-★★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/2022/day_12.mjs)
 [![](https://img.shields.io/badge/Day_13-★★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/2022/day_13.mjs)
 [![](https://img.shields.io/badge/Day_14-★★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/2022/day_14.mjs)
-![](https://img.shields.io/badge/Day_15-☆☆-black)  
+[![](https://img.shields.io/badge/Day_15-★☆-silver)](https://github.com/MilanFox/Advent-of-Code/blob/main/2022/day_15.mjs)
 ![](https://img.shields.io/badge/Day_16-☆☆-black)
 ![](https://img.shields.io/badge/Day_17-☆☆-black)
 ![](https://img.shields.io/badge/Day_18-☆☆-black)
@@ -61,8 +64,6 @@
 ![](https://img.shields.io/badge/Day_24-☆☆-black)
 ![](https://img.shields.io/badge/Day_25-☆☆-black)
 
-
-
-
 #### [Credit] External Libraries used:
+
 '[fs](https://nodejs.org/api/fs.html)' - Everywhere, to read input from filesystem.  
