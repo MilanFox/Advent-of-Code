@@ -1,4 +1,4 @@
-import fs from 'fs';
+import fs from 'node:fs';
 
 const wordSearch = fs.readFileSync('input.txt', 'utf-8').trim().split('\n').map(row => row.split(''));
 
