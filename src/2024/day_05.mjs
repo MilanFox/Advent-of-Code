@@ -12,14 +12,11 @@ const isInValidOrder = (update) => rules.every(([a, b]) => update.indexOf(a) < u
 const getMiddleNumber = (update) => update[Math.floor(update.length / 2)];
 const toSum = (acc, cur) => acc + cur;
 
-const correctlySortedUpdatesChecksum = updates
-  .filter(isInValidOrder)
-  .map(getMiddleNumber)
-  .reduce(toSum, 0);
-
+const correctlySortedUpdatesChecksum = updates.filter(isInValidOrder).map(getMiddleNumber).reduce(toSum, 0);
 console.log(`Part 1: ${correctlySortedUpdatesChecksum}`);
 
-// https://www.programiz.com/dsa/bubble-sort
+/** Not really Bubble Sort, but was missing a better name. "Bubble Sort"-ish at least.
+ I just swap them around according to the rules, until all rules are satisfied... */
 const bubbleSort = (update) => {
   let swapped;
   while (swapped !== false) {
