@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 
 const [_rules, _updates] = fs
-  .readFileSync('testInput.txt', 'utf-8')
+  .readFileSync('input.txt', 'utf-8')
   .trim()
   .split('\n\n').map(data => data.split('\n'));
 
