@@ -18,6 +18,7 @@ class Guard {
     let y = this.y;
     let currentDir = 0;
     let isCyclic = false;
+    const shouldDetectCycles = Boolean(obstruction);
 
     while (true) {
       const [offsetX, offsetY] = this.#directions[currentDir];
@@ -33,9 +34,10 @@ class Guard {
 
       y = targetY;
       x = targetX;
-      const hash = `${y}|${x}|${currentDir}`;
+      let hash = `${y}|${x}`;
+      if (shouldDetectCycles) hash += `|${currentDir}`;
 
-      if (visited.has(hash)) {
+      if (shouldDetectCycles && visited.has(hash)) {
         isCyclic = true;
         break;
       }
