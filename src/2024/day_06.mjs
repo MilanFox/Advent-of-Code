@@ -55,12 +55,10 @@ const guard = new Guard(inputData);
 const { visited } = guard.patrol();
 console.log(`Part 1: ${visited.size}`);
 
-let cycles = 0;
-for (let y = 0; y < inputData.length; y++) {
-  for (let x = 0; x < inputData[0].length; x++) {
-    const { isCyclic } = guard.patrol({ obstruction: { x, y } });
-    cycles += isCyclic;
-  }
-}
+const cycles = [...visited].reduce((acc, position) => {
+  const [y, x] = position.split('|').map(Number);
+  const { isCyclic } = guard.patrol({ obstruction: { x, y } });
+  return acc + isCyclic;
+}, 0);
 
 console.log(`Part 2: ${cycles}`);
