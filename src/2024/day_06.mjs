@@ -11,12 +11,13 @@ class Guard {
   #map;
   #directions = [[0, -1], [1, 0], [0, 1], [-1, 0]];
 
-  patrol() {
+  patrol({ obstruction } = {}) {
     const visited = new Set();
     const isInBounds = ({ x, y }) => y >= 0 && y < this.#map.length && x >= 0 && x < this.#map[0].length;
     let x = this.x;
     let y = this.y;
     let currentDir = 0;
+    let isCyclic = false;
 
     while (true) {
       const [offsetX, offsetY] = this.#directions[currentDir];
@@ -25,25 +26,39 @@ class Guard {
 
       if (!isInBounds({ x: targetX, y: targetY })) break;
 
-      if (this.#map[targetY][targetX] === '#') {
+      if (this.#map[targetY][targetX] === '#' || (targetY === obstruction?.y && targetX === obstruction?.x)) {
         currentDir = (currentDir + 1) % 4;
         continue;
       }
 
       y = targetY;
       x = targetX;
-      visited.add(`${y}|${x}`);
+      const hash = `${y}|${x}|${currentDir}`;
+
+      if (visited.has(hash)) {
+        isCyclic = true;
+        break;
+      }
+
+      visited.add(hash);
     }
 
-    return { visited };
+    return { visited, isCyclic };
   }
 }
 
-const inputData = fs.readFileSync('testInput.txt', 'utf-8').trim().split('\n').map(row => row.split(''));
+const inputData = fs.readFileSync('input.txt', 'utf-8').trim().split('\n').map(row => row.split(''));
 const guard = new Guard(inputData);
 
 const { visited } = guard.patrol();
 console.log(`Part 1: ${visited.size}`);
 
-for (let i = 0; i < 17_000; i++) {
+let cycles = 0;
+for (let y = 0; y < inputData.length; y++) {
+  for (let x = 0; x < inputData[0].length; x++) {
+    const { isCyclic } = guard.patrol({ obstruction: { x, y } });
+    cycles += isCyclic;
+  }
 }
+
+console.log(`Part 2: ${cycles}`);
