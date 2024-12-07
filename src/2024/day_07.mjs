@@ -17,11 +17,11 @@ class Calibration {
 
   isPossible(operators) {
     if (this.#isPossible[operators]) return this.#isPossible[operators];
-    const queue = operators.map(op => [[...this.numbers], op]);
+    const stack = operators.map(op => [[...this.numbers], op]);
     let isPossible = false;
 
-    while (queue.length) {
-      const [numbers, op] = queue.shift();
+    while (stack.length) {
+      const [numbers, op] = stack.pop();
       const a = numbers.shift();
 
       numbers[0] = this.#operations[op](a, numbers[0]);
@@ -33,7 +33,7 @@ class Calibration {
         break;
       }
 
-      operators.forEach(op => { queue.push([[...numbers], op]); });
+      operators.forEach(op => { stack.push([[...numbers], op]); });
     }
 
     this.#isPossible[operators] = isPossible;
@@ -48,8 +48,6 @@ const checkSum1 = calibrations
   .reduce((acc, cur) => acc + cur.result, 0);
 
 console.log(`Part 1: ${checkSum1}`);
-
-/* Runs ~5mins... needs optimization */
 
 const checkSum2 = calibrations
   .filter(calibrations => !calibrations.isPossible(['add', 'mult']))
