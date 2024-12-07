@@ -1,8 +1,8 @@
 import fs from 'fs';
 
 const multiplication = /mul\((\d+),(\d+)\)/g;
-const extract = (str, rgx) => [...str.matchAll(rgx)].map(match => match.slice(1).map(Number));
-const multiplyAll = (str) => extract(str, multiplication).reduce((acc, [a, b]) => acc + (a * b), 0);
+const extractMultNumbers = (str) => [...str.matchAll(multiplication)].map(match => match.slice(1).map(Number));
+const multiplyAll = (str) => extractMultNumbers(str).reduce((acc, [a, b]) => acc + (a * b), 0);
 
 const inputData = fs.readFileSync('input.txt', 'utf-8');
 console.log(`Part 1: ${multiplyAll(inputData)}`);
