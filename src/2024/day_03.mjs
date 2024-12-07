@@ -13,9 +13,6 @@ const multiplyAll = (str) => extract(str, multiplication)
 
 console.log(`Part 1: ${multiplyAll(inputData)}`);
 
-const enabledInputs = inputData
-  .split('do()').map(instr => instr.split('don\'t()'))
-  .map(instr => instr[0])
-  .join('');
+const enabledParts = inputData.split('do()').map(instr => instr.split('don\'t()')[0]).join('');
 
-console.log(`Part 2: ${multiplyAll(enabledInputs)}`);
+console.log(`Part 2: ${multiplyAll(enabledParts)}`);
