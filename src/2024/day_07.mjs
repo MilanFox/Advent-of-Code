@@ -13,7 +13,10 @@ class Calibration {
     concat: (a, b) => parseInt(`${a}${b}`),
   };
 
+  #isPossible = {};
+
   isPossible(operators) {
+    if (this.#isPossible[operators]) return this.#isPossible[operators];
     const queue = operators.map(op => [[...this.numbers], op]);
     let isPossible = false;
 
@@ -33,6 +36,7 @@ class Calibration {
       operators.forEach(op => { queue.push([[...numbers], op]); });
     }
 
+    this.#isPossible[operators] = isPossible;
     return isPossible;
   }
 }
@@ -45,8 +49,11 @@ const checkSum1 = calibrations
 
 console.log(`Part 1: ${checkSum1}`);
 
+/* Runs ~5mins... needs optimization */
+
 const checkSum2 = calibrations
+  .filter(calibrations => !calibrations.isPossible(['add', 'mult']))
   .filter(calibration => calibration.isPossible(['add', 'mult', 'concat']))
   .reduce((acc, cur) => acc + cur.result, 0);
 
-console.log(`Part 2: ${checkSum2}`);
+console.log(`Part 2: ${checkSum1 + checkSum2}`);
