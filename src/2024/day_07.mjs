@@ -13,10 +13,10 @@ class Calibration {
     concat: (a, b) => parseInt(`${a}${b}`),
   };
 
-  #isPossible = {};
+  #memo = {};
 
   isPossible(operators) {
-    if (this.#isPossible[operators]) return this.#isPossible[operators];
+    if (this.#memo[operators]) return this.#memo[operators];
     const stack = operators.map(op => [[...this.numbers], op]);
     let isPossible = false;
 
@@ -36,7 +36,7 @@ class Calibration {
       operators.forEach(op => { stack.push([[...numbers], op]); });
     }
 
-    this.#isPossible[operators] = isPossible;
+    this.#memo[operators] = isPossible;
     return isPossible;
   }
 }
