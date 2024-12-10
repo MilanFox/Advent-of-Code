@@ -13,12 +13,14 @@ const directions = [[0, -1], [1, 0], [0, 1], [-1, 0]];
 const getScore = (trailHead) => {
   const queue = [trailHead];
   const peaks = new Set([]);
+  let trails = 0;
 
   while (queue.length) {
     const { x, y } = queue.shift();
 
     if (hikingMap[y][x] === 9) {
       peaks.add(`${x}|${y}`);
+      trails += 1;
       continue;
     }
 
@@ -31,9 +33,11 @@ const getScore = (trailHead) => {
     }
   }
 
-  return peaks.size;
+  return { score: peaks.size, trails };
 };
 
-const hikingScore = trailHeads.reduce((acc, cur) => acc + getScore(cur), 0);
+const hikingScore = trailHeads.reduce((acc, cur) => acc + getScore(cur).score, 0);
 console.log(`Part 1: ${hikingScore}`);
 
+const uniqueTrails = trailHeads.reduce((acc, cur) => acc + getScore(cur).trails, 0);
+console.log(`Part 2: ${uniqueTrails}`);
