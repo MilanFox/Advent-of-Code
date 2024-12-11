@@ -1,22 +1,42 @@
 import fs from 'node:fs';
 
-const inputData = fs.readFileSync('input.txt', 'utf-8').trim().split(' ').map(Number);
+let stones = fs
+  .readFileSync('input.txt', 'utf-8')
+  .trim()
+  .split(' ')
+  .reduce((acc, cur) => ({ ...acc, [cur]: (acc[cur] ?? 0) + 1 }), {});
+
+const getTotalStoneCount = () => Object.values(stones).reduce((acc, cur) => acc + cur, 0);
 
 const blink = (count) => {
-  let stones = [...inputData];
   for (let i = 0; i < count; i++) {
-    console.log(i);
-    stones = stones.flatMap(stone => {
-      if (stone === 0) return 1;
-      const digits = stone.toString();
-      if (digits.length % 2 === 0) return [
-        Number(digits.substring(0, digits.length / 2)),
-        Number(digits.substring(digits.length / 2)),
-      ];
-      return stone * 2024;
-    });
+    const _stones = {};
+
+    for (const [inscription, quantity] of Object.entries(stones)) {
+      if (inscription === '0') {
+        _stones['1'] = quantity;
+        continue;
+      }
+
+      const digits = inscription.toString();
+      if (digits.length % 2 === 0) {
+        const pointerA = Number(digits.substring(0, digits.length / 2));
+        const pointerB = Number(digits.substring(digits.length / 2));
+        _stones[pointerA] = _stones[pointerA] ? _stones[pointerA] + quantity : quantity;
+        _stones[pointerB] = _stones[pointerB] ? _stones[pointerB] + quantity : quantity;
+        continue;
+      }
+
+      const multPointer = Number(inscription) * 2024;
+      _stones[multPointer] = _stones[multPointer] ? _stones[multPointer] + quantity : quantity;
+    }
+
+    stones = _stones;
   }
-  return stones.length;
 };
 
-console.log(`Part 1: ${blink(25)}`);
+blink(25);
+console.log(`Part 1: ${getTotalStoneCount()}`);
+
+blink(50);
+console.log(`Part 2: ${getTotalStoneCount()}`);
