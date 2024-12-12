@@ -70,5 +70,4 @@ const getPerimeter = ({ cells }) => {
 
 const gardenPlots = getAllPlots();
 const totalPrice = gardenPlots.reduce((acc, cur) => acc + cur.price, 0);
-
 console.log(`Part 1: ${totalPrice}`);
