@@ -1,27 +1,15 @@
 import fs from 'node:fs';
 
-class Button {
-  constructor(data, token) {
-    this.token = token;
-    [this.dx, this.dy] = data.match(/\d+/g).map(Number);
-  }
-}
-
-class Prize {
-  constructor(data) {
-    [this.x, this.y] = data.match(/\d+/g).map(Number);
-  }
-}
-
 class ClawMachine {
   constructor(data) {
     const [_buttonA, _buttonB, _prize] = data.split('\n');
-    this.buttonA = new Button(_buttonA, 3);
-    this.buttonB = new Button(_buttonB, 1);
-    this.prize = new Prize(_prize);
+    const parseData = (data) => data.match(/\d+/g).map(Number);
+    this.buttonA = { token: 3, dx: parseData(_buttonA)[0], dy: parseData(_buttonA)[1] };
+    this.buttonB = { token: 1, dx: parseData(_buttonB)[0], dy: parseData(_buttonB)[1] };
+    this.prize = { x: parseData(_prize)[0], y: parseData(_prize)[1] };
   }
 
-  findCheapestPath() {
+  get cheapestPath() {
     const maxButtonPresses = 100;
 
     const initialBAssumption = Math.min(
@@ -60,5 +48,5 @@ class ClawMachine {
 
 const inputData = fs.readFileSync('input.txt', 'utf-8').trim().split('\n\n').map(data => new ClawMachine(data));
 
-const totalTokens = inputData.reduce((acc, cur) => acc + cur.findCheapestPath(), 0);
+const totalTokens = inputData.reduce((acc, cur) => acc + cur.cheapestPath, 0);
 console.log(`Part 1: ${totalTokens}`);
