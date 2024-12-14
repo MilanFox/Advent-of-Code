@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AoC 2024 - Day 14</title>
+  <style>
+    body {
+      display: grid;
+      grid-template-columns: 412px 1fr;
+      gap: 8px;
+    }
+
+    canvas {
+      border: 1px solid grey;
+    }
+
+    #puzzle-input {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+
+      > textarea {
+        flex-grow: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+<canvas width="404px" height="412px"></canvas>
+
+<div id="puzzle-input">
+  <textarea> Paste your Puzzle Input here</textarea>
+  <button onclick="parseInput()">Parse</button>
+</div>
+
+<label>Seconds: <input type="number" value="0" id="input-time"/></label>
+
+<p>I didn't go through every one of the seconds. At least my input had a repeating pattern of vertical bars every 101
+  steps, so i just checked only these, which is fairly quick to do. You might need to set "step" yourself to match your
+  inputs step length.</p>
+
+<script>
+  class SecurityRobot {
+    constructor(data) {
+      [this.px, this.py, this.vx, this.vy] = data.match(/-?\d+/g).map(Number);
+    }
+
+    getPosition({ steps, width, height }) {
+      const x = (((this.px + (steps * this.vx) % width) + width) % width);
+      const y = (((this.py + (steps * this.vy) % height) + height) % height);
+      return { x, y };
+    }
+  }
+
+  let robots = [];
+  const inputField = document.querySelector('textarea');
+  const canvas = document.querySelector('canvas').getContext('2d');
+
+  const inputTime = document.querySelector('#input-time');
+
+  const parseInput = () => {
+    robots = inputField.value.trim().split('\n').map(data => new SecurityRobot(data));
+    processData();
+  };
+
+  const drawPixels = (pixels) => {
+    canvas.clearRect(0, 0, 404, 412);
+    pixels.forEach(({ x, y }) => {
+      const canvasX = x * 4;
+      const canvasY = y * 4;
+      canvas.fillStyle = 'green';
+      canvas.fillRect(canvasX, canvasY, 4, 4);
+    });
+  };
+
+  const processData = () => {
+    const steps = inputTime.value;
+    const robotPositions = robots.map(robot => robot.getPosition({ height: 103, width: 101, steps }));
+    drawPixels(robotPositions);
+  };
+
+  document.querySelector('input').addEventListener('change', processData);
+</script>
+</body>
+</html>

@@ -44,5 +44,6 @@ const robots = fs.readFileSync('input.txt', 'utf-8').trim().split('\n').map(data
 
 const floor = new Floor({ width: 101, height: 103, robots });
 
-console.log(floor.getSafetyFactor({ seconds: 100 }));
+console.log(`Part 1: ${floor.getSafetyFactor({ seconds: 100 })}`);
+console.log(`Part 2: Check HTML file`);
 
