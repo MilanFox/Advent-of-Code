@@ -35,10 +35,6 @@
 
 <label>Seconds: <input type="number" value="0" id="input-time"/></label>
 
-<p>I didn't go through every one of the seconds. At least my input had a repeating pattern of vertical bars every 101
-  steps, so i just checked only these, which is fairly quick to do. You might need to set "step" yourself to match your
-  inputs step length.</p>
-
 <script>
   class SecurityRobot {
     constructor(data) {
@@ -58,9 +54,41 @@
 
   const inputTime = document.querySelector('#input-time');
 
+  const isAligned = (positions) => {
+    const rows = {};
+    for (const { x, y } of positions) {
+      if (!rows[y]) rows[y] = [];
+      rows[y].push(x);
+    }
+
+    for (const y in rows) {
+      const xCoords = rows[y].sort((a, b) => a - b);
+
+      let consecutiveCount = 1;
+      for (let i = 1; i < xCoords.length; i++) {
+        if (xCoords[i] === xCoords[i - 1] + 1) {
+          consecutiveCount++;
+          if (consecutiveCount >= 10) return true;
+        } else {
+          consecutiveCount = 1;
+        }
+      }
+    }
+
+    return false;
+  };
+
   const parseInput = () => {
     robots = inputField.value.trim().split('\n').map(data => new SecurityRobot(data));
-    processData();
+    let i = 0;
+    let positions = [];
+    while (true) {
+      positions = robots.map(robot => robot.getPosition({ height: 103, width: 101, steps: i }));
+      if (isAligned(positions)) break;
+      i++;
+    }
+    inputTime.value = i.toString();
+    drawPixels(positions);
   };
 
   const drawPixels = (pixels) => {
@@ -74,9 +102,9 @@
   };
 
   const processData = () => {
-    const steps = inputTime.value;
-    const robotPositions = robots.map(robot => robot.getPosition({ height: 103, width: 101, steps }));
-    drawPixels(robotPositions);
+    robots = inputField.value.trim().split('\n').map(data => new SecurityRobot(data));
+    const positions = robots.map(robot => robot.getPosition({ height: 103, width: 101, steps: inputTime.value }));
+    drawPixels(positions);
   };
 
   document.querySelector('input').addEventListener('change', processData);
