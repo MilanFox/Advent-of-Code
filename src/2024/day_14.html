@@ -54,6 +54,9 @@
 
   const inputTime = document.querySelector('#input-time');
 
+  /* Obviously this is not how I originally solved it, since I didn't know what to look for.
+     Originally I solved it manually, but this solves it automatically. */
+
   const isAligned = (positions) => {
     const rows = {};
     for (const { x, y } of positions) {
