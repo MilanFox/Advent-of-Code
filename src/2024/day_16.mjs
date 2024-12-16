@@ -41,4 +41,4 @@ const findCheapestPath = (start) => {
   return null;
 };
 
-console.log(findCheapestPath(start));
+console.log(`Part 1: ${findCheapestPath(start)}`);
