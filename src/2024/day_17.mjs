@@ -57,7 +57,7 @@ class Program {
     this.register.C = Math.trunc(this.register.A / (2 ** this.getComboOperand(operand)));
   }
 
-  execute() {
+  run() {
     const opCodeLookup = [
       this.adv.bind(this),
       this.bxl.bind(this),
@@ -81,6 +81,6 @@ class Program {
 
 }
 
-const inputData = new Program(fs.readFileSync('input.txt', 'utf-8').trim().split('\n\n'));
+const program = new Program(fs.readFileSync('input.txt', 'utf-8').trim().split('\n\n'));
 
-console.log(`Part 1: ${inputData.execute()}`);
+console.log(`Part 1: ${program.run()}`);
