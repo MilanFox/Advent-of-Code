@@ -58,7 +58,7 @@ class Program {
   }
 
   execute() {
-    const instructions = [
+    const opCodeLookup = [
       this.adv.bind(this),
       this.bxl.bind(this),
       this.bst.bind(this),
@@ -72,7 +72,7 @@ class Program {
     while (this.pointer < this.instructions.length) {
       const opcode = this.instructions[this.pointer];
       const operand = this.instructions[this.pointer + 1];
-      const jumped = instructions[opcode](operand);
+      const jumped = opCodeLookup[opcode](operand);
       if (!jumped) this.pointer += 2;
     }
 
