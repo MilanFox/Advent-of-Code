@@ -9,16 +9,13 @@ class Program {
     this.output = [];
   }
 
+  get formatedOutput() { return this.output.join(','); }
+
   getComboOperand(operand) {
     if (operand >= 0 && operand <= 3) return operand;
-    switch (operand) {
-      case 4:
-        return this.register.A;
-      case 5:
-        return this.register.B;
-      case 6:
-        return this.register.C;
-    }
+    if (operand === 4) return this.register.A;
+    if (operand === 5) return this.register.B;
+    if (operand === 6) return this.register.C;
   }
 
   adv(operand) {
@@ -34,11 +31,9 @@ class Program {
   }
 
   jnz(operand) {
-    if (this.register.A !== 0) {
-      this.pointer = operand;
-      return true;
-    }
-    return false;
+    if (this.register.A === 0) return false;
+    this.pointer = operand;
+    return true;
   }
 
   bxc() {
@@ -75,12 +70,10 @@ class Program {
       const jumped = opCodeLookup[opcode](operand);
       if (!jumped) this.pointer += 2;
     }
-
-    return this.output.join(',');
   }
-
 }
 
 const program = new Program(fs.readFileSync('input.txt', 'utf-8').trim().split('\n\n'));
 
-console.log(`Part 1: ${program.run()}`);
+program.run();
+console.log(`Part 1: ${program.formatedOutput}`);
