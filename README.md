@@ -242,12 +242,12 @@ projects.
 [![](https://img.shields.io/badge/Day_24-☆☆-black)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2017/day_24.mjs)
 [![](https://img.shields.io/badge/Day_25-☆-black)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2017/day_25.mjs)
 
-## 🎄 [2015](https://adventofcode.com/2015) ![](https://progress-bar.xyz/4?scale=49)
+## 🎄 [2015](https://adventofcode.com/2015) ![](https://progress-bar.xyz/8?scale=49)
 
 [![](https://img.shields.io/badge/Day_01-★★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2015/day_01.mjs)
 [![](https://img.shields.io/badge/Day_02-★★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2015/day_02.mjs)
 [![](https://img.shields.io/badge/Day_03-★★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2015/day_03.mjs)
-[![](https://img.shields.io/badge/Day_04-☆☆-black)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2015/day_04.mjs)
+[![](https://img.shields.io/badge/Day_04-★★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2015/day_04.mjs)
 [![](https://img.shields.io/badge/Day_05-☆☆-black)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2015/day_05.mjs)
 [![](https://img.shields.io/badge/Day_06-☆☆-black)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2015/day_06.mjs)
 [![](https://img.shields.io/badge/Day_07-☆☆-black)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2015/day_07.mjs)
