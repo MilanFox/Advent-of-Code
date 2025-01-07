@@ -10,6 +10,6 @@ const play = (n) => {
   return str;
 };
 
-console.log(play(40).length);
-console.log(play(50).length);
+console.log(`Part 1: ${play(40).length}`);
+console.log(`Part 2: ${play(50).length}`);
 
