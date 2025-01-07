@@ -2,18 +2,21 @@ import fs from 'node:fs';
 
 const inputData = fs.readFileSync('input.txt', 'utf-8').trim().split('\n').map(data => data);
 
-const getMemorySpace = (string) => {
-  let space = 0;
-  for (let i = 1; i < string.length - 1; i++) {
-    if (string[i] === '\\') {
-      if (string[i + 1] === '\\' || string[i + 1] === '"') i++;
-      else if (string[i + 1] === 'x') i += 3;
-    }
-    space++;
-  }
-  return space;
-};
+const decodedLength = (string) => string
+  .slice(1, -1)
+  .replace(/\\x[0-9a-fA-F]{2}/g, 'x')
+  .replace(/\\"/g, '"')
+  .replace(/\\\\/g, '\\')
+  .length;
 
-const checksum = inputData.reduce((acc, cur) => acc + (cur.length - getMemorySpace(cur)), 0);
+const decodeChecksum = inputData.reduce((acc, cur) => acc + (cur.length - decodedLength(cur)), 0);
+console.log(`Part 1: ${decodeChecksum}`);
 
-console.log(`Part 1: ${checksum}`);
+const encodedLength = (string) => 2 + string
+  .replace(/\\/g, '\\\\')
+  .replace(/"/g, '\\"')
+  .replace(/([^\x00-\x7F])/g, '\\x$1')
+  .length;
+
+const encodeChecksum = inputData.reduce((acc, cur) => acc + (encodedLength(cur) - cur.length), 0);
+console.log(`Part 2: ${encodeChecksum}`);
