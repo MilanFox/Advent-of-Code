@@ -21,5 +21,5 @@ const newRules = [rules.hasDisjoinedDoubleLetter, rules.hasRepeatingDoubleLetter
 
 const isNice = (string, rules) => rules.every(rule => rule(string));
 
-console.log(`Part 1: ${inputData.filter(string => isNice(string, oldRules)).length}`);
-console.log(`Part 2: ${inputData.filter(string => isNice(string, newRules)).length}`);
+console.log(`Part 1: ${inputData.reduce((acc, cur) => acc + isNice(cur, oldRules), 0)}`);
+console.log(`Part 2: ${inputData.reduce((acc, cur) => acc + isNice(cur, newRules), 0)}`);
