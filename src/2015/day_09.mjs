@@ -70,5 +70,5 @@ class Graph {
 const graph = new Graph(fs.readFileSync('input.txt', 'utf-8').trim().split('\n'));
 
 console.log(`Part 1: ${graph.getShortestPath()}`);
-console.log(`Part 2: ${graph.getLongestPath()}`); // runs nearly 30 secs - needs optimization
+console.log(`Part 2: ${graph.getLongestPath()}`); // runs nearly 60 secs - needs optimization
 
