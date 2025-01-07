@@ -45,8 +45,30 @@ class Graph {
 
     return shortestPath;
   }
+
+  getLongestPath() {
+    let longestPath = -Infinity;
+
+    const queue = Object.keys(this.nodes).map(key => [key, [], 0]);
+
+    while (queue.length) {
+      queue.sort((a, b) => a[2] - b[2]);
+      const [currentNode, visited, currentCost] = queue.shift();
+      visited.push(currentNode);
+      const nextDestinations = this.destinations.filter(dest => !visited.includes(dest));
+      if (nextDestinations.length === 0) {
+        longestPath = Math.max(longestPath, currentCost);
+        continue;
+      }
+      nextDestinations.forEach(dest => queue.push([dest, [...visited], currentCost + this.nodes[currentNode][dest]]));
+    }
+
+    return longestPath;
+  }
 }
 
 const graph = new Graph(fs.readFileSync('input.txt', 'utf-8').trim().split('\n'));
 
 console.log(`Part 1: ${graph.getShortestPath()}`);
+console.log(`Part 2: ${graph.getLongestPath()}`); // runs nearly 30 secs - needs optimization
+
