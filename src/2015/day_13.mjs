@@ -44,3 +44,11 @@ const getHappinessFactor = (arrangement) => {
 const maxHappiness = Math.max(...arrangements.map(getHappinessFactor));
 
 console.log(`Part 1: ${maxHappiness}`);
+
+for (const name of Object.keys(guests)) guests[name].Me = 0;
+guests.Me = Object.keys(guests).reduce((acc, cur) => ({ ...acc, [cur]: 0 }), {});
+
+const arrangementsIncludingMe = generateArrangements(guests);
+const maxHappinessIncludingMe = Math.max(...arrangementsIncludingMe.map(getHappinessFactor));
+
+console.log(`Part 2: ${maxHappinessIncludingMe}`);
