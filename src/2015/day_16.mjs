@@ -27,6 +27,13 @@ const mfcsamScan = [
   ['perfumes', 1],
 ];
 
-const giftingAunt = aunts.find(aunt => mfcsamScan.every(([key, val]) => aunt[key] === val || aunt[key] === undefined));
+const giftingAunt1 = aunts.find(aunt => mfcsamScan.every(([key, val]) => aunt[key] === val || aunt[key] === undefined));
+console.log(`Part 1: ${giftingAunt1.id}`);
 
-console.log(`Part 1: ${giftingAunt.id}`);
+const giftingAunt2 = aunts.find(aunt => mfcsamScan.every(([key, val]) => {
+  if (aunt[key] === undefined) return true;
+  if (['cats', 'trees'].includes(key)) return aunt[key] >= val;
+  if (['pomeranians', 'goldfish'].includes(key)) return aunt[key] <= val;
+  else return aunt[key] === val;
+}));
+console.log(`Part 2: ${giftingAunt2.id}`);
