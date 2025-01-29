@@ -24,6 +24,8 @@ const getCombinations = (targetVolume) => {
       continue;
     }
 
+    if (currentVolume > targetVolume) continue;
+
     const emptyBuckets = buckets.filter(({ id }) => !(usedBuckets.some(bucket => bucket.id === id)));
 
     for (const bucket of emptyBuckets) {
@@ -35,7 +37,13 @@ const getCombinations = (targetVolume) => {
     }
   }
 
-  return combinations.size;
+  const neededBuckets = [...combinations].map(combination => combination.split('-').length);
+  const minimalNeededBuckets = Math.min(...neededBuckets);
+
+  return [combinations.size, neededBuckets.filter(needed => needed === minimalNeededBuckets).length];
 };
 
-console.log(`Part 1: ${getCombinations(150)}`);
+const [combinations, combinationsWithMinimalBuckets] = getCombinations(150);
+
+console.log(`Part 1: ${combinations}`);
+console.log(`Part 2: ${combinationsWithMinimalBuckets}`);
