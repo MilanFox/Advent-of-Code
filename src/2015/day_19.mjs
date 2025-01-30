@@ -34,11 +34,14 @@ const findPathLength = (sourceMolecule, targetMolecule) => {
     queue.sort(([a], [b]) => a.length - b.length);
     const [currentMolecule, localLength] = queue.shift();
     if (currentMolecule === sourceMolecule) return localLength;
-    if (visited.has(currentMolecule)) continue;
-    visited.add(currentMolecule);
     replacements.forEach(replacement => replacement
       .replaceBackwards(currentMolecule)
-      .forEach(mol => {if (!visited.has(mol)) queue.push([mol, localLength + 1]);}));
+      .forEach(mol => {
+        if (!visited.has(mol)) {
+          queue.push([mol, localLength + 1]);
+          visited.add(mol);
+        }
+      }));
   }
 
   return null;
