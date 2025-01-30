@@ -19,8 +19,30 @@ class Replacement {
   }
 }
 
-const [replacementData, testMolecule] = fs.readFileSync('input.txt', 'utf-8').trim().split('\n\n');
+const [replacementData, sourceMolecule] = fs.readFileSync('input.txt', 'utf-8').trim().split('\n\n');
 const replacements = replacementData.split('\n').map(data => new Replacement(data));
 
-const moleculesAfterOneReplacement = new Set(replacements.flatMap(replacement => replacement.replaceForward(testMolecule)));
+const moleculesAfterOneReplacement = new Set(replacements.flatMap(replacement => replacement.replaceForward(sourceMolecule)));
 console.log(`Part 1: ${moleculesAfterOneReplacement.size}`);
+
+const findPathLength = (sourceMolecule, targetMolecule) => {
+  replacements.sort((a, b) => b.out.length - a.out.length);
+  const queue = [[targetMolecule, 0]];
+  const visited = new Set();
+
+  while (queue.length) {
+    queue.sort(([a], [b]) => a.length - b.length);
+    const [currentMolecule, localLength] = queue.shift();
+    if (currentMolecule === sourceMolecule) return localLength;
+    if (visited.has(currentMolecule)) continue;
+    visited.add(currentMolecule);
+    replacements.forEach(replacement => replacement
+      .replaceBackwards(currentMolecule)
+      .forEach(mol => {if (!visited.has(mol)) queue.push([mol, localLength + 1]);}));
+  }
+
+  return null;
+};
+
+console.log(`Part 2: ${findPathLength('e', sourceMolecule)}`); // Needs optimization... never finishes for real data.
+
