@@ -12,8 +12,10 @@ const handOutPresents = (upperBounds, housesPerElf = Infinity, multiplier = 10) 
   return houses;
 };
 
-const house1 = handOutPresents(1_000_000).findIndex(presentCount => presentCount >= input);
+const upperBounds = 1_000_000; // Determined by trial-and-error. Works for my input - increase in case you are getting "-1" as answer.
+
+const house1 = handOutPresents(upperBounds).findIndex(presentCount => presentCount >= input);
 console.log(`Part 1: ${house1}`);
 
-const house2 = handOutPresents(1_000_000, 50, 11).findIndex(presentCount => presentCount >= input);
+const house2 = handOutPresents(upperBounds, 50, 11).findIndex(presentCount => presentCount >= input);
 console.log(`Part 2: ${house2}`);
