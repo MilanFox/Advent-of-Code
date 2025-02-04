@@ -1,10 +1,6 @@
 import fs from 'node:fs';
 
-const boss = fs
-  .readFileSync('input.txt', 'utf-8')
-  .trim()
-  .split('\n')
-  .map(data => data.match(/\d+/g)).map(Number);
+const boss = fs.readFileSync('input.txt', 'utf-8').trim().split('\n').map(data => data.match(/\d+/g)).map(Number);
 
 const shop = {
   weapons: [[8, 4, 0], [10, 5, 0], [25, 6, 0], [40, 7, 0], [74, 8, 0]],
