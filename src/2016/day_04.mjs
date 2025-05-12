@@ -27,7 +27,8 @@ class Room {
   get decryptedName() {
     const decryptedBlocks = this.encryptedName.map(block => {
       const letters = [...block].map(c => c.charCodeAt(0) - 97);
-      return letters.map(code => String.fromCharCode(((code + this.sectorID) % 26) + 97)).join('');
+      const decryptedLetters = letters.map(code => String.fromCharCode(((code + this.sectorID) % 26) + 97));
+      return decryptedLetters.join('');
     });
     return decryptedBlocks.join(' ');
   }
