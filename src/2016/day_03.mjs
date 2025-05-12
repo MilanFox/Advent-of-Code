@@ -5,12 +5,24 @@ const inputData = readFileSync('input.txt', 'utf-8')
   .split('\n')
   .map(line => line
     .trim()
-    .split('  ')
-    .map(Number)
-    .sort((a, b) => a - b));
+    .split(/\s+/)
+    .map(Number));
 
 const isValid = ([a, b, c]) => (a + b) > c;
 
-const numberOfValidTriangles = inputData.map(isValid).filter(Boolean).length;
+const getNumberOfValidSets = (sets) => sets
+  .map(set => set.toSorted((a, b) => a - b))
+  .map(isValid)
+  .filter(Boolean).length;
 
-console.log(`Part 1: ${numberOfValidTriangles}`);
+console.log(`Part 1: ${getNumberOfValidSets(inputData)}`);
+
+const verticalDataSet = inputData
+  .reduce((acc, _, i, arr) => {
+    if (i % 3 !== 0) return acc;
+    const group = arr.slice(i, i + 3);
+    const transposed = group[0].map((_, j) => group.map(row => row[j]));
+    return [...acc, ...transposed];
+  }, []);
+
+console.log(`Part 2: ${getNumberOfValidSets(verticalDataSet)}`);
