@@ -245,7 +245,7 @@ projects.
 ## 🐰 [2016](https://adventofcode.com/2016) ![](https://progress-bar.xyz/1?scale=49&suffix=/49)
 
 [![](https://img.shields.io/badge/Day_01-★★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2016/day_01.mjs)
-[![](https://img.shields.io/badge/Day_02-☆☆-black)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2016/day_02.mjs)
+[![](https://img.shields.io/badge/Day_02-★☆-silver)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2016/day_02.mjs)
 [![](https://img.shields.io/badge/Day_03-☆☆-black)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2016/day_03.mjs)
 [![](https://img.shields.io/badge/Day_04-☆☆-black)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2016/day_04.mjs)
 [![](https://img.shields.io/badge/Day_05-☆☆-black)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2016/day_05.mjs)
