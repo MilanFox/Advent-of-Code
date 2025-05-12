@@ -16,4 +16,23 @@ const getPassword = () => {
   const passwordGenerator = generatePassword();
   return Array.from({ length: 8 }, () => passwordGenerator.next().value[5]).join('');
 };
+
 console.log(`Part 1: ${getPassword()}`);
+
+const getStrongPassword = () => {
+  const passwordGenerator = generatePassword();
+  const password = Array.from({ length: 8 });
+
+  while (true) {
+    const nextHash = passwordGenerator.next().value;
+    const pos = Number(nextHash[5]);
+    if (!Number.isNaN(pos) && pos <= 7 && password[pos] === undefined) {
+      password[pos] = nextHash[6];
+      if (password.every(el => el !== undefined)) break;
+    }
+  }
+
+  return password.join('');
+};
+
+console.log(`Part 2: ${getStrongPassword()}`);
