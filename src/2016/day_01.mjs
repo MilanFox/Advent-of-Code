@@ -12,18 +12,29 @@ const getManhattanDistance = ({ x, y }) => Math.abs(x) + Math.abs(y);
 const circleMod = (value, mod) => ((value % mod) + mod) % mod;
 
 const walk = () => {
+  const visited = new Set(`0|0`);
   const currentPos = { x: 0, y: 0 };
   let currentDir = 0;
+  let firstRepeatedPosition;
 
   for (const [rotDir, distance] of instructions) {
     currentDir = circleMod(currentDir + rotation[rotDir], 4);
     const [dx, dy] = directions[currentDir];
-    currentPos.x += distance * dx;
-    currentPos.y += distance * dy;
+
+    for (let step = 0; step < distance; step++) {
+      currentPos.x += dx;
+      currentPos.y += dy;
+      const posHash = `${currentPos.x}|${currentPos.y}`;
+      if (firstRepeatedPosition) continue;
+      if (visited.has(posHash)) firstRepeatedPosition = { ...currentPos };
+      visited.add(posHash);
+    }
   }
 
-  return currentPos;
+  return { finalPosition: currentPos, firstRepeatedPosition };
 };
 
-const finalPosition = walk();
+const { finalPosition, firstRepeatedPosition } = walk();
+
 console.log(`Part 1: ${getManhattanDistance(finalPosition)}`);
+console.log(`Part 2: ${getManhattanDistance(firstRepeatedPosition)}`);
