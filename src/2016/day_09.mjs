@@ -2,17 +2,25 @@ import { readFileSync } from 'node:fs';
 
 const compressedData = readFileSync('input.txt', 'utf-8').trim();
 
-let decompressedData = '';
+const decompress = (sequence, { version } = { version: 1 }) => {
+  let decompressedDataSize = 0;
 
-for (let i = 0; i < compressedData.length; i++) {
-  if (compressedData[i] !== '(') decompressedData += compressedData[i];
-  else {
-    const remainingString = compressedData.substring(i, compressedData.length - 1);
-    const [match, length, repeatCount] = remainingString.match(/^\D*\((\d+)x(\d+)\)/);
-    const repeatString = compressedData.substring(i + match.length, i + match.length + Number(length));
-    decompressedData += repeatString.repeat(Number(repeatCount));
-    i += match.length + Number(length) - 1;
+  for (let i = 0; i < sequence.length; i++) {
+    if (sequence[i] !== '(') decompressedDataSize += 1;
+
+    else {
+      const remainingString = sequence.substring(i, sequence.length);
+      const [match, length, repeatCount] = remainingString.match(/^\D*\((\d+)x(\d+)\)/);
+      let repeatStringSize = remainingString.substring(match.length, match.length + Number(length)).length;
+      if (version === 2) repeatStringSize = decompress(remainingString.substring(match.length, match.length + Number(length)), { version });
+      for (let i = 0; i < repeatCount; i++) decompressedDataSize += repeatStringSize;
+      i += match.length + Number(length) - 1;
+    }
+
   }
-}
 
-console.log(`Part 1: ${decompressedData.length}`);
+  return decompressedDataSize;
+};
+
+console.log(`Part 1: ${decompress(compressedData)}`);
+console.log(`Part 2: ${decompress(compressedData, { version: 2 })}`);
