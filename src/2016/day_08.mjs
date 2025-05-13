@@ -30,3 +30,5 @@ for (const instruction of instructions) {
 
 const checksum = screen.flat().filter(Boolean).length;
 console.log(`Part 1: ${checksum}`);
+
+console.log(`Part 2:\n${screen.map(row => row.map(isLit => isLit ? '█' : ' ').join('')).join('\n')}`);
