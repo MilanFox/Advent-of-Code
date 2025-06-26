@@ -3,6 +3,8 @@ import { readFileSync } from 'node:fs';
 class Jupiter {
   constructor(moonData) {
     this.moons = moonData.map(data => new Moon(data));
+    this.states = { x: new Set, y: new Set, z: new Set };
+    this.loopPoints = { x: undefined, y: undefined, z: undefined };
   }
 
   simulateTimeStep() {
@@ -14,10 +16,32 @@ class Jupiter {
     }
 
     this.moons.forEach(moon => moon.applyVelocity());
+    this.logState();
+    return this.loopPoints;
   }
 
   get totalEnergy() {
     return this.moons.reduce((acc, cur) => acc + cur.totalEnergy, 0);
+  }
+
+  logState() {
+    ['x', 'y', 'z'].forEach(axis => {
+      if (this.loopPoints[axis]) return;
+      const hash = this.moons.map(moon => `(${moon.position[axis]}|${moon.velocity[axis]})`).join('-');
+
+      if (this.states[axis].has(hash)) this.loopPoints[axis] = this.states[axis].size;
+      else this.states[axis].add(hash);
+    });
+  }
+
+  get loopPoint() {
+    const getLCM = (arr) => {
+      const getGreatestCommonDivisor = (x, y) => (!y ? x : getGreatestCommonDivisor(y, x % y));
+      const getLeastCommonMultiple = (x, y) => (x * y) / getGreatestCommonDivisor(x, y);
+      return [...arr].reduce((a, b) => getLeastCommonMultiple(a, b));
+    };
+
+    return getLCM(Object.values(this.loopPoints));
   }
 }
 
@@ -51,8 +75,13 @@ const inputData = readFileSync('input.txt', 'utf-8').trim().split('\n');
 
 const jupiter = new Jupiter(inputData);
 
-for (let i = 0; i < 1000; i++) {
-  jupiter.simulateTimeStep();
+let i = 0;
+
+while (true) {
+  i++;
+  const loops = jupiter.simulateTimeStep();
+  if (i === 1000) console.log(`Part 1: ${jupiter.totalEnergy}`);
+  if (loops.x && loops.y && loops.z) break;
 }
 
-console.log(`Part 1: ${jupiter.totalEnergy}`);
+console.log(`Part 2: ${jupiter.loopPoint}`);
