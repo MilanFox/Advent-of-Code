@@ -47,8 +47,25 @@ const jump = async () => {
   assert.equal(computer2.lastOutput, 0);
 };
 
-const tests = { add, multiply, inOut, equals, lessThan, jump };
+const inputQueue = async () => {
+  const memory = [3, 0, 4, 0, 99];
+  const computer = new IntCodeComputer(memory);
+
+  let emitted = false;
+  computer.on(computer.EVENT_NAMES.NEEDS_INPUT, async () => {
+    emitted = true;
+    computer.queueInput(123);
+    await computer.run();
+  });
+
+  await computer.run();
+  assert.equal(emitted, true);
+  assert.equal(computer.lastOutput, 123);
+};
+
+const tests = { add, multiply, inOut, equals, lessThan, jump, inputQueue };
+
 Object.entries(tests).forEach(([name, test]) => {
-  console.log(`running test '${name}'...`);
+  console.log(`Running test: '${name}'... done`);
   test();
 });
