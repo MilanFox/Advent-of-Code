@@ -49,3 +49,44 @@ const findHighestPowerLevel = async () => {
 const highestPowerLevel = await findHighestPowerLevel();
 
 console.log(`Part 1: ${highestPowerLevel}`);
+
+const findPowerLevelFeedbackLoop = async (phaseSetting) => {
+  const amplifiers = phaseSetting.map(phase => {
+    const amp = new IntCodeComputer(memory);
+    amp.queueInput(phase);
+    amp.pauseOnOutput = true;
+    return amp;
+  });
+
+  amplifiers[0].queueInput(0);
+
+  let lastOutput = 0;
+  let current = 0;
+
+  while (!amplifiers[4].isHalted) {
+    const amp = amplifiers[current];
+    await amp.run();
+    const output = amp.lastOutput;
+    lastOutput = output;
+    const nextAmp = amplifiers[(current + 1) % 5];
+    nextAmp.queueInput(output);
+    current = (current + 1) % 5;
+  }
+
+  return lastOutput;
+};
+
+const findHighestPowerLevelFeedbackLoop = async () => {
+  const permutations = generatePermutations([5, 6, 7, 8, 9]);
+  let tempHighestPowerLevel = 0;
+
+  for (const phaseSetting of permutations) {
+    const powerlevel = await findPowerLevelFeedbackLoop(phaseSetting);
+    tempHighestPowerLevel = Math.max(tempHighestPowerLevel, powerlevel);
+  }
+
+  return tempHighestPowerLevel;
+};
+
+const part2 = await findHighestPowerLevelFeedbackLoop();
+console.log(`Part 2: ${part2}`);
