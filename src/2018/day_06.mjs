@@ -10,38 +10,38 @@ const area = Array
   .from({ length: mapDimensions[1] + 1 }, () => Array(mapDimensions[0] + 1).fill(''))
   .map((row, y) => row.map((cell, x) => {
     const distances = allLocations
-      .map(location => ({ location, dist: getManhattanDistance(location, [x, y]) }))
-      .sort((a, b) => a.dist - b.dist);
+      .map(location => ({ closestLocation: { location, dist: getManhattanDistance(location, [x, y]) } }))
+      .sort((a, b) => a.closestLocation.dist - b.closestLocation.dist);
 
-    if (distances[0].dist === distances[1].dist) return null;
+    if (distances[0].closestLocation.dist === distances[1].closestLocation.dist) return { closestLocation: null };
 
     return distances[0];
   }));
 
 const scanPerimeter = () => {
-  const infiniteLocations = new Set();
 
   const topRow = area.at(0);
   const bottomRow = area.at(-1);
   const leftCol = area.map(([cell]) => cell);
   const rightCol = area.map(row => row.at(-1));
 
-  const edges = [topRow, bottomRow, leftCol, rightCol].flat().filter(Boolean).map(({ location }) => location);
-
-  edges.forEach(cell => infiniteLocations.add(cell));
+  const infiniteLocations = new Set([topRow, bottomRow, leftCol, rightCol]
+    .flat()
+    .map(({ closestLocation }) => closestLocation?.location)
+    .filter(Boolean));
 
   return {
-    infiniteLocation: [...infiniteLocations],
+    infiniteLocations: [...infiniteLocations],
     finiteLocations: allLocations.filter(location => !infiniteLocations.has(location)),
   };
 };
 
-const { finiteLocations } = scanPerimeter();
+const { infiniteLocations, finiteLocations } = scanPerimeter();
 
 const locationSizes = finiteLocations
   .map(location => ({
     location,
-    size: area.map(row => row.filter(cell => cell?.location === location).length).reduce((acc, cur) => acc + cur, 0),
+    size: area.map(row => row.filter(cell => cell.closestLocation?.location === location).length).reduce((acc, cur) => acc + cur, 0),
   }))
   .sort((a, b) => b.size - a.size);
 
