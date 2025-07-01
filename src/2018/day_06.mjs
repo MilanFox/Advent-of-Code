@@ -10,12 +10,13 @@ const area = Array
   .from({ length: mapDimensions[1] + 1 }, () => Array(mapDimensions[0] + 1).fill(''))
   .map((row, y) => row.map((cell, x) => {
     const distances = allLocations
-      .map(location => ({ closestLocation: { location, dist: getManhattanDistance(location, [x, y]) } }))
-      .sort((a, b) => a.closestLocation.dist - b.closestLocation.dist);
+      .map(location => ({ location, dist: getManhattanDistance(location, [x, y]) }))
+      .sort((a, b) => a.dist - b.dist);
 
-    if (distances[0].closestLocation.dist === distances[1].closestLocation.dist) return { closestLocation: null };
+    const hasMultipleClosestLocations = distances[0].dist === distances[1].dist;
+    const closestLocation = hasMultipleClosestLocations ? null : distances[0];
 
-    return distances[0];
+    return { closestLocation };
   }));
 
 const scanPerimeter = () => {
