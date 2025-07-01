@@ -16,7 +16,9 @@ const area = Array
     const hasMultipleClosestLocations = distances[0].dist === distances[1].dist;
     const closestLocation = hasMultipleClosestLocations ? null : distances[0];
 
-    return { closestLocation };
+    const sumOfDistances = distances.reduce((acc, cur) => acc + cur.dist, 0);
+
+    return { closestLocation, sumOfDistances };
   }));
 
 const scanPerimeter = () => {
@@ -47,3 +49,9 @@ const locationSizes = finiteLocations
   .sort((a, b) => b.size - a.size);
 
 console.log(`Part 1: ${locationSizes.at(0).size}`);
+
+const numberOfSafeCells = (maxDistance) => {
+  return area.reduce((acc, cur) => acc + cur.filter(cell => cell.sumOfDistances < maxDistance).length, 0);
+};
+
+console.log(`Part 2: ${numberOfSafeCells(10000)}`);
