@@ -36,7 +36,7 @@ const scanPerimeter = () => {
   };
 };
 
-const { infiniteLocations, finiteLocations } = scanPerimeter();
+const { finiteLocations } = scanPerimeter();
 
 const locationSizes = finiteLocations
   .map(location => ({
