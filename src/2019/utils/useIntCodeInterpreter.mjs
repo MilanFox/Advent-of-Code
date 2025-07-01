@@ -1,17 +1,11 @@
-import * as readline from 'node:readline';
-
-const ui = readline.createInterface({ input: process.stdin, output: process.stdout });
-
-function askQuestion(query) {
-  return new Promise(resolve => ui.question(query, resolve));
-}
-
 export class IntCodeComputer {
   constructor(memory, { input } = {}) {
     this.#memory = [...memory];
     this.#pointer = 0;
     this.#inputQueue = [];
     this.#outputQueue = [];
+    this.#halted = false;
+    this.pauseOnOutput = false;
 
     if (input !== undefined) this.#inputQueue = [...input];
   }
@@ -20,6 +14,8 @@ export class IntCodeComputer {
   #pointer;
   #inputQueue;
   #outputQueue;
+  #shouldPause = false;
+  #halted;
 
   /**
    * UTILS
@@ -57,7 +53,10 @@ export class IntCodeComputer {
    */
 
   EVENT_NAMES = Object.freeze({
-    AFTER_OUTPUT: 'afterOutput', AFTER_PAUSE: 'afterPause', AFTER_HALT: 'afterHalt',
+    AFTER_OUTPUT: 'afterOutput',
+    AFTER_PAUSE: 'afterPause',
+    AFTER_HALT: 'afterHalt',
+    NEEDS_INPUT: 'needsInput',
   });
 
   #events = {};
@@ -78,7 +77,9 @@ export class IntCodeComputer {
     this.#shouldPause = true;
   }
 
-  #shouldPause = false;
+  get isHalted() {
+    return this.#halted;
+  }
 
   /**
    * FUNCTIONS
@@ -114,17 +115,13 @@ export class IntCodeComputer {
 
   async #input() {
     const targetAddress = this.#getOffsetValue(1);
-
-    let value;
-    if (this.#inputQueue.length) {
-      value = this.#inputQueue.shift();
+    if (!this.#inputQueue.length) {
+      this.#shouldPause = true;
+      this.#emit(this.EVENT_NAMES.NEEDS_INPUT);
     } else {
-      const userInput = await askQuestion('Please Input Number: ');
-      value = parseInt(userInput);
+      this.#memory[targetAddress] = this.#inputQueue.shift();
+      this.#movePointer(2);
     }
-
-    this.#memory[targetAddress] = value;
-    this.#movePointer(2);
   }
 
   #output() {
@@ -132,6 +129,7 @@ export class IntCodeComputer {
     this.#outputQueue.push(outputValue);
     this.#movePointer(2);
     this.#emit(this.EVENT_NAMES.AFTER_OUTPUT);
+    if (this.pauseOnOutput) this.pause();
   }
 
   #jumpIfTrue() {
@@ -184,12 +182,13 @@ export class IntCodeComputer {
     while (true) {
       if (this.#shouldPause) break;
       const opCode = this.#currentInstruction;
-      if (opCode === 99) break;
+      if (opCode === 99) {
+        this.#halted = true;
+        break;
+      }
       await this.#callFunction[opCode]();
     }
 
     this.#emit(this.#shouldPause ? this.EVENT_NAMES.AFTER_PAUSE : this.EVENT_NAMES.AFTER_HALT);
-
-    ui.close();
   }
 }

@@ -1,9 +1,14 @@
 import * as fs from 'node:fs';
 import { IntCodeComputer } from './utils/useIntCodeInterpreter.mjs';
 
-const memory = fs.readFileSync('input.txt', 'utf-8').trim().split(',').map(n => parseInt(n));
+const memory = fs.readFileSync('input.txt', 'utf-8').trim().split(',').map(Number);
 
-const computer = new IntCodeComputer(memory);
-await computer.run();
+const vm1 = new IntCodeComputer(memory);
+vm1.queueInput(1);
+await vm1.run();
+console.log(`Part 1: ${vm1.lastOutput}`);
 
-console.log(`Part 1&2: ${computer.lastOutput}`);
+const vm2 = new IntCodeComputer(memory);
+vm2.queueInput(5);
+await vm2.run();
+console.log(`Part 2: ${vm2.lastOutput}`);
