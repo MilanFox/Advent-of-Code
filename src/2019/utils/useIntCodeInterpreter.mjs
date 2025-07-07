@@ -1,11 +1,12 @@
 export class IntCodeComputer {
-  constructor(memory, { input } = {}) {
+  constructor(memory, { input, logOutputAsAscii } = {}) {
     this.#memory = [...memory];
     this.#pointer = 0;
     this.#inputQueue = [];
     this.#outputQueue = [];
     this.#halted = false;
     this.pauseOnOutput = false;
+    this.#logOutputAsAscii = logOutputAsAscii ?? false;
     this.#relativeBase = 0;
 
     if (input !== undefined) this.#inputQueue = [...input];
@@ -18,6 +19,7 @@ export class IntCodeComputer {
   #shouldPause = false;
   #halted;
   #relativeBase;
+  #logOutputAsAscii;
 
   /**
    * UTILS
@@ -140,6 +142,7 @@ export class IntCodeComputer {
     this.#outputQueue.push(outputValue);
     this.#movePointer(2);
     this.#emit(this.EVENT_NAMES.AFTER_OUTPUT);
+    if (this.#logOutputAsAscii) process.stdout.write(String.fromCharCode(outputValue));
     if (this.pauseOnOutput) this.pause();
   }
 
