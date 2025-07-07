@@ -6,6 +6,7 @@ export class IntCodeComputer {
     this.#outputQueue = [];
     this.#halted = false;
     this.pauseOnOutput = false;
+    this.#relativeBase = 0;
 
     if (input !== undefined) this.#inputQueue = [...input];
   }
@@ -16,6 +17,7 @@ export class IntCodeComputer {
   #outputQueue;
   #shouldPause = false;
   #halted;
+  #relativeBase;
 
   /**
    * UTILS
@@ -26,8 +28,9 @@ export class IntCodeComputer {
   }
 
   #getValue(value, mode) {
+    if (mode === 2) return this.#memory[value + this.#relativeBase] ?? 0;
     if (mode === 1) return value;
-    if (mode === 0) return this.#memory[value];
+    if (mode === 0) return this.#memory[value] ?? 0;
     throw new Error('Illegal Parameter Mode');
   }
 
@@ -44,8 +47,11 @@ export class IntCodeComputer {
     return this.#memory.slice(this.#pointer + 1, this.#pointer + 1 + n).map((val, i) => this.#getValue(val, paramModes[i]));
   }
 
-  #getOffsetValue(n) {
-    return this.#memory[this.#pointer + n];
+  #getWriteAddress(offset, mode) {
+    const param = this.#memory[this.#pointer + offset];
+    if (mode === 2) return param + this.#relativeBase;
+    if (mode === 0) return param;
+    throw new Error('Illegal Parameter Mode for write');
   }
 
   /**
@@ -95,12 +101,14 @@ export class IntCodeComputer {
     this.#jumpIfFalse.bind(this),
     this.#lessThan.bind(this),
     this.#equals.bind(this),
+    this.#adjustRelativeBase.bind(this),
   ];
 
   #add() {
     const numberOfParams = 2;
     const [addend1, addend2] = this.#getParams(numberOfParams);
-    const targetAddress = this.#getOffsetValue(numberOfParams + 1);
+    const paramModes = this.#getCurrentParamModes(numberOfParams + 1);
+    const targetAddress = this.#getWriteAddress(numberOfParams + 1, paramModes[numberOfParams]);
     this.#memory[targetAddress] = addend1 + addend2;
     this.#movePointer(numberOfParams + 2);
   }
@@ -108,13 +116,16 @@ export class IntCodeComputer {
   #multiply() {
     const numberOfParams = 2;
     const [multiplicant, multiplier] = this.#getParams(numberOfParams);
-    const targetAddress = this.#getOffsetValue(numberOfParams + 1);
+    const paramModes = this.#getCurrentParamModes(numberOfParams + 1);
+    const targetAddress = this.#getWriteAddress(numberOfParams + 1, paramModes[numberOfParams]);
     this.#memory[targetAddress] = multiplicant * multiplier;
     this.#movePointer(numberOfParams + 2);
   }
 
   async #input() {
-    const targetAddress = this.#getOffsetValue(1);
+    const numberOfParams = 0;
+    const paramModes = this.#getCurrentParamModes(numberOfParams + 1);
+    const targetAddress = this.#getWriteAddress(numberOfParams + 1, paramModes[numberOfParams]);
     if (!this.#inputQueue.length) {
       this.#shouldPause = true;
       this.#emit(this.EVENT_NAMES.NEEDS_INPUT);
@@ -143,17 +154,27 @@ export class IntCodeComputer {
   }
 
   #lessThan() {
-    const [param1, param2] = this.#getParams(2);
-    const targetAddress = this.#getOffsetValue(3);
+    const numberOfParams = 2;
+    const [param1, param2] = this.#getParams(numberOfParams);
+    const paramModes = this.#getCurrentParamModes(numberOfParams + 1);
+    const targetAddress = this.#getWriteAddress(numberOfParams + 1, paramModes[numberOfParams]);
     if (param1 < param2) this.#memory[targetAddress] = 1; else this.#memory[targetAddress] = 0;
     this.#movePointer(4);
   }
 
   #equals() {
-    const [param1, param2] = this.#getParams(2);
-    const targetAddress = this.#getOffsetValue(3);
+    const numberOfParams = 2;
+    const [param1, param2] = this.#getParams(numberOfParams);
+    const paramModes = this.#getCurrentParamModes(numberOfParams + 1);
+    const targetAddress = this.#getWriteAddress(numberOfParams + 1, paramModes[numberOfParams]);
     if (param1 === param2) this.#memory[targetAddress] = 1; else this.#memory[targetAddress] = 0;
     this.#movePointer(4);
+  }
+
+  #adjustRelativeBase() {
+    const [param] = this.#getParams(1);
+    this.#relativeBase += param;
+    this.#movePointer(2);
   }
 
   /**

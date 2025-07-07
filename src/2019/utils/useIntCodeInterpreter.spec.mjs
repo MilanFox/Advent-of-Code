@@ -63,7 +63,14 @@ const inputQueue = async () => {
   assert.equal(computer.lastOutput, 123);
 };
 
-const tests = { add, multiply, inOut, equals, lessThan, jump, inputQueue };
+const relativeMode = async () => {
+  const memory = [104, 1125899906842624, 99];
+  const computer = new IntCodeComputer(memory);
+  await computer.run();
+  assert.equal(computer.lastOutput, 1125899906842624);
+};
+
+const tests = { add, multiply, inOut, equals, lessThan, jump, inputQueue, relativeMode };
 
 Object.entries(tests).forEach(([name, test]) => {
   console.log(`Running test: '${name}'... done`);
