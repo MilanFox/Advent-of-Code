@@ -38,4 +38,3 @@ vm.on(vm.EVENT_NAMES.AFTER_HALT, () => {
 });
 
 await vm.run();
-//2478
