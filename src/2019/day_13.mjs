@@ -6,6 +6,7 @@ class Screen {
   blocks = [];
   paddle;
   ball;
+  score;
 
   #typeMap = {
     1: (pos) => this.walls.push(pos),
@@ -15,24 +16,43 @@ class Screen {
   };
 
   addElement(x, y, type) {
-    this.#typeMap[type]?.({ x, y });
+    if (x === -1 && y === 0) this.score = type;
+    else this.#typeMap[type]?.({ x, y });
   }
 }
 
 const memory = fs.readFileSync('input.txt', 'utf-8').trim().split(',').map(Number);
 
-const vm = new IntCodeComputer(memory, { pauseOnOutput: true, outputPauseInterval: 3 });
-const screen = new Screen();
+const vm1 = new IntCodeComputer(memory, { pauseOnOutput: true, outputPauseInterval: 3 });
+const screen1 = new Screen();
 
-vm.on(vm.EVENT_NAMES.AFTER_PAUSE, async () => {
-  const [x, y, type] = vm.outputQueue.slice(-3);
-  screen.addElement(x, y, type);
-  await vm.run();
+vm1.on(vm1.EVENT_NAMES.AFTER_PAUSE, async () => {
+  const [x, y, type] = vm1.outputQueue.slice(-3);
+  screen1.addElement(x, y, type);
+  await vm1.run();
 });
 
-vm.on(vm.EVENT_NAMES.AFTER_HALT, () => {
-  console.log(`Part 1: ${screen.blocks.length}`);
-  console.log(screen);
+vm1.on(vm1.EVENT_NAMES.AFTER_HALT, async () => {
+  console.log(`Part 1: ${screen1.blocks.length}`);
+  await vm2.run();
 });
 
-await vm.run();
+await vm1.run();
+
+const vm2 = new IntCodeComputer(memory, { pauseOnOutput: true, outputPauseInterval: 3 });
+vm2.changeMemory(0, 2);
+const screen2 = new Screen();
+
+vm2.on(vm2.EVENT_NAMES.AFTER_PAUSE, async () => {
+  const [x, y, type] = vm2.outputQueue.slice(-3);
+  screen2.addElement(x, y, type);
+  await vm2.run();
+});
+
+vm2.on(vm2.EVENT_NAMES.NEEDS_INPUT, async () => {
+  vm2.queueInput(Math.sign(screen2.ball.x - screen2.paddle.x));
+});
+
+vm2.on(vm2.EVENT_NAMES.AFTER_HALT, () => {
+  console.log(`Part 2: ${screen2.score}`);
+});

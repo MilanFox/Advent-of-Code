@@ -216,6 +216,10 @@ export class IntCodeComputer {
     this.#inputQueue.push(n);
   }
 
+  changeMemory(address, value) {
+    this.#memory[address] = value;
+  }
+
   async run() {
     this.#shouldPause = false;
 
