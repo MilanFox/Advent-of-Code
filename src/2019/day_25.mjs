@@ -2,7 +2,7 @@ import { IntCodeComputer } from './utils/useIntCodeInterpreter.mjs';
 import fs from 'node:fs';
 import { getUserInput } from './utils/getUserInput.mjs';
 
-const memory = fs.readFileSync('testInput.txt', 'utf-8').trim().split(',').map(Number);
+const memory = fs.readFileSync('input.txt', 'utf-8').trim().split(',').map(Number);
 
 const vm = new IntCodeComputer(memory, { logOutputAsAscii: true });
 
