@@ -1,15 +1,19 @@
 export class IntCodeComputer {
-  constructor(memory, { input, logOutputAsAscii, pauseOnOutput } = {}) {
+  constructor(memory, { input, logOutputAsAscii, pauseOnOutput, outputPauseInterval } = {}) {
     this.#memory = [...memory];
     this.#pointer = 0;
-    this.#inputQueue = [];
-    this.#outputQueue = [];
-    this.#halted = false;
-    this.#pauseOnOutput = pauseOnOutput ?? false;
-    this.#logOutputAsAscii = logOutputAsAscii ?? false;
     this.#relativeBase = 0;
 
-    if (input !== undefined) this.#inputQueue = [...input];
+    this.#inputQueue = input ? [...input] : [];
+    this.#outputQueue = [];
+
+    this.#shouldPause = false;
+    this.#halted = false;
+
+    this.#pauseOnOutput = pauseOnOutput ?? false;
+    this.#logOutputAsAscii = logOutputAsAscii ?? false;
+    this.#outputPauseInterval = outputPauseInterval ?? 1;
+    this.#outputCycle = 1;
   }
 
   #memory;
@@ -18,12 +22,14 @@ export class IntCodeComputer {
 
   #inputQueue;
   #outputQueue;
-  
+
+  #shouldPause;
   #halted;
 
   #logOutputAsAscii;
-  #shouldPause = false;
   #pauseOnOutput;
+  #outputPauseInterval;
+  #outputCycle;
 
   /**
    * UTILS
@@ -145,9 +151,15 @@ export class IntCodeComputer {
     const [outputValue] = this.#getParams(1);
     this.#outputQueue.push(outputValue);
     this.#movePointer(2);
-    this.#emit(this.EVENT_NAMES.AFTER_OUTPUT);
     if (this.#logOutputAsAscii) process.stdout.write(String.fromCharCode(outputValue));
-    if (this.#pauseOnOutput) this.pause();
+
+    if (this.#pauseOnOutput && this.#outputCycle % this.#outputPauseInterval === 0) {
+      this.pause();
+      this.#outputCycle -= this.#outputPauseInterval;
+    }
+    this.#outputCycle += 1;
+
+    this.#emit(this.EVENT_NAMES.AFTER_OUTPUT);
   }
 
   #jumpIfTrue() {
