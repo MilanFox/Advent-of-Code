@@ -51,12 +51,7 @@ const highestPowerLevel = await findHighestPowerLevel();
 console.log(`Part 1: ${highestPowerLevel}`);
 
 const findPowerLevelFeedbackLoop = async (phaseSetting) => {
-  const amplifiers = phaseSetting.map(phase => {
-    const amp = new IntCodeComputer(memory);
-    amp.queueInput(phase);
-    amp.pauseOnOutput = true;
-    return amp;
-  });
+  const amplifiers = phaseSetting.map(phase => new IntCodeComputer(memory, { pauseOnOutput: true, input: [phase] }));
 
   amplifiers[0].queueInput(0);
 
