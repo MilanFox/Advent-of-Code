@@ -4,18 +4,18 @@ import fs from 'node:fs';
 class Screen {
   walls = [];
   blocks = [];
-  paddle = [];
-  ball = [];
+  paddle;
+  ball;
 
   #typeMap = {
-    1: this.walls,
-    2: this.blocks,
-    3: this.paddle,
-    4: this.ball,
+    1: (pos) => this.walls.push(pos),
+    2: (pos) => this.blocks.push(pos),
+    3: (pos) => this.paddle = pos,
+    4: (pos) => this.ball = pos,
   };
 
   addElement(x, y, type) {
-    this.#typeMap[type]?.push({ x, y });
+    this.#typeMap[type]?.({ x, y });
   }
 }
 
@@ -32,6 +32,7 @@ vm.on(vm.EVENT_NAMES.AFTER_PAUSE, async () => {
 
 vm.on(vm.EVENT_NAMES.AFTER_HALT, () => {
   console.log(`Part 1: ${screen.blocks.length}`);
+  console.log(screen);
 });
 
 await vm.run();
