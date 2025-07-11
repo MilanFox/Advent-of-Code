@@ -29,6 +29,11 @@ class Factory {
   produce(ressourceName, amount) {
     this.resources[ressourceName].restock(amount);
   }
+
+  dumpResources() {
+    Object.values(this.resources).forEach(resource => resource.stock = 0);
+    this.resources['ORE'].totalOreNeeded = null;
+  }
 }
 
 class Resource {
@@ -72,3 +77,36 @@ const factory = new Factory(recipes);
 
 factory.produce('FUEL', 1);
 console.log(`Part 1: ${factory.totalOreNeeded}`);
+
+const oreReserve = 1_000_000_000_000;
+
+const findMaxFuel = (availableOre) => {
+  let testAmount = 1;
+  let neededOre = 0;
+
+  while (neededOre < availableOre) {
+    factory.dumpResources();
+    testAmount *= 2;
+    factory.produce('FUEL', testAmount);
+    neededOre = factory.totalOreNeeded;
+  }
+
+  let lowerBounds = testAmount / 2;
+  let upperBounds = testAmount;
+
+  while (true) {
+    factory.dumpResources();
+
+    let midPoint = Math.floor((lowerBounds + upperBounds) / 2);
+    factory.produce('FUEL', midPoint);
+    const oreConsumptionAtMidPoint = factory.totalOreNeeded;
+
+    if (oreConsumptionAtMidPoint === availableOre) return midPoint;
+    if (oreConsumptionAtMidPoint > availableOre) upperBounds = midPoint - 1;
+    else lowerBounds = midPoint + 1;
+
+    if (lowerBounds > upperBounds) return upperBounds;
+  }
+};
+
+console.log(`Part 2: ${findMaxFuel(oreReserve)}`);
