@@ -25,6 +25,13 @@ class LumberCollectionArea {
     }
   }
 
+  seen = [];
+  minutes = 0;
+
+  get stateHash() {
+    return this.map.map(row => row.map(({ ground }) => ground.symbol).join('')).join('\n');
+  }
+
   nextTick() {
     const nextMap = this.map.map(row => row.map(({ neighbours, ground }) => ground.nextState(neighbours)));
 
@@ -32,6 +39,13 @@ class LumberCollectionArea {
       for (let x = 0; x < this.map[y].length; x++) {
         this.map[y][x].ground = nextMap[y][x];
       }
+    }
+  }
+
+  forwardTo(mins) {
+    while (this.minutes < mins) {
+      this.minutes += 1;
+      this.nextTick();
     }
   }
 
@@ -48,6 +62,10 @@ class OpenGround {
     if (numberOfNeighbouringTrees >= 3) return new Tree();
     return this;
   }
+
+  get symbol() {
+    return '.';
+  }
 }
 
 class Tree {
@@ -55,6 +73,10 @@ class Tree {
     const numberOfNeighbouringYards = neighbours.filter(neighbor => neighbor.ground instanceof LumberYard).length;
     if (numberOfNeighbouringYards >= 3) return new LumberYard();
     return this;
+  }
+
+  get symbol() {
+    return '|';
   }
 }
 
@@ -65,11 +87,16 @@ class LumberYard {
     if (numberOfNeighbouringTrees >= 1 && numberOfNeighbouringYards >= 1) return this;
     return new OpenGround();
   }
+
+  get symbol() {
+    return '#';
+  }
 }
 
-const inputData = readFileSync('input.txt', 'utf-8');
+const inputData = readFileSync('testInput.txt', 'utf-8');
 const area = new LumberCollectionArea(inputData);
 
-for (let i = 0; i < 10; i++) area.nextTick();
+area.forwardTo(10);
 console.log(`Part 1: ${area.totalRessourceValue}`);
+
 
