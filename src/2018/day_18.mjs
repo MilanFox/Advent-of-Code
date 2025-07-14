@@ -124,6 +124,3 @@ console.log(`Part 1: ${area.totalRessourceValue}`);
 
 area.forwardTo(1000000000);
 console.log(`Part 2: ${area.totalRessourceValue}`);
-
-//215130 too low
-
