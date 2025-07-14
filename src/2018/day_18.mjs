@@ -25,9 +25,6 @@ class LumberCollectionArea {
     }
   }
 
-  seen = [];
-  minutes = 0;
-
   get stateHash() {
     return this.map.map(row => row.map(({ ground }) => ground.symbol).join('')).join('\n');
   }
@@ -42,14 +39,40 @@ class LumberCollectionArea {
     }
   }
 
+  seen = [];
+  minutes = 0;
+  loopIn = undefined;
+  loopOut = undefined;
+
   forwardTo(mins) {
+    if (this.loopIn && this.loopOut) {
+      this.minutes = mins - 1;
+      return;
+    }
+
     while (this.minutes < mins) {
       this.minutes += 1;
       this.nextTick();
+      const hash = this.stateHash;
+
+      if (this.seen.some(el => el.hash === hash)) {
+        this.loopOut = this.seen.length;
+        this.loopIn = this.seen.findIndex(el => el.hash === hash);
+        this.minutes = mins - 1;
+        break;
+      }
+
+      this.seen.push({ hash, value: this.totalRessourceValue });
     }
   }
 
   get totalRessourceValue() {
+    if (this.loopIn && this.loopOut) {
+      const loopLength = this.loopOut - this.loopIn;
+      const remaining = (this.minutes - this.loopIn) % loopLength;
+      return this.seen[this.loopIn + remaining].value;
+    }
+
     const numberOfTrees = this.map.flat().filter(({ ground }) => ground instanceof Tree).length;
     const numberOfYards = this.map.flat().filter(({ ground }) => ground instanceof LumberYard).length;
     return numberOfTrees * numberOfYards;
@@ -93,10 +116,14 @@ class LumberYard {
   }
 }
 
-const inputData = readFileSync('testInput.txt', 'utf-8');
+const inputData = readFileSync('input.txt', 'utf-8');
 const area = new LumberCollectionArea(inputData);
 
 area.forwardTo(10);
 console.log(`Part 1: ${area.totalRessourceValue}`);
 
+area.forwardTo(1000000000);
+console.log(`Part 2: ${area.totalRessourceValue}`);
+
+//215130 too low
 
