@@ -1,9 +1,26 @@
 import { readFileSync } from 'node:fs';
 import crypto from 'crypto';
 
+// Progress Bar - Just for flair, since this is a very expensive calculation by design
+const CLI = {
+  updateLine: (text) => {
+    process.stdout.write(text);
+  },
+  clearLine: () => {
+    process.stdout.clearLine?.(0);
+    process.stdout.cursorTo?.(0);
+  },
+  hideCursor: () => {
+    process.stdout.write('\x1B[?25l');
+  },
+  showCursor: () => {
+    process.stdout.write('\x1B[?25h');
+  },
+};
+
 const salt = readFileSync('input.txt', 'utf-8').trim();
 
-const getKey = (desiredIndex) => {
+const getKey = ({ desiredIndex, stretchingFactor }) => {
   const getInfo = (i) => {
     let a = 0;
     let b = 1;
@@ -11,7 +28,10 @@ const getKey = (desiredIndex) => {
     let triplet;
     const quintuplets = new Set();
 
-    const hash = crypto.createHash('md5').update(`${salt}${i}`).digest('hex');
+    let hash;
+    for (let j = 0; j <= stretchingFactor; j++) {
+      hash = crypto.createHash('md5').update(hash ?? `${salt}${i}`).digest('hex');
+    }
 
     while (b < hash.length) {
       if (hash[a] !== hash[b]) {
@@ -32,22 +52,26 @@ const getKey = (desiredIndex) => {
   const foundKeys = new Set();
 
   while (true) {
-    if (foundKeys.size >= desiredIndex) break;
+    memo[i + 1000] = getInfo(i + 1000);
 
     const triplet = memo[i].triplet;
     if (triplet === undefined) {
       i += 1;
-      memo[i + 1000] = getInfo(i + 1000);
       continue;
     }
 
     if (memo.slice(i + 1, i + 1001).some(({ quintuplets }) => quintuplets.has(triplet))) foundKeys.add(i);
+    if (foundKeys.size >= desiredIndex) break;
+    CLI.updateLine(`\r${'█'.repeat(Math.floor(10 / desiredIndex * foundKeys.size))}${'░'.repeat(10 - Math.floor((10 / desiredIndex * foundKeys.size)))}`);
 
     i += 1;
-    memo[i + 1000] = getInfo(i + 1000);
   }
 
-  return i - 1;
+  CLI.clearLine();
+  return i;
 };
 
-console.log(`Part 1: ${(getKey(64))}`);
+CLI.hideCursor();
+console.log(`Part 1: ${(getKey({ desiredIndex: 64, stretchingFactor: 0 }))}`);
+console.log(`Part 2: ${(getKey({ desiredIndex: 64, stretchingFactor: 2016 }))}`);
+CLI.showCursor();
