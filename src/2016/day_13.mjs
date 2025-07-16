@@ -74,6 +74,3 @@ const getAllReachableDestinations = (steps) => {
 };
 
 console.log(`Part 2: ${getAllReachableDestinations(50).length}`);
-
-// 124 too low
-// 126 too low
