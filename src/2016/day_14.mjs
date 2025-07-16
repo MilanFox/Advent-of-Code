@@ -21,6 +21,8 @@ const CLI = {
 const salt = readFileSync('input.txt', 'utf-8').trim();
 
 const getKey = ({ desiredIndex, stretchingFactor }) => {
+  CLI.updateLine(`\r${'░'.repeat(13)}`);
+
   const getInfo = (i) => {
     let a = 0;
     let b = 1;
@@ -62,7 +64,7 @@ const getKey = ({ desiredIndex, stretchingFactor }) => {
 
     if (memo.slice(i + 1, i + 1001).some(({ quintuplets }) => quintuplets.has(triplet))) foundKeys.add(i);
     if (foundKeys.size >= desiredIndex) break;
-    CLI.updateLine(`\r${'█'.repeat(Math.floor(10 / desiredIndex * foundKeys.size))}${'░'.repeat(10 - Math.floor((10 / desiredIndex * foundKeys.size)))}`);
+    CLI.updateLine(`\r${'█'.repeat(Math.floor(13 / desiredIndex * foundKeys.size))}${'░'.repeat(13 - Math.floor((13 / desiredIndex * foundKeys.size)))}`);
 
     i += 1;
   }
