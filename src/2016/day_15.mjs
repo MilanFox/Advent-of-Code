@@ -5,7 +5,7 @@ const diskParser = /Disc #(?<id>\d+) has (?<interval>\d+) positions; at time=0, 
 const disks = readFileSync('input.txt', 'utf-8')
   .trim()
   .split('\n')
-  .map(line => Object.fromEntries(Object.entries(diskParser.exec(line).groups).map(([k, v], i) => [k, Number(v)])));
+  .map(line => Object.fromEntries(Object.entries(diskParser.exec(line).groups).map(([k, v]) => [k, Number(v)])));
 
 const findFirstPossibleStart = () => {
   Object.values(disks).forEach((disk) => disk.offset = (((-disk.initialPosition - disk.id) % disk.interval) + disk.interval) % disk.interval);
@@ -30,3 +30,6 @@ const findFirstPossibleStart = () => {
 };
 
 console.log(`Part 1: ${findFirstPossibleStart()}`);
+
+disks.push({ id: disks.length + 1, interval: 11, initialPosition: 0 });
+console.log(`Part 2: ${findFirstPossibleStart()}`);
