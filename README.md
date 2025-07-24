@@ -10,7 +10,8 @@ To run the solutions, follow these steps:
 2. Use your preferred JavaScript runtime (Node, Deno, Bun) to execute the file. All should work without any issues.
 
 Some solutions might create a 2D render called "visualization.txt" which is best viewed in a
-browser, due to their ability to zoom out.
+browser, due to their ability to zoom out. AoC Inputs tend to render really _wide_ things and line wrapping in Text
+Editors can mess with my renders.
 
 This repository is for educational purposes and to share my approach to solving the Advent of Code
 challenges. Feel free to explore, modify, and use any code you find here for your own learning and
@@ -196,7 +197,7 @@ The usage of AI is also limited to "non-code" only in this Project.
 [![](https://img.shields.io/badge/Day_24-☆☆-black)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2019/day_24.mjs)
 [![](https://img.shields.io/badge/Day_25-★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2019/day_25.mjs)
 
-## ⏳ [2018](https://adventofcode.com/2018) ![](https://progress-bar.xyz/20?scale=49&suffix=/49)
+## ⏳ [2018](https://adventofcode.com/2018) ![](https://progress-bar.xyz/22?scale=49&suffix=/49)
 
 [![](https://img.shields.io/badge/Day_01-★★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2018/day_01.mjs)
 [![](https://img.shields.io/badge/Day_02-★★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2018/day_02.mjs)
