@@ -214,7 +214,7 @@ The usage of AI is also limited to "non-code" only in this Project.
 [![](https://img.shields.io/badge/Day_14-☆☆-black)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2018/day_14.mjs)
 [![](https://img.shields.io/badge/Day_15-☆☆-black)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2018/day_15.mjs)
 [![](https://img.shields.io/badge/Day_16-☆☆-black)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2018/day_16.mjs)
-[![](https://img.shields.io/badge/Day_17-☆☆-black)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2018/day_17.mjs)
+[![](https://img.shields.io/badge/Day_17-★★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2018/day_17.mjs)
 [![](https://img.shields.io/badge/Day_18-★★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2018/day_18.mjs)
 [![](https://img.shields.io/badge/Day_19-☆☆-black)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2018/day_19.mjs)
 [![](https://img.shields.io/badge/Day_20-☆☆-black)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2018/day_20.mjs)

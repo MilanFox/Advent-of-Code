@@ -3,13 +3,14 @@ import { readFileSync, writeFileSync } from 'node:fs';
 const TileType = {
   VOID: ' ',
   CLAY: '█',
-  WATER: '░',
+  WATER_FLOWING: '≋',
+  WATER_SETTLED: '░',
   WATER_SOURCE: '◎',
 };
 
 class UndergroundScan {
   constructor(data) {
-    const dataPoints = this.#parseData(data.filter(Boolean));
+    const dataPoints = this.#parseData(data);
 
     this.#mapDimensions = dataPoints.reduce((acc, cur) => {
       acc.minX = Math.min(acc.minX, cur[0][0]);
@@ -27,7 +28,6 @@ class UndergroundScan {
     this.#waterSource = { x: 500, y: this.#mapDimensions.minY - 1 };
 
     this.#map = Array.from({ length: this.#mapDimensions.maxY + 1 }, () => Array.from({ length: this.#mapDimensions.maxX + 2 }, () => TileType.VOID));
-    this.#waterMemo = Array.from({ length: this.#mapDimensions.maxY + 1 }, () => Array.from({ length: this.#mapDimensions.maxX + 2 }));
 
     this.#markClay(dataPoints);
     this.#map[this.#waterSource.y][this.#waterSource.x] = TileType.WATER_SOURCE;
@@ -36,7 +36,6 @@ class UndergroundScan {
   }
 
   #map;
-  #waterMemo;
   #waterSource;
   #mapDimensions;
 
@@ -78,25 +77,25 @@ class UndergroundScan {
 
   hasSettled(pos) {
     const isContained = (pos, dir) => {
-      if (this.#waterMemo[pos.y][pos.x]) return true;
+      if (this.#map[pos.y][pos.x] === TileType.WATER_SETTLED) return true;
+
       const x = pos.x + dir;
       const nextTile = this.#map[pos.y][x];
 
-      if (nextTile === TileType.CLAY) {
-        this.#waterMemo[pos.y][x] = true;
-        return true;
-      }
-
+      if (nextTile === TileType.CLAY) return true;
       if (nextTile === TileType.VOID) return false;
       return isContained({ x, y: pos.y }, dir);
     };
 
-    return isContained(pos, -1) && isContained(pos, 1);
+    const isFullyContained = isContained(pos, -1) && isContained(pos, 1);
+    if (isFullyContained) this.#map[pos.y][pos.x] = TileType.WATER_SETTLED;
+
+    return isFullyContained;
   };
 
   fillWithWater() {
     const fillFrom = ({ x, y }) => {
-      this.#map[y][x] = TileType.WATER;
+      this.#map[y][x] = TileType.WATER_FLOWING;
 
       if (y + 1 > this.#mapDimensions.maxY) return { finished: true };
 
@@ -110,7 +109,8 @@ class UndergroundScan {
       if (shouldFinish) return { finished: true };
 
       if (this.#map[y + 1][x] === TileType.CLAY ||
-          this.#map[y + 1][x] === TileType.WATER && this.hasSettled({ x, y: y + 1 })) {
+          this.#map[y + 1][x] === TileType.WATER_SETTLED ||
+          (this.#map[y + 1][x] === TileType.WATER_FLOWING && this.hasSettled({ x, y: y + 1 }))) {
         if (this.#map[y][x - 1] === TileType.VOID) fillFrom({ x: x - 1, y });
         if (this.#map[y][x + 1] === TileType.VOID) fillFrom({ x: x + 1, y });
       }
@@ -119,10 +119,23 @@ class UndergroundScan {
     };
 
     fillFrom({ x: this.#waterSource.x, y: this.#waterSource.y + 1 });
+
+    for (let y = this.#mapDimensions.minY; y < this.#mapDimensions.maxY; y++) {
+      for (let x = this.#mapDimensions.minX; x < this.#mapDimensions.maxX; x++) {
+        if (this.#map[y][x] === TileType.WATER_FLOWING) {
+          const hasSettled = this.hasSettled({ x, y });
+          if (hasSettled) this.#map[y][x] = TileType.WATER_SETTLED;
+        }
+      }
+    }
   }
 
   get waterTiles() {
-    return this.#map.flat().filter(tile => tile === TileType.WATER).length;
+    return this.#map.flat().reduce((acc, cur) => {
+      if (cur === TileType.WATER_SETTLED) acc.settled += 1;
+      if (cur === TileType.WATER_FLOWING) acc.flowing += 1;
+      return acc;
+    }, { flowing: 0, settled: 0 });
   }
 }
 
@@ -130,6 +143,9 @@ const inputData = readFileSync('input.txt', 'utf-8').trim().split('\n');
 
 const undergroundScan = new UndergroundScan(inputData);
 
-console.log(`Part 1: ${undergroundScan.waterTiles}`);
+const { settled, flowing } = undergroundScan.waterTiles;
 
-undergroundScan.renderMap();
+console.log(`Part 1: ${settled + flowing}`);
+console.log(`Part 2: ${settled}`);
+
+undergroundScan.renderMap(); // Written for debugging, left in for style points.
