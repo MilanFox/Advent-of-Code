@@ -86,3 +86,7 @@ const [numberOfPlayers, lastMarbleScore] =
 const marbleGame = new MarbleGame(numberOfPlayers, lastMarbleScore);
 marbleGame.runGame();
 console.log(`Part 1: ${marbleGame.highScore}`);
+
+const extendedMarbleGame = new MarbleGame(numberOfPlayers, lastMarbleScore * 100);
+extendedMarbleGame.runGame();
+console.log(`Part 2: ${extendedMarbleGame.highScore}`);
