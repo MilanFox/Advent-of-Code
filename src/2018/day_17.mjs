@@ -1,7 +1,7 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 
 const TileType = {
-  VOID: ' ',
+  VOID: ' ',
   CLAY: '█',
   WATER_FLOWING: '≋',
   WATER_SETTLED: '░',
