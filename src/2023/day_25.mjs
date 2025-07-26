@@ -43,8 +43,9 @@ const findShortestPath = (graph, startNode, endNode) => {
 };
 
 /*
-   https://www.praxisframework.org/en/library/monte-carlo-analysis#:~:text=Monte%20Carlo%20analysis%20uses%20a,probabilities%20for%20a%20project%20schedule.
-   Generate random pairs of connections and see what edges get passed through the most until I find them.
+   In the absence of an actual mathematical solution...
+   https://www.praxisframework.org/en/library/monte-carlo-analysis
+   I generate random pairs of connections and see what edges get passed through the most until I find them.
    The ones that connect the two sets should be the ones being passed through the most.
  */
 
