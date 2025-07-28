@@ -1,11 +1,21 @@
 import { readFileSync } from 'node:fs';
 
-const directions = [[-1, 0], [0, 1], [1, 0], [0, -1]];
-
 class Maze {
   constructor(data) {
     this.#map = data.split('\n').map(line => line.split(('')));
+
+    this.dimensions = {
+      x: this.#map.reduce((acc, cur) => Math.max(acc, cur.length), 0),
+      y: this.#map.length,
+    };
+
+    this.nodes = Array.from({ length: this.dimensions.y }, (_, y) =>
+      Array.from({ length: this.dimensions.x }, (_, x) => ({ x, y })));
+
     this.findPortals();
+
+    this.start = this.portals['AA'][0];
+    this.end = this.portals['ZZ'][0];
   }
 
   findPortals() {
@@ -35,10 +45,8 @@ class Maze {
       }
     };
 
-    const mapWidth = this.#map.reduce((acc, cur) => Math.max(acc, cur.length), 0);
-
-    for (let y = 0; y < this.#map.length; y++) {
-      for (let x = 0; x < mapWidth; x++) {
+    for (let y = 0; y < this.dimensions.y; y++) {
+      for (let x = 0; x < this.dimensions.x; x++) {
         if ([undefined, ' ', '.', '#'].includes(this.#map[y][x]) || visitedPositions.has(`${x}|${y}`)) continue;
         const { portal, tile } = findPortalTile([x, y]);
         (this.portals[portal] ??= []).push(tile);
@@ -46,10 +54,38 @@ class Maze {
     }
   }
 
+  findShortestPath() {
+    const queue = [[this.start, 0]];
+    const visited = new Set();
+
+    while (queue.length) {
+      const [[x, y], steps] = queue.shift();
+      visited.add(`${x}|${y}`);
+
+      if (x === this.end[0] && y === this.end[1]) return steps;
+
+      if (!this.nodes[y][x].neighbours) this.nodes[y][x].neighbours = this.findNeighbours([x, y]);
+      this.nodes[y][x].neighbours.forEach(({ x: targetX, y: targetY }) => {
+        if (!visited.has(`${targetX}|${targetY}`)) queue.push([[targetX, targetY], steps + 1]);
+      });
+    }
+  }
+
+  findNeighbours([x, y]) {
+    const directNeighbours = [[-1, 0], [0, 1], [1, 0], [0, -1]]
+      .filter(([dx, dy]) => this.#map[y + dy][x + dx] === '.')
+      .map(([dx, dy]) => [x + dx, y + dy]);
+
+    const portalNeighbor = (Object.values(this.portals).find(tiles => tiles.some(([px, py]) => x === px && y === py)) || []).filter(([px, py]) => x !== px && y !== py);
+
+    return [directNeighbours, portalNeighbor].flat().map((([x, y]) => this.nodes[y][x]));
+  }
+
   #map;
   portals;
+  nodes;
 }
 
-const maze = new Maze(readFileSync('testInput.txt', 'utf-8'));
+const maze = new Maze(readFileSync('input.txt', 'utf-8'));
 
-console.log(maze);
+console.log(`Part 1: ${maze.findShortestPath()}`);
