@@ -17,6 +17,10 @@ This repository is for educational purposes and to share my approach to solving 
 challenges. Feel free to explore, modify, and use any code you find here for your own learning and
 projects.
 
+Code is mostly written self-explanatory, but a comment might have been added where I was unsure of my approach or I felt
+like I wouldn't be able to remember _why_ I did something.
+Usually it also links to the source I found the approach at.
+
 ### Disclaimer / Self imposed Rules / Usage of AI
 
 This project is used to teach _me_ new algorithms, new approaches and optimization techniques.

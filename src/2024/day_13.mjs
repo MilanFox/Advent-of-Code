@@ -10,8 +10,13 @@ class ClawMachine {
   }
 
   cheapestPath({ maxButtonPresses } = {}) {
-    // ChatGPT told me to Google "Cramer's Rule", so I did... Still very confused, but it works, so I'm not complaining...
-    // https://openstax.org/books/college-algebra-2e/pages/7-8-solving-systems-with-cramers-rule
+    /* Solves the 2x2 linear system:
+     * (a * buttonA + b * buttonB) = prize
+     * using Cramer's Rule.
+     * buttonA and buttonB are 2D vectors; prize is a 2D point.
+     * Computes determinant to solve for b, then backsolves for a.
+     * https://openstax.org/books/college-algebra-2e/pages/7-8-solving-systems-with-cramers-rule
+     */
     const bPresses = ((this.buttonA.dx * this.prize.y) - (this.buttonA.dy * this.prize.x)) / ((this.buttonA.dx * this.buttonB.dy) - (this.buttonB.dx * this.buttonA.dy));
     const aPresses = (this.prize.x - (bPresses * this.buttonB.dx)) / this.buttonA.dx;
 
