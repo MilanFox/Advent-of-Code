@@ -46,7 +46,7 @@ const getFastestRoute = (initState) => {
     const hash = getHash(state, elevatorLevel);
     if (visited.has(hash)) continue;
     visited.add(hash);
-    
+
     if (!isLegal(state)) continue;
 
     const itemsOnTheCurrentFloor = state.reduce((acc, [chipFloor, genFloor], i) => {
@@ -75,4 +75,4 @@ const getFastestRoute = (initState) => {
 
 const fastestRoute = getFastestRoute(originalItemMap);
 
-console.log(`Part 1: ${fastestRoute}`);
+console.log(`Part 1: ${fastestRoute}`); // Todo: Runs for like a minute. Find out how to make a priority queue..
