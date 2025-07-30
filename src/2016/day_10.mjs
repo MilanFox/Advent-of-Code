@@ -3,9 +3,12 @@ import { readFileSync } from 'node:fs';
 class Output {
   constructor(id) {
     this.id = id;
+    this.value = null;
   }
 
-  values = new Set();
+  values = {
+    add: (val) => this.value = val,
+  };
 }
 
 class Bot {
@@ -68,7 +71,13 @@ class Factory {
       nextBot.handOverMicrochips();
     }
   }
+
+  get checkSum() {
+    return this.outputs[0].value * this.outputs[1].value * this.outputs[2].value;
+  }
 }
 
 const factory = new Factory(readFileSync('input.txt', 'utf-8').trim().split('\n'));
+
 factory.run({ logAt: [61, 17] });
+console.log(`Part 2: ${factory.checkSum}`);
