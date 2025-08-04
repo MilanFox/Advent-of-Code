@@ -122,7 +122,7 @@ const getFastestRoute = (initState) => {
 
     movableCombinations.forEach(combinations => {
       if (elevatorLevel < 3) {
-        const nextState = structuredClone((state));
+        const nextState = structuredClone(state);
         for (const [element, type] of combinations) nextState[element][type] += 1;
         if (isLegal(nextState)) {
           queue.push({ value: [nextState, elevatorLevel + 1, steps + 1], priority: steps + getPriority(nextState) });
@@ -130,7 +130,7 @@ const getFastestRoute = (initState) => {
       }
 
       if (elevatorLevel > 0) {
-        const nextState = structuredClone((state));
+        const nextState = structuredClone(state);
         for (const [element, type] of combinations) nextState[element][type] -= 1;
         if (isLegal(nextState)) {
           queue.push({ value: [nextState, elevatorLevel - 1, steps + 1], priority: steps + getPriority(nextState) });
