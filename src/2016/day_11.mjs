@@ -119,7 +119,7 @@ const getFastestRoute = (initState) => {
         const nextState = structuredClone((state));
         for (const [element, type] of combinations) nextState[element][type] += 1;
         if (isLegal(nextState)) {
-          queue.push({ value: [nextState, elevatorLevel + 1, steps + 1], priority: getPriority(nextState) });
+          queue.push({ value: [nextState, elevatorLevel + 1, steps + 1], priority: steps + getPriority(nextState) });
         }
       }
 
@@ -127,7 +127,7 @@ const getFastestRoute = (initState) => {
         const nextState = structuredClone((state));
         for (const [element, type] of combinations) nextState[element][type] -= 1;
         if (isLegal(nextState)) {
-          queue.push({ value: [nextState, elevatorLevel - 1, steps + 1], priority: getPriority(nextState) });
+          queue.push({ value: [nextState, elevatorLevel - 1, steps + 1], priority: steps + getPriority(nextState) });
         }
       }
     });
