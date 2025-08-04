@@ -1,25 +1,18 @@
 ![Advent of Code](assets/aoc.png)
 
 Welcome to my "Advent of Code" repository! This repository contains my solutions to the Advent of
-Code
-challenges, implemented exclusively in JavaScript.
-
-To run the solutions, follow these steps:
-
-1. Provide your own `input.txt` file. This input file is not shared in the repository due to Advent of Code's rules.
-2. Use your preferred JavaScript runtime (Node, Deno, Bun) to execute the file. All should work without any issues.
-
-Some solutions might create a 2D render called "visualization.txt" which is best viewed in a
-browser, due to their ability to zoom out. AoC Inputs tend to render really _wide_ things and line wrapping in Text
-Editors can mess with my renders.
+Code challenges, implemented exclusively in **JavaScript**.
 
 This repository is for educational purposes and to share my approach to solving the Advent of Code
 challenges. Feel free to explore, modify, and use any code you find here for your own learning and
 projects.
 
-Code is mostly written self-explanatory, but a comment might have been added where I was unsure of my approach or I felt
-like I wouldn't be able to remember _why_ I did something.
-Usually it also links to the source I found the approach at.
+### Setup
+
+To run the solutions, follow these steps:
+
+1. Provide your own `input.txt` file. This input file is not shared in the repository due to Advent of Code's rules.
+2. Use your preferred JavaScript runtime (Node, Deno, Bun) to execute the file. All should work without any issues.
 
 ### Self imposed Rules / Usage of AI
 
@@ -35,6 +28,19 @@ model.
 The usage of AI is also limited to "non-code" only in this Project. This means, when I get stuck, it **can** be used to
 ask "_What is the Algorithm they want me to use here?_" or "_Do you see where I am calculating extra noise?_"; but
 **not** "_Generate a function that does X_" or "_Refactor to do X_".
+
+### Visualization
+
+Some solutions might create a 2D render called "visualization.txt" which is best viewed in a
+browser, due to their ability to zoom out. AoC Inputs tend to render really _wide_ things and line wrapping in Text
+Editors can mess with my renders. These renders are (mostly) not part of the puzzles but where created to help with
+debugging some of the more complex 2D (or 3D) puzzles. And I left them in because they look very satifying.
+
+### Quotes / External Sources
+
+Code is mostly written self-explanatory, but a comment might have been added where I was unsure of my approach or I felt
+like I wouldn't be able to remember _why_ I did something.
+Where I took approaches I've found at outside sources, it also links to the source I found it at for transparency.
 
 ![Advent of Code](assets/divider.png)
 
