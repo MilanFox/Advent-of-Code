@@ -143,5 +143,7 @@ const getFastestRoute = (initState) => {
 };
 
 const fastestRoute = getFastestRoute(originalItemMap);
-
 console.log(`Part 1: ${fastestRoute}`);
+
+const fastestRoute2 = getFastestRoute([...originalItemMap, [0, 0], [0, 0]]);
+console.log(`Part 2: ${fastestRoute2}`);
