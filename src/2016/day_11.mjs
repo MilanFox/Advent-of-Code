@@ -64,7 +64,13 @@ let originalItemMap = elements.map(el => [
 ]);
 
 const getFastestRoute = (initState) => {
-  const getHash = (itemMap, elevatorLevel) => `[${elevatorLevel}]>` + itemMap.map((pair, i) => `[${elements[i]}: ${pair.join('|')}]`).join('-');
+  const getHash = (itemMap, elevatorLevel) => {
+    const normalized = [...itemMap]
+      .map(([chip, gen]) => `${chip},${gen}`)
+      .sort()
+      .join(';');
+    return `${elevatorLevel}|${normalized}`;
+  };
 
   const isLegal = (itemMap) => itemMap.every(([chipFloor, genFloor]) => chipFloor === genFloor || !itemMap.some(([_, otherGenFloor]) => otherGenFloor === chipFloor));
 
@@ -136,8 +142,6 @@ const getFastestRoute = (initState) => {
   return fastestKnownRoute;
 };
 
-console.time();
 const fastestRoute = getFastestRoute(originalItemMap);
 
 console.log(`Part 1: ${fastestRoute}`);
-console.timeEnd();
