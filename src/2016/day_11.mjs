@@ -106,8 +106,6 @@ const getFastestRoute = (initState) => {
     if (visited.has(hash) && visited.get(hash) <= steps) continue;
     visited.set(hash, steps);
 
-    if (!isLegal(state)) continue;
-
     const itemsOnTheCurrentFloor = state.reduce((acc, [chipFloor, genFloor], i) => {
       if (chipFloor === elevatorLevel) acc.push([i, 0]);
       if (genFloor === elevatorLevel) acc.push([i, 1]);
@@ -120,13 +118,17 @@ const getFastestRoute = (initState) => {
       if (elevatorLevel < 3) {
         const nextState = structuredClone((state));
         for (const [element, type] of combinations) nextState[element][type] += 1;
-        queue.push({ value: [nextState, elevatorLevel + 1, steps + 1], priority: getPriority(nextState) });
+        if (isLegal(nextState)) {
+          queue.push({ value: [nextState, elevatorLevel + 1, steps + 1], priority: getPriority(nextState) });
+        }
       }
 
       if (elevatorLevel > 0) {
         const nextState = structuredClone((state));
         for (const [element, type] of combinations) nextState[element][type] -= 1;
-        queue.push({ value: [nextState, elevatorLevel - 1, steps + 1], priority: getPriority(nextState) });
+        if (isLegal(nextState)) {
+          queue.push({ value: [nextState, elevatorLevel - 1, steps + 1], priority: getPriority(nextState) });
+        }
       }
     });
   }
@@ -134,6 +136,8 @@ const getFastestRoute = (initState) => {
   return fastestKnownRoute;
 };
 
+console.time();
 const fastestRoute = getFastestRoute(originalItemMap);
 
 console.log(`Part 1: ${fastestRoute}`);
+console.timeEnd();
