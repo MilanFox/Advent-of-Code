@@ -3,19 +3,30 @@ import { readFileSync } from 'node:fs';
 const dirMap = ['^', '>', 'v', '<'];
 
 const connectionMap = {
-  '-': [null, [1, 0], null, [-1, 0]],
-  '>': [null, [1, 0], null, [-1, 0]],
-  '<': [null, [1, 0], null, [-1, 0]],
-  '|': [[0, -1], null, [0, 1], null],
-  '^': [[0, -1], null, [0, 1], null],
-  'v': [[0, -1], null, [0, 1], null],
-  '/': [[0, -1], [1, 0], [0, 1], [-1, 0]],
-  '\\': [[0, -1], [1, 0], [0, 1], [-1, 0]],
-  '+': [[0, -1], [1, 0], [0, 1], [-1, 0]],
+  '-': [null, { dx: 1, dy: 0 }, null, { dx: -1, dy: 0 }],
+  '>': [null, { dx: 1, dy: 0 }, null, { dx: -1, dy: 0 }],
+  '<': [null, { dx: 1, dy: 0 }, null, { dx: -1, dy: 0 }],
+  '|': [{ dx: 0, dy: -1 }, null, { dx: 0, dy: 1 }, null],
+  '^': [{ dx: 0, dy: -1 }, null, { dx: 0, dy: 1 }, null],
+  'v': [{ dx: 0, dy: -1 }, null, { dx: 0, dy: 1 }, null],
+  '/': [
+    { dx: 0, dy: -1, whiteList: ['|', 'v', '^', '+'] },
+    { dx: 1, dy: 0, whiteList: ['-', '<', '>', '+'] },
+    { dx: 0, dy: 1, whiteList: ['|', 'v', '^', '+'] },
+    { dx: -1, dy: 0, whiteList: ['-', '<', '>', '+'] },
+  ],
+  '\\': [
+    { dx: 0, dy: -1, whiteList: ['|', 'v', '^', '+'] },
+    { dx: 1, dy: 0, whiteList: ['-', '<', '>', '+'] },
+    { dx: 0, dy: 1, whiteList: ['|', 'v', '^', '+'] },
+    { dx: -1, dy: 0, whiteList: ['-', '<', '>', '+'] },
+  ],
+  '+': [{ dx: 0, dy: -1 }, { dx: 1, dy: 0 }, { dx: 0, dy: 1 }, { dx: -1, dy: 0 }],
 };
 
 class Cart {
-  constructor(rail, dir) {
+  constructor(rail, dir, id) {
+    this.id = id;
     this.rail = rail;
     this.dir = dirMap.findIndex(el => el === dir);
   }
@@ -39,9 +50,10 @@ class Cart {
 }
 
 class Rail {
-  constructor(x, y) {
+  constructor(x, y, type) {
     this.x = x;
     this.y = y;
+    this.type = type;
   }
 
   neighbours = Array(4).fill(null);
@@ -65,16 +77,18 @@ class Track {
         if (cell === undefined || cell === ' ') return;
 
         const curRail = new Rail(x, y, cell);
-        if (dirMap.includes(cell)) this.carts.push(new Cart(curRail, cell));
+        if (dirMap.includes(cell)) this.carts.push(new Cart(curRail, cell, this.carts.length));
 
         this.tracks[y][x] = curRail;
 
         connectionMap[cell].forEach((connection, i) => {
           if (!connection) return;
-          const [dx, dy] = connection;
+          const { dx, dy, whiteList } = connection;
 
           if (this.tracks[y + dy]?.[x + dx]) {
             const neighborRail = this.tracks[y + dy][x + dx];
+            if (whiteList && !(whiteList.includes(neighborRail.type))) return;
+
             curRail.addNeighbour(neighborRail, i);
             neighborRail.addNeighbour(curRail, (i + 2) % 4);
           }
@@ -85,12 +99,24 @@ class Track {
 
   tracks = [];
   carts = [];
+
+  nextTick() {
+    this.carts.sort((a, b) => a.rail.y - b.rail.y || a.rail.x - b.rail.x);
+    for (let cart of this.carts) {
+      cart.moveTick();
+      if (this.carts.find(c => c !== cart && c.rail.x === cart.rail.x && c.rail.y === cart.rail.y)) {
+        return { x: cart.rail.x, y: cart.rail.y };
+      }
+    }
+  }
+
+  findFirstCrash() {
+    let crashSite;
+    while (!crashSite) crashSite = this.nextTick();
+    return `${crashSite.x},${crashSite.y}`;
+  }
 }
 
-const mine = new Track(readFileSync('testInput.txt', 'utf-8').trim().split('\n').map(line => line.split('')));
+const mine = new Track(readFileSync('input.txt', 'utf-8').trim().split('\n').map(line => line.split('')));
 
-for (let i = 0; i < 20; i++) {
-  console.log(`y: ${mine.carts[1].rail.y}, x: ${mine.carts[1].rail.x}, dir: ${mine.carts[1].dir}`);
-  mine.carts[1].moveTick();
-}
-
+console.log(`Part 1: ${mine.findFirstCrash()}`);
