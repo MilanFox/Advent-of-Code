@@ -29,6 +29,7 @@ class Cart {
     this.id = id;
     this.rail = rail;
     this.dir = dirMap.findIndex(el => el === dir);
+    this.hasCrashed = false;
   }
 
   #decisions = [-1, 0, 1];
@@ -99,24 +100,40 @@ class Track {
 
   tracks = [];
   carts = [];
+  crashes = [];
 
   nextTick() {
     this.carts.sort((a, b) => a.rail.y - b.rail.y || a.rail.x - b.rail.x);
     for (let cart of this.carts) {
+      if (cart.hasCrashed) continue;
+
       cart.moveTick();
-      if (this.carts.find(c => c !== cart && c.rail.x === cart.rail.x && c.rail.y === cart.rail.y)) {
-        return { x: cart.rail.x, y: cart.rail.y };
+
+      const cartsOnCurrentRail = this.carts.filter(c =>
+        !c.hasCrashed &&
+        c.rail.x === cart.rail.x &&
+        c.rail.y === cart.rail.y,
+      );
+
+      if (cartsOnCurrentRail.length >= 2) {
+        this.crashes.push({ x: cart.rail.x, y: cart.rail.y });
+        cartsOnCurrentRail.forEach(c => c.hasCrashed = true);
       }
     }
   }
 
-  findFirstCrash() {
-    let crashSite;
-    while (!crashSite) crashSite = this.nextTick();
-    return `${crashSite.x},${crashSite.y}`;
+  simulateCarts() {
+    while (this.carts.length > 1) {
+      this.nextTick();
+      this.carts = this.carts.filter(cart => !cart.hasCrashed);
+    }
   }
 }
 
-const mine = new Track(readFileSync('input.txt', 'utf-8').trim().split('\n').map(line => line.split('')));
+const mine = new Track(readFileSync('input.txt', 'utf-8').split('\n').map(line => line.split('')));
 
-console.log(`Part 1: ${mine.findFirstCrash()}`);
+mine.simulateCarts();
+
+console.log(`Part 1: ${mine.crashes[0].x},${mine.crashes[0].y}`);
+console.log(`Part 2: ${mine.carts[0].rail.x},${mine.carts[0].rail.y}`);
+
