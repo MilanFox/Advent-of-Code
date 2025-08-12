@@ -31,14 +31,8 @@ const findPath = () => {
     }
 
     dirMap.forEach(([dir, [dx, dy]], i) => {
-      if (!doors[i]) return;
-
-      const newX = x + dx;
-      if (newX < 0 || newX > 3) return;
-
-      const newY = y + dy;
-      if (newY < 0 || newY > 3) return;
-
+      const [newX, newY] = [x + dx, y + dy];
+      if (!doors[i] || newX < 0 || newX > 3 || newY < 0 || newY > 3) return;
       queue.push([newX, newY, path + dir]);
     });
   }
