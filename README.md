@@ -44,6 +44,21 @@ Where I took approaches I've found at outside sources, it also links to the sour
 
 ![Advent of Code](assets/divider.png)
 
+## 🏺️ [2024](https://adventofcode.com/2024) ![](https://progress-bar.xyz/2?scale=23&suffix=/23)
+
+[![](https://img.shields.io/badge/Day_01-★★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2025/day_01.mjs)
+[![](https://img.shields.io/badge/Day_02-☆☆-black)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2025/day_02.mjs)
+[![](https://img.shields.io/badge/Day_03-☆☆-black)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2025/day_03.mjs)
+[![](https://img.shields.io/badge/Day_04-☆☆-black)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2025/day_04.mjs)
+[![](https://img.shields.io/badge/Day_05-☆☆-black)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2025/day_05.mjs)
+[![](https://img.shields.io/badge/Day_06-☆☆-black)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2025/day_06.mjs)
+[![](https://img.shields.io/badge/Day_07-☆☆-black)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2025/day_07.mjs)
+[![](https://img.shields.io/badge/Day_08-☆☆-black)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2025/day_08.mjs)
+[![](https://img.shields.io/badge/Day_09-☆☆-black)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2025/day_09.mjs)
+[![](https://img.shields.io/badge/Day_10-☆☆-black)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2025/day_10.mjs)
+[![](https://img.shields.io/badge/Day_11-☆☆-black)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2025/day_11.mjs)
+[![](https://img.shields.io/badge/Day_12-☆☆-black)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2025/day_12.mjs)
+
 ## 🏺️ [2024](https://adventofcode.com/2024) ![](https://progress-bar.xyz/34?scale=49&suffix=/49)
 
 [![](https://img.shields.io/badge/Day_01-★★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2024/day_01.mjs)
