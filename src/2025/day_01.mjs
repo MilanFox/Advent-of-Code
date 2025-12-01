@@ -1,0 +1,14 @@
+import { readFileSync } from 'node:fs';
+
+const inputData = readFileSync('input.txt', 'utf-8').trim().replaceAll('L', '-').replaceAll('R', '+').split('\n').map(Number);
+
+const dial = { position: 50, homePositionReached: 0 };
+
+const rotate = (value) => {
+  dial.position = (((dial.position + value) % 100) + 100) % 100;
+  if (dial.position === 0) dial.homePositionReached += 1;
+};
+
+inputData.forEach(rotate);
+
+console.log(`Part 1: ${dial.homePositionReached}`);
