@@ -44,7 +44,7 @@ Where I took approaches I've found at outside sources, it also links to the sour
 
 ![Advent of Code](assets/divider.png)
 
-## 🏺️ [2024](https://adventofcode.com/2024) ![](https://progress-bar.xyz/2?scale=23&suffix=/23)
+## 🎀 [2024](https://adventofcode.com/2024) ![](https://progress-bar.xyz/2?scale=23&suffix=/23)
 
 [![](https://img.shields.io/badge/Day_01-★★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2025/day_01.mjs)
 [![](https://img.shields.io/badge/Day_02-☆☆-black)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2025/day_02.mjs)
