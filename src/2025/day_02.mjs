@@ -1,30 +1,22 @@
 import { readFileSync } from 'node:fs';
 
-const inputData = readFileSync('testinput.txt', 'utf-8').trim().split(',').map(line => line.split('-'));
+const inputData = readFileSync('input.txt', 'utf-8').trim().split(',').map(line => line.split('-').map(Number));
 
-const findInvalidIDsInRange = (range) => {
-  const [start, end] = range.map(Number);
-
-  let checksum = 0;
-
-  let i = start;
-
-  search: while (true) {
-    if (i > end) break;
-    const curNumber = String(i);
-    let a = 0;
-    let b = curNumber.length / 2;
-
-    i++;
-
-    for (let j = 0; j < curNumber.length / 2; j++) {
-      if (curNumber[a + j] !== curNumber[b + j]) continue search;
+const isInvalid = (num, segmentLength) => {
+  for (let i = 0; i < segmentLength; i++) {
+    for (let j = 0; j < num.length / segmentLength; j++) {
+      if (num[i] !== num[i + (j * segmentLength)]) return false;
     }
-
-    checksum += Number(curNumber);
   }
-
-  return checksum;
+  return true;
 };
 
-console.log(`Part 1: ${inputData.reduce((acc, cur) => acc + findInvalidIDsInRange(cur), 0)}`);
+const twoWaySymmetryChecksum = inputData.reduce((acc, [start, end]) => {
+  for (let i = start; i <= end; i++) {
+    const num = String(i);
+    if (num.length % 2 === 0 && isInvalid(num, num.length / 2)) acc += i;
+  }
+  return acc;
+}, 0);
+
+console.log(`Part 1: ${twoWaySymmetryChecksum}`);
