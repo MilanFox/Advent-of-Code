@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 
-const inputData = readFileSync('testInput.txt', 'utf-8').trim().split(',').map(line => line.split('-'));
+const inputData = readFileSync('input.txt', 'utf-8').trim().split(',').map(line => line.split('-'));
 
 const clampToEvenNumbers = (range) => {
   let [start, end] = range;
@@ -12,11 +12,12 @@ const clampToEvenNumbers = (range) => {
 const findInvalidIDsInRange = (range) => {
   const [start, end] = clampToEvenNumbers(range);
 
-  const invalidIDs = [];
+  let checksum = 0;
 
   let i = start;
 
   search: while (true) {
+    i++;
     if (i > end) break;
 
     const curNumber = String(i);
@@ -24,17 +25,13 @@ const findInvalidIDsInRange = (range) => {
     let b = curNumber.length / 2;
 
     for (let j = 0; j < curNumber.length / 2; j++) {
-      if (curNumber[a] !== curNumber[b]) {
-        i++; // skip i further
-        continue search;
-      }
+      if (curNumber[a + j] !== curNumber[b + j]) continue search;
     }
 
-    i++;
-    invalidIDs.push(curNumber);
+    checksum += Number(curNumber);
   }
 
-  return invalidIDs;
+  return checksum;
 };
 
-console.log(findInvalidIDsInRange(inputData[0])); //?
+console.log(`Part 1: ${inputData.reduce((acc, cur) => acc + findInvalidIDsInRange(cur), 0)}`);
