@@ -44,7 +44,7 @@ noise?_"; but **not** "_Generate a function that does X_" or "_Refactor to do X_
 
 ![Advent of Code](assets/divider.png)
 
-## 🎀 [2025](https://adventofcode.com/2025) ![](https://progress-bar.xyz/5?scale=23&suffix=/23)
+## 🎀 [2025](https://adventofcode.com/2025) ![](https://progress-bar.xyz/6?scale=23&suffix=/23)
 
 [![](https://img.shields.io/badge/Day_01-★★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2025/day_01.mjs)
 [![](https://img.shields.io/badge/Day_02-★★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2025/day_02.mjs)
