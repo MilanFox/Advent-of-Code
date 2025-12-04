@@ -22,3 +22,16 @@ const getReachablePaperRolls = () => {
 };
 
 console.log(`Part 1: ${getReachablePaperRolls().length}`);
+
+let totalRemovableRolls = 0;
+
+while (true) {
+  const removableRolls = getReachablePaperRolls();
+  if (!removableRolls.length) break;
+
+  totalRemovableRolls += removableRolls.length;
+
+  removableRolls.forEach(([x, y]) => floorMap[y][x] = '.');
+}
+
+console.log(`Part 2: ${totalRemovableRolls}`);
