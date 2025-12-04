@@ -4,10 +4,10 @@ const floorMap = readFileSync('input.txt', 'utf-8').trim().split('\n').map(line 
 
 const PAPER_ROLL = '@';
 
-const dirs = [[-1, -1], [0, -1], [1, -1], [-1, 0], [1, 0], [-1, 1], [0, 1], [1, 1]];
+const offsets = [[-1, -1], [0, -1], [1, -1], [-1, 0], [1, 0], [-1, 1], [0, 1], [1, 1]];
 
 const isReachable = ({ x, y }) => {
-  const numberOfSurroundingRolls = dirs.reduce((acc, [dx, dy]) => {
+  const numberOfSurroundingRolls = offsets.reduce((acc, [dx, dy]) => {
     if (floorMap[y + dy]?.[x + dx] !== PAPER_ROLL) return acc;
     return acc + 1;
   }, 0);
