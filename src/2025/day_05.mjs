@@ -2,6 +2,8 @@ import { readFileSync } from 'node:fs';
 
 const [rangeData, ingredientData] = readFileSync('input.txt', 'utf-8').trim().split('\n\n');
 
+const atNewLine = '\n'
+
 const toRanges = line => line.split('-').map(Number)
 
 const byStartAndEnd = ([startA, endA], [startB, endB]) => startA - startB || endA - endB
@@ -14,8 +16,8 @@ const toDeduplicatedRanges = (acc, [start, end]) => {
   return acc;
 }
 
-const freshRanges = rangeData.split('\n').map(toRanges).sort(byStartAndEnd).reduce(toDeduplicatedRanges, []);
-const ingredients = ingredientData.split('\n').map(Number);
+const freshRanges = rangeData.split(atNewLine).map(toRanges).sort(byStartAndEnd).reduce(toDeduplicatedRanges, []);
+const ingredients = ingredientData.split(atNewLine).map(Number);
 
 const isFresh = id => freshRanges.some(([start, end]) => id >= start && id <= end);
 
