@@ -5,7 +5,7 @@ const [freshnessData, ingredientData] = readFileSync('input.txt', 'utf-8').trim(
 const freshRanges = freshnessData
   .split('\n')
   .map(line => line.split('-').map(Number))
-  .toSorted((([startA, endA], [startB, endB]) => startA - startB || endA - endB)) //?
+  .toSorted((([startA, endA], [startB, endB]) => startA - startB || endA - endB))
   .reduce((acc, [start, end]) => {
     if (!acc.at(-1)) {
       acc.push([start, end]);
