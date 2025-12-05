@@ -1,8 +1,8 @@
 import { readFileSync } from 'node:fs';
 
-const [freshnessData, ingredientData] = readFileSync('input.txt', 'utf-8').trim().split('\n\n');
+const [rangeData, ingredientData] = readFileSync('input.txt', 'utf-8').trim().split('\n\n');
 
-const freshRanges = freshnessData
+const freshRanges = rangeData
   .split('\n')
   .map(line => line.split('-').map(Number))
   .toSorted((([startA, endA], [startB, endB]) => startA - startB || endA - endB))
