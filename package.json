@@ -1,0 +1,10 @@
+{
+  "name": "advent-of-code",
+  "author": "Milan Fox (http://github.com/MilanFox)",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "fetch": "bash -c 'source .env && curl -s -H \"Cookie: session=$AOC_SESSION\" https://adventofcode.com/$1/day/$2/input -o input.txt' --",
+    "day": "bash -c 'DAY=$(printf \"%02d\" $2); node src/$1/day_$DAY.mjs' --"
+  }
+}

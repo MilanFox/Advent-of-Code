@@ -12,7 +12,28 @@ projects.
 To run the solutions, follow these steps:
 
 1. Provide your own `input.txt` file. This input file is not shared in the repository due to Advent of Code's rules.
+   (See section below)
 2. Use your preferred JavaScript runtime (Node, Deno, Bun) to execute the file. All should work without any issues.
+
+### Fetch Input Automatically
+
+This command automatically fetches your input and writes it to input.txt for you.
+
+```shell
+npm run fetch 2025 1
+```
+
+Since Inputs are different for every user, you would need to retrieve your session cookie from your current browser
+session and put it in a .env file. A template for that is found as [.env.example](./.env.example). Otherwise you will
+get a message that you need to log in first.
+
+### Fetch Input Automatically
+
+Run specific day
+
+```shell
+npm run day 2025 1
+```
 
 ### Visualization
 
