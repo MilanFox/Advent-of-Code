@@ -7,28 +7,16 @@ const freshRanges = freshnessData
   .map(line => line.split('-').map(Number))
   .toSorted((([startA, endA], [startB, endB]) => startA - startB || endA - endB))
   .reduce((acc, [start, end]) => {
-    if (!acc.at(-1)) {
-      acc.push([start, end]);
-      return acc;
-    }
-
-    if (acc.at(-1)[0] <= start && acc.at(-1)[1] >= end) return acc;
-
-    if (acc.at(-1)[1] >= start && acc.at(-1)[1] <= end) {
-      acc.at(-1)[1] = end;
-      return acc;
-    }
-
-    acc.push([start, end]);
+    const last = acc.at(-1);
+    if (!last) acc.push([start, end]);
+    else if (last[1] < start) acc.push([start, end]);
+    else if (last[1] < end) last[1] = end;
     return acc;
   }, []);
 
 const ingredients = ingredientData.split('\n').map(Number);
 
-const isFresh = (id) => {
-  for (const [start, end] of freshRanges) if (id >= start && id <= end) return true;
-  return false;
-};
+const isFresh = id => freshRanges.some(([start, end]) => id >= start && id <= end);
 
 console.log(`Part 1: ${ingredients.reduce((acc, cur) => acc + isFresh(cur), 0)}`);
 console.log(`Part 2: ${freshRanges.reduce((acc, [start, end]) => acc + (end - start) + 1, 0)}`);
