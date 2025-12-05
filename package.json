@@ -4,6 +4,7 @@
   "private": true,
   "license": "MIT",
   "scripts": {
+    "setup": "bash -c 'YEAR=$1; DAY=$(printf \"%02d\" $2); mkdir -p src/$YEAR && cp assets/templates/template.mjs src/$YEAR/day_$DAY.mjs && npm run fetch $YEAR $2' --",
     "fetch": "bash -c 'source .env && curl -s -H \"Cookie: session=$AOC_SESSION\" https://adventofcode.com/$1/day/$2/input -o input.txt' --",
     "day": "bash -c 'DAY=$(printf \"%02d\" $2); node src/$1/day_$DAY.mjs' --"
   }

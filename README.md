@@ -15,25 +15,40 @@ To run the solutions, follow these steps:
    (See section below)
 2. Use your preferred JavaScript runtime (Node, Deno, Bun) to execute the file. All should work without any issues.
 
-### Fetch Input Automatically
+### Commands
 
-This command automatically fetches your input and writes it to input.txt for you.
+#### setup
 
 ```shell
-npm run fetch 2025 1
+npm run setup 2025 1
 ```
+
+Set up boilerplate Javascript file and download input automatically as "input.txt".
 
 Since Inputs are different for every user, you would need to retrieve your session cookie from your current browser
 session and put it in a .env file. A template for that is found as [.env.example](./.env.example). Otherwise you will
 get a message that you need to log in first.
 
-### Fetch Input Automatically
+<hr />
 
-Run specific day
+#### fetch
+
+```shell
+npm run fetch 2025 1
+```
+
+Automatically downloads your input as "inut.txt" in case you need to re-download an older puzzle.
+
+
+<hr />
+
+#### day
 
 ```shell
 npm run day 2025 1
 ```
+
+Run specific days code.
 
 ### Visualization
 
