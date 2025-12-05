@@ -3,7 +3,8 @@ import { readFileSync } from 'node:fs';
 const [freshnessData, ingredientData] = readFileSync('input.txt', 'utf-8').trim().split('\n\n');
 
 const freshRanges = freshnessData
-  .split('\n').map(line => line.split('-').map(Number))
+  .split('\n')
+  .map(line => line.split('-').map(Number))
   .toSorted((([startA, endA], [startB, endB]) => startA - startB || endA - endB)) //?
   .reduce((acc, [start, end]) => {
     if (!acc.at(-1)) {
