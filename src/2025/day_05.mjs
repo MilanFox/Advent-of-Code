@@ -16,7 +16,12 @@ const toDeduplicatedRanges = (acc, [start, end]) => {
   return acc;
 };
 
-const freshRanges = rangeData.split(atNewLine).map(toRanges).sort(byStartAndEnd).reduce(toDeduplicatedRanges, []);
+const freshRanges = rangeData
+  .split(atNewLine)
+  .map(toRanges)
+  .sort(byStartAndEnd)
+  .reduce(toDeduplicatedRanges, []);
+
 const ingredients = ingredientData.split(atNewLine).map(Number);
 
 const isFresh = id => freshRanges.some(([start, end]) => id >= start && id <= end);
