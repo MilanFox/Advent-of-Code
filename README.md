@@ -87,7 +87,7 @@ noise?_"; but **not** "_Generate a function that does X_" or "_Refactor to do X_
 [![](https://img.shields.io/badge/Day_03-★★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2025/day_03.mjs)
 [![](https://img.shields.io/badge/Day_04-★★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2025/day_04.mjs)
 [![](https://img.shields.io/badge/Day_05-★★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2025/day_05.mjs)
-[![](https://img.shields.io/badge/Day_06-★☆-silver)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2025/day_06.mjs)
+[![](https://img.shields.io/badge/Day_06-★★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2025/day_06.mjs)
 [![](https://img.shields.io/badge/Day_07-☆☆-black)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2025/day_07.mjs)
 [![](https://img.shields.io/badge/Day_08-☆☆-black)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2025/day_08.mjs)
 [![](https://img.shields.io/badge/Day_09-☆☆-black)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2025/day_09.mjs)
