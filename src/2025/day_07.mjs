@@ -14,19 +14,22 @@ const getNumberOfTimelines = ({ x, y }, memo = new Map()) => {
     }
   }
 
-  if (!nextSplitYPos) return 1;
+  if (!nextSplitYPos) return { timeLinesAfterSplit: 1 };
 
   const splitPosHash = `${x}|${nextSplitYPos}`;
-  if (memo.get(splitPosHash)) return memo.get(splitPosHash);
+  if (memo.get(splitPosHash)) return { timeLinesAfterSplit: memo.get(splitPosHash) };
 
   const timeLinesAfterSplit = [-1, 1].reduce((acc, dir) => acc + getNumberOfTimelines({
     x: x + dir,
     y: nextSplitYPos,
-  }, memo), 0);
+  }, memo).timeLinesAfterSplit, 0);
 
   memo.set(splitPosHash, timeLinesAfterSplit);
 
-  return timeLinesAfterSplit;
+  return { timeLinesAfterSplit, memo };
 };
 
-console.log(`Part 2: ${getNumberOfTimelines(start)}`);
+const { memo, timeLinesAfterSplit } = getNumberOfTimelines(start);
+
+console.log(`Part 1: ${memo.size}`);
+console.log(`Part 2: ${timeLinesAfterSplit}`);
