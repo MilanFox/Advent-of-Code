@@ -2,9 +2,9 @@ import { readFileSync } from 'node:fs';
 
 const map = readFileSync('input.txt', 'utf-8').trim().split('\n').map(line => line.split(''));
 
-const startX = map[0].findIndex(el => el === 'S');
+const start = { x: map[0].findIndex(el => el === 'S'), y: 1 };
 
-const shootBeam = ({ x, y }, seenSplitters = new Set()) => {
+const getNumberOfTimelines = ({ x, y }, memo = new Map()) => {
   let nextSplitYPos;
 
   for (let curYPos = y; curYPos < map.length; curYPos++) {
@@ -14,15 +14,19 @@ const shootBeam = ({ x, y }, seenSplitters = new Set()) => {
     }
   }
 
-  if (nextSplitYPos && !seenSplitters.has(`${x}|${nextSplitYPos}`)) {
-    seenSplitters.add(`${x}|${nextSplitYPos}`);
-    shootBeam({ x: x - 1, y: nextSplitYPos }, seenSplitters);
-    shootBeam({ x: x + 1, y: nextSplitYPos }, seenSplitters);
-  }
+  if (!nextSplitYPos) return 1;
 
-  return { seenSplitters };
+  const splitPosHash = `${x}|${nextSplitYPos}`;
+  if (memo.get(splitPosHash)) return memo.get(splitPosHash);
+
+  const timeLinesAfterSplit = [-1, 1].reduce((acc, dir) => acc + getNumberOfTimelines({
+    x: x + dir,
+    y: nextSplitYPos,
+  }, memo), 0);
+
+  memo.set(splitPosHash, timeLinesAfterSplit);
+
+  return timeLinesAfterSplit;
 };
 
-const { seenSplitters } = shootBeam({ x: startX, y: 1 });
-
-console.log(`Part 1: ${seenSplitters.size}`);
+console.log(`Part 2: ${getNumberOfTimelines(start)}`);
