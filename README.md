@@ -34,6 +34,8 @@ browser, due to their ability to zoom out. AoC Inputs tend to render really _wid
 Editors can mess with my renders. These renders are (mostly) not part of the puzzles but where created to help with
 debugging some of the more complex 2D (or 3D) puzzles. And I left them in because they look very satisfying.
 
+![visualization.png](assets/visualization.png)
+
 ### Self-imposed Rules / Usage of AI / Disclaimer
 
 This project is used to teach _me_ new algorithms, new approaches and optimization techniques.
