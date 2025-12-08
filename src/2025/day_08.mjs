@@ -70,11 +70,21 @@ const inputData = readFileSync('input.txt', 'utf-8').trim().split('\n');
 const junctionBoxes = new UnionFind(inputData);
 const connectionStack = getAllCombinations(inputData).sort(([, , a], [, , b]) => b - a);
 
-const numberOfConnections = 1000;
+const numberOfConnections = 1_000;
 for (let i = 0; i < numberOfConnections; i++) {
   junctionBoxes.union(connectionStack.pop());
 }
 
-const checksum = junctionBoxes.groups.sort((a, b) => a.length - b.length).slice(-3).reduce((acc, cur) => acc *= cur.length, 1);
+const checksum = junctionBoxes.groups.sort((a, b) => a.length - b.length).slice(-3).reduce((acc, cur) => acc * cur.length, 1);
 
 console.log(`Part 1: ${checksum}`);
+
+while (true) {
+  let nextConnection = connectionStack.pop();
+  junctionBoxes.union(nextConnection);
+  if (junctionBoxes.groups.length === 1) {
+    const [lightA, lightB] = nextConnection;
+    console.log(`Part 2: ${Number(lightA.split(',').at(0)) * Number(lightB.split(',').at(0))}`);
+    break;
+  }
+}
