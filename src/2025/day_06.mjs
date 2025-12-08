@@ -4,10 +4,8 @@ const rows = readFileSync('input.txt', 'utf-8').trim().split('\n');
 const type1data = rows.map(line => line.trim().split(/\s+/));
 const operators = type1data.pop();
 
-const dataCols = type1data[0].map((_, j) => ({
-  values: type1data.map(row => row[j]),
-  operator: operators[j],
-}));
+const dataCols = type1data[0]
+  .map((_, j) => ({ values: type1data.map(row => row[j]), operator: operators[j] }));
 
 const calculate = ({ values, operator }) => values
   .slice(1)
