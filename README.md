@@ -39,7 +39,7 @@ debugging some of the more complex 2D (or 3D) puzzles. And I left them in becaus
 ### Self-imposed Rules / Usage of AI / Disclaimer
 
 This project is used to teach _me_ new algorithms, new approaches and optimization techniques.
-I do approach it as a challenge and try to solve the puzzles on my own, _during december_. For puzzles, which are solved
+I do approach it as a challenge and try to solve the puzzles on my own, _during December_. For puzzles, which are solved
 outside December, I might look up _strategies_ on how to tackle the puzzle. I don't look up other peoples code until
 _after_ I have solved it myself.
 
