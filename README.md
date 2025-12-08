@@ -15,7 +15,7 @@ To run the solutions, follow these steps:
    (See section below)
 2. Use your preferred JavaScript runtime (Node, Deno, Bun) to execute the file. All should work without any issues.
 
-### Commands
+### Quality of Life / Commands
 
 #### setup
 
