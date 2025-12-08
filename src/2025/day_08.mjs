@@ -32,10 +32,6 @@ class UnionFind {
     this.size[groupA] += this.size[groupB];
   }
 
-  getSize(el) {
-    return this.size[this.find(el)];
-  }
-
   get groups() {
     const map = new Map();
     this.elements.forEach(el => {
