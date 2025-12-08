@@ -55,11 +55,13 @@ const getDistanceScore = (pointA, pointB) => {
 
 const getAllCombinations = (arr) => {
   const combinations = [];
+
   for (let i = 0; i < arr.length - 1; i++) {
     for (let j = i + 1; j < arr.length; j++) {
       combinations.push([arr[i], arr[j], getDistanceScore(arr[i], arr[j])]);
     }
   }
+
   return combinations;
 };
 
@@ -79,6 +81,7 @@ console.log(`Part 1: ${checksum}`);
 while (true) {
   let nextConnection = connectionStack.pop();
   junctionBoxes.union(nextConnection);
+  
   if (junctionBoxes.groups.length === 1) {
     const [lightA, lightB] = nextConnection;
     console.log(`Part 2: ${Number(lightA.split(',').at(0)) * Number(lightB.split(',').at(0))}`);
