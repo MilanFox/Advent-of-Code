@@ -1,8 +1,8 @@
 import { readFileSync } from 'node:fs';
 
 /**
- * @source https://javascript.plainenglish.io/union-find-97f0036dff93
- * @source https://www.youtube.com/watch?v=ayW5B2W9hfo
+ * @see https://javascript.plainenglish.io/union-find-97f0036dff93
+ * @see https://www.youtube.com/watch?v=ayW5B2W9hfo
  */
 class UnionFind {
   constructor(elements) {
@@ -44,8 +44,8 @@ class UnionFind {
   }
 }
 
-/** Not calculating the actual distance here, just a representation, since Math.sqrt is considerably slow and we don't care about actual distances
- *  @source https://stackoverflow.com/questions/2264760/efficient-way-of-finding-distance-between-two-3d-points
+/** Not calculating the actual distance here, just a representation, since Math.sqrt is considerably slow, and we don't care about actual distances
+ *  @see https://stackoverflow.com/questions/2264760/efficient-way-of-finding-distance-between-two-3d-points
  */
 const getDistanceScore = (pointA, pointB) => {
   const a = pointA.split(',').map(Number);
@@ -81,7 +81,7 @@ console.log(`Part 1: ${checksum}`);
 while (true) {
   let nextConnection = connectionStack.pop();
   junctionBoxes.union(nextConnection);
-  
+
   if (junctionBoxes.groups.length === 1) {
     const [lightA, lightB] = nextConnection;
     console.log(`Part 2: ${Number(lightA.split(',').at(0)) * Number(lightB.split(',').at(0))}`);
