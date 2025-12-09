@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 
-const tiles = readFileSync('testinput.txt', 'utf-8').trim().split('\n').map(line => line.split(',').map(Number));
+const tiles = readFileSync('input.txt', 'utf-8').trim().split('\n').map(line => line.split(',').map(Number));
 
 const getAllPermutations = (arr) => {
   const permutations = [];
@@ -16,7 +16,9 @@ const getArea = ([[x1, y1], [x2, y2]]) => (Math.abs(x1 - x2) + 1) * (Math.abs(y1
 
 const rectangles = getAllPermutations(tiles);
 
-console.log(`Part 1: ${rectangles.map(getArea).sort((a, b) => b - a).at(0)}`);
+const getLargestPossibleArea = (rectangles) => rectangles.map(getArea).sort((a, b) => b - a).at(0);
+
+console.log(`Part 1: ${getLargestPossibleArea(rectangles)}`);
 
 const getPolygonLineSegments = (corners) => corners.reduce((acc, [curX, curY], i) => {
   const [nextX, nextY] = corners[i + 1] ?? corners[0];
@@ -36,21 +38,31 @@ const hasIntersection = ([[a1x, a1y], [a2x, a2y]], [[b1x, b1y], [b2x, b2y]]) => 
 
 const polygonLineSegments = getPolygonLineSegments(tiles);
 
+/**
+ * @see https://math.stackexchange.com/questions/3210317/how-to-check-if-a-given-point-lies-inside-a-rectilinear-figure
+ */
 const isInsidePolygon = ([px, py]) => {
-  const edgeCrossings = polygonLineSegments.vertical.filter(([[x, y1], [_, y2]]) => x <= px && y1 <= py && y2 >= py).length;
-  return edgeCrossings % 2 !== 0;
+  let edgeCrossings = 0;
+
+  for (const [[x, y1], [_, y2]] of polygonLineSegments.vertical) {
+    if (x === px && py >= y1 && py <= y2) return true;
+    if (x < px && py >= y1 && py < y2) edgeCrossings++;
+  }
+
+  for (const [[x1, y], [x2]] of polygonLineSegments.horizontal) {
+    if (y === py && px >= x1 && px <= x2) return true;
+  }
+
+  return edgeCrossings % 2 === 1;
 };
 
 const containingRectangles = rectangles.filter((rect) => {
   const corners = getCorners(rect);
+  if (corners.some(point => !isInsidePolygon(point))) return false;
   const { horizontal: horizontalLines, vertical: verticalLines } = getPolygonLineSegments(corners);
   const intersectsHorizontally = horizontalLines.some(line => polygonLineSegments.vertical.some(segment => hasIntersection(line, segment)));
   const intersectsVertically = verticalLines.some(line => polygonLineSegments.horizontal.some(segment => hasIntersection(line, segment)));
   return !intersectsHorizontally && !intersectsVertically;
 });
 
-/**DEBUG*/
-containingRectangles
-  .map(rect => ({ area: getArea(rect), p1: { x: rect[0][0], y: rect[0][1] }, p2: { x: rect[1][0], y: rect[1][1] } }))
-  .sort((a, b) => b.area - a.area);
-
+console.log(`Part 2: ${getLargestPossibleArea(containingRectangles)}`);
