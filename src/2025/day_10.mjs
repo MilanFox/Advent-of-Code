@@ -5,12 +5,15 @@ const inputData = readFileSync('input.txt', 'utf-8').trim().split('\n').map(line
   const numLights = indicatorLights.length;
   const indicatorLightValue = parseInt(indicatorLights, 2);
 
-  const buttonValueMasks = [...line.matchAll(/(?<=\().*?(?=\))/g)].map(m => m[0].split(',').reduce((acc, i) => acc | (1 << (numLights - 1 - i)), 0));
+  const buttons = [...line.matchAll(/(?<=\().*?(?=\))/g)].map(m => m[0].split(',').map(Number));
+  const buttonValueMasks = buttons.map(button => button.reduce((acc, i) => acc | (1 << (numLights - 1 - i)), 0));
 
-  return { indicatorLightValue, buttonValueMasks };
+  const joltageTarget = line.match(/(?<=\{).*?(?=})/)[0].split(',').map(Number);
+
+  return { indicatorLightValue, buttonValueMasks, joltageTarget, buttons };
 });
 
-const findQuickestPath = ({ indicatorLightValue, buttonValueMasks }) => {
+const findFastestStartupSequence = ({ indicatorLightValue, buttonValueMasks }) => {
   const queue = [[0, 0]];
   const seen = new Set([0]);
 
@@ -30,5 +33,29 @@ const findQuickestPath = ({ indicatorLightValue, buttonValueMasks }) => {
   }
 };
 
-const fewestButtonPresses = inputData.map(findQuickestPath).reduce((acc, cur) => acc + cur, 0);
-console.log(`Part 1: ${fewestButtonPresses}`);
+const startupTime = inputData.map(findFastestStartupSequence).reduce((acc, cur) => acc + cur, 0);
+console.log(`Part 1: ${startupTime}`);
+
+const findFastestConfiguration = ({ joltageTarget, buttons }) => {
+  const queue = [[Array(joltageTarget.length).fill(0), 0]];
+  const seen = new Set([Array(joltageTarget.length).fill(0).join('-')]);
+
+  while (queue.length) {
+    const [cur, presses] = queue.shift();
+
+    if (cur.every((num, i) => num === joltageTarget[i])) return presses;
+
+    for (const button of buttons) {
+      const next = [...cur];
+      for (const i of button) next[i] += 1;
+
+      if (!seen.has(next.join('-'))) {
+        seen.add(next.join('-'));
+        queue.push([next, presses + 1]);
+      }
+    }
+  }
+};
+
+const configurationTime = inputData.map(findFastestConfiguration).reduce((acc, cur) => acc + cur, 0);
+console.log(`Part 2: ${configurationTime}`);
