@@ -13,8 +13,6 @@ const inputData = readFileSync('input.txt', 'utf-8').trim().split('\n').map(line
   return { indicatorLightValue, buttonValueMasks, joltageTarget, buttons };
 });
 
-console.log(inputData.map(({ joltageTarget }) => joltageTarget.length));
-
 const findFastestStartupSequence = ({ indicatorLightValue, buttonValueMasks }) => {
   const queue = [[0, 0]];
   const seen = new Set([0]);
