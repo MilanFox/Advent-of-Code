@@ -110,4 +110,4 @@ const findFastestConfiguration = ({ joltageTarget, buttons }) => {
 };
 
 const configurationTime = inputData.map(findFastestConfiguration).reduce((acc, cur) => acc + cur, 0);
-console.log(`Part 2: ${configurationTime}`);
+console.log(`Part 2: ${configurationTime}`); // Needs optimization... A* never finishes for real data.
