@@ -112,4 +112,4 @@ const findFastestConfiguration = ({ joltageTarget, buttons }) => {
 };
 
 const configurationTime = inputData.map(findFastestConfiguration).reduce((acc, cur) => acc + cur, 0);
-console.log(`Part 2: ${configurationTime}`); // Needs optimization. Apparently 10-Dimensional A* Pathfinding is still not performant enough... Keeping it until i have a better solution.
+console.log(`Part 2: ${configurationTime}`); // Needs optimization. Apparently 10-Dimensional A* Pathfinding is still not performant enough... Keeping it until I have a better solution.
