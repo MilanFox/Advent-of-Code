@@ -13,6 +13,8 @@ const inputData = readFileSync('input.txt', 'utf-8').trim().split('\n').map(line
   return { indicatorLightValue, buttonValueMasks, joltageTarget, buttons };
 });
 
+console.log(inputData.map(({ joltageTarget }) => joltageTarget.length));
+
 const findFastestStartupSequence = ({ indicatorLightValue, buttonValueMasks }) => {
   const queue = [[0, 0]];
   const seen = new Set([0]);
@@ -110,4 +112,4 @@ const findFastestConfiguration = ({ joltageTarget, buttons }) => {
 };
 
 const configurationTime = inputData.map(findFastestConfiguration).reduce((acc, cur) => acc + cur, 0);
-console.log(`Part 2: ${configurationTime}`); // Needs optimization... A* never finishes for real data.
+console.log(`Part 2: ${configurationTime}`); // Needs optimization. Apparently 10-Dimensional A* Pathfinding is still not performant enough... Keeping it until i have a better solution.
