@@ -4,7 +4,7 @@ const inputData = readFileSync('input.txt', 'utf-8').trim().split('\n').map(line
   const indicatorLights = line.match(/(?<=\[).*?(?=])/)[0].split('').map(char => char === '#' ? 1 : 0).join('');
   const numLights = indicatorLights.length;
   const indicatorLightValue = parseInt(indicatorLights, 2);
-  const buttons = [...line.matchAll(/(?<=\().*?(?=\))/g)].map(m => m[0].split(',').map(Number));
+  const buttons = [...line.matchAll(/(?<=\().*?(?=\))/g)].map(match => match[0].split(',').map(Number));
   const buttonValueMasks = buttons.map(button => button.reduce((acc, i) => acc | (1 << (numLights - 1 - i)), 0));
   return { indicatorLightValue, buttonValueMasks };
 });
