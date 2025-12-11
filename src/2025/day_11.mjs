@@ -45,4 +45,3 @@ const getPaths = (node1, node2) => network.devices.get(node1).computePathsTo(nod
 
 console.log(`Part 1: ${getPaths('you', 'out')}`);
 console.log(`Part 2: ${getPaths('svr', 'fft') * getPaths('fft', 'dac') * getPaths('dac', 'out')}`);
-
