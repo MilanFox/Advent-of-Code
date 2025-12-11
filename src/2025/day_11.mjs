@@ -44,4 +44,6 @@ const network = new Network(readFileSync('input.txt', 'utf-8').trim().split('\n'
 const getPaths = (node1, node2) => network.devices.get(node1).computePathsTo(node2);
 
 console.log(`Part 1: ${getPaths('you', 'out')}`);
-console.log(`Part 2: ${getPaths('svr', 'fft') * getPaths('fft', 'dac') * getPaths('dac', 'out')}`); // My input had a guaranteed order of first FFT then DAC, don't know if that is true for all inputs
+
+// My input had a guaranteed order of first FFT then DAC (meaning there are no paths DAC > FFT). Don't know if that is true for all inputs, though..
+console.log(`Part 2: ${getPaths('svr', 'fft') * getPaths('fft', 'dac') * getPaths('dac', 'out')}`);
