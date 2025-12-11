@@ -10,9 +10,6 @@ class Network {
         this.devices.get(name).addNeighbour(this.devices.get(neighbour));
       });
     });
-
-    this.you = this.devices.get('you');
-    this.out = this.devices.get('out');
   }
 
   tryAdd(name) {
@@ -24,21 +21,28 @@ class Device {
   constructor(name) {
     this.name = name;
     this.neighbours = [];
+    this.#memo = new Map();
   }
 
-  #pathsToOutNode = undefined;
+  #memo;
 
   addNeighbour(device) {
     this.neighbours.push(device);
   }
 
-  get pathsToOutNode() {
-    if (this.name === 'out') return 1;
-    if (this.#pathsToOutNode === undefined) this.#pathsToOutNode = this.neighbours.reduce((acc, neighbour) => acc + neighbour.pathsToOutNode, 0);
-    return this.#pathsToOutNode;
-  }
+  computePathsTo = (target) => {
+    if (this.name === target) return 1;
+    if (this.#memo.has(target)) return this.#memo.get(target);
+    const count = this.neighbours.reduce((acc, neighbour) => acc + neighbour.computePathsTo(target), 0);
+    this.#memo.set(target, count);
+    return count;
+  };
 }
 
 const network = new Network(readFileSync('input.txt', 'utf-8').trim().split('\n').map(line => line.split(': ')));
 
-console.log(`Part 1: ${network.you.pathsToOutNode}`);
+const getPaths = (node1, node2) => network.devices.get(node1).computePathsTo(node2);
+
+console.log(`Part 1: ${getPaths('you', 'out')}`);
+console.log(`Part 2: ${getPaths('svr', 'fft') * getPaths('fft', 'dac') * getPaths('dac', 'out')}`);
+
