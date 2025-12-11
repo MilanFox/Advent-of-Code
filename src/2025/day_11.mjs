@@ -2,7 +2,6 @@ import { readFileSync } from 'node:fs';
 
 class Network {
   constructor(connections) {
-    this.devices = new Map();
     connections.forEach(([name, neighbours]) => {
       this.tryAdd(name);
       neighbours.split(' ').forEach(neighbour => {
@@ -11,6 +10,8 @@ class Network {
       });
     });
   }
+
+  devices = new Map();
 
   tryAdd(name) {
     if (!this.devices.get(name)) this.devices.set(name, new Device(name));
@@ -24,20 +25,19 @@ class Network {
 class Device {
   constructor(name) {
     this.name = name;
-    this.neighbours = [];
-    this.#memo = new Map();
   }
 
-  #memo;
+  #memo = new Map();
+  #neighbours = [];
 
   addNeighbour(device) {
-    this.neighbours.push(device);
+    this.#neighbours.push(device);
   }
 
   computePathsTo = (target) => {
     if (this.name === target) return 1;
     if (this.#memo.has(target)) return this.#memo.get(target);
-    const count = this.neighbours.reduce((acc, neighbour) => acc + neighbour.computePathsTo(target), 0);
+    const count = this.#neighbours.reduce((acc, neighbour) => acc + neighbour.computePathsTo(target), 0);
     this.#memo.set(target, count);
     return count;
   };
