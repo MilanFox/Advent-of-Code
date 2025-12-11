@@ -15,6 +15,10 @@ class Network {
   tryAdd(name) {
     if (!this.devices.get(name)) this.devices.set(name, new Device(name));
   }
+
+  numberOfPaths(node1, node2) {
+    return this.devices.get(node1).computePathsTo(node2);
+  }
 }
 
 class Device {
@@ -41,7 +45,6 @@ class Device {
 
 const network = new Network(readFileSync('input.txt', 'utf-8').trim().split('\n').map(line => line.split(': ')));
 
-const getPaths = (node1, node2) => network.devices.get(node1).computePathsTo(node2);
-
-console.log(`Part 1: ${getPaths('you', 'out')}`);
-console.log(`Part 2: ${getPaths('svr', 'fft') * getPaths('fft', 'dac') * getPaths('dac', 'out')}`); // My input had a guaranteed order of first FFT then DAC (meaning there are no paths DAC > FFT). Don't know if that is true for all inputs, though.
+console.log(`Part 1: ${network.numberOfPaths('you', 'out')}`);
+console.log(`Part 2: ${network.numberOfPaths('svr', 'fft') * network.numberOfPaths('fft', 'dac') * network.numberOfPaths('dac', 'out')}`);
+// My input had a guaranteed order of first FFT then DAC (meaning there are no paths DAC > FFT). Don't know if that is true for all inputs, though.
