@@ -15,16 +15,10 @@ class Region {
     this.requiredShapes = shapeData.split(' ').map((amount, id) => ({ amount, shape: shapes[id] }));
   }
 
-  get totalArea() {
-    return this.width * this.height;
-  }
-
-  get totalShapesArea() {
-    return this.requiredShapes.reduce((acc, { amount, shape }) => acc + (amount * shape.area), 0);
-  }
-
   get isImpossible() {
-    return this.totalArea < this.totalShapesArea;
+    const totalAvaliableArea = this.width * this.height;
+    const totalNeededArea = this.requiredShapes.reduce((acc, { amount, shape }) => acc + (amount * shape.area), 0);
+    return totalAvaliableArea < totalNeededArea;
   }
 
   get isTrivial() {
