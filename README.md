@@ -53,7 +53,8 @@ that does X_", "_Refactor to do X_" or "Fix the Bug in Function X".
 
 ### @see
 
-When I used a strategy or approach I didn't come up with myself, I marked it with a comment and a link to their original
+When I used a strategy or approach I didn't come up with myself, I credit the original author in an "@see" comment and a
+link to their original
 writeup in the solution code.
 
 ![Advent of Code](assets/divider.png)
