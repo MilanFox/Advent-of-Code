@@ -41,7 +41,7 @@ const shapes = inputData.map(data => new Shape(data));
 const regions = regionData.split('\n').map(data => new Region(data, shapes));
 
 // Wtf?
-const possibleRegions = regions.reduce((acc, cur) => acc + cur.isTrivial, 0);
+const possibleRegions = regions.reduce((acc, cur) => acc + !cur.isImpossible, 0);
 const trivialRegions = regions.reduce((acc, cur) => acc + cur.isTrivial, 0);
 
 if (possibleRegions === trivialRegions) {}
