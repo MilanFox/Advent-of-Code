@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 
-const inputData = readFileSync('testinput.txt', 'utf-8').trim().split('\n').map(line => {
+const inputData = readFileSync('input.txt', 'utf-8').trim().split('\n').map(line => {
   const indicatorLights = line.match(/(?<=\[).*?(?=])/)[0].split('').map(char => char === '#' ? 1 : 0).join('');
   const numLights = indicatorLights.length;
   const indicatorLightValue = parseInt(indicatorLights, 2);
@@ -77,12 +77,12 @@ class PriorityQueue {
 
 const findFastestConfiguration = ({ joltageTarget, buttons }) => {
   const queue = new PriorityQueue();
-  const getPriorityScore = (state) => state.reduce((acc, cur, i) => acc + joltageTarget[i] - cur, 0);
+  const heuristic = (state) => Math.max(...state.map((v, i) => joltageTarget[i] - v));
   const startState = Array(joltageTarget.length).fill(0);
 
-  queue.push({ value: [startState, 0], priority: getPriorityScore(startState) });
+  queue.push({ value: [startState, 0], priority: heuristic(startState) });
 
-  const seen = new Set([Array(joltageTarget.length).fill(0).join('-')]);
+  const seen = new Map([[startState.join('-'), 0]]);
 
   while (true) {
     const { value: [cur, presses] } = queue.pop();
@@ -95,10 +95,13 @@ const findFastestConfiguration = ({ joltageTarget, buttons }) => {
 
       if (next.some((value, i) => value > joltageTarget[i])) continue;
 
-      if (!seen.has(next.join('-'))) {
-        seen.add(next.join('-'));
-        queue.push({ value: [next, presses + 1], priority: presses + 1 + getPriorityScore(next) });
-      }
+      const nextKey = next.join('-');
+      const nextG = presses + 1;
+
+      if (seen.has(nextKey) && seen.get(nextKey) <= nextG) continue;
+
+      seen.set(nextKey, nextG);
+      queue.push({ value: [next, nextG], priority: nextG + heuristic(next) });
     }
   }
 };
