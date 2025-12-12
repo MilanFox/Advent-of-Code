@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 
-const inputData = readFileSync('testinput.txt', 'utf-8').trim().split('\n').map(line => {
+const inputData = readFileSync('input.txt', 'utf-8').trim().split('\n').map(line => {
   const indicatorLights = line.match(/(?<=\[).*?(?=])/)[0].split('').map(char => char === '#' ? 1 : 0).join('');
   const numLights = indicatorLights.length;
   const indicatorLightValue = parseInt(indicatorLights, 2);
@@ -52,6 +52,9 @@ const findFastestConfiguration = (machine) => {
     const parity = machine.joltageTarget.map(n => n % 2 === 0 ? 0 : 1);
     const indicatorLightValue = parseInt(parity.join(''), 2);
 
+    const key = machine.joltageTarget.join(',') + '|' + indicatorLightValue;
+    if (memo.has(key)) return memo.get(key);
+
     const combinations = getAllLegalCombinations({ ...machine, indicatorLightValue });
     if (!combinations.length) return Infinity;
 
@@ -63,18 +66,20 @@ const findFastestConfiguration = (machine) => {
         }, [...machine.joltageTarget])
         .map(n => n / 2);
 
-      let debug = combination.map(({ definition }) => definition); //TODO
-
       if (joltageTarget.some(n => n < 0)) return Infinity;
       if (joltageTarget.every(n => n === 0)) return combination.length;
 
       return solveSubProblem({ ...machine, joltageTarget }) * 2 + combination.length;
     });
 
-    return solutions.sort((a, b) => a - b).at(0);
+    const result = Math.min(...solutions);
+    memo.set(key, result);
+
+    return result;
   };
 
   return solveSubProblem(machine);
 };
 
-findFastestConfiguration(inputData[2]); //?
+const configurationTime = inputData.map(findFastestConfiguration).reduce((acc, cur) => acc + cur, 0);
+console.log(`Part 2: ${configurationTime}`);
