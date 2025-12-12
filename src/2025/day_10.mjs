@@ -1,24 +1,29 @@
 import { readFileSync } from 'node:fs';
 
-const inputData = readFileSync('input.txt', 'utf-8').trim().split('\n').map(line => {
+const inputData = readFileSync('testinput.txt', 'utf-8').trim().split('\n').map(line => {
   const indicatorLights = line.match(/(?<=\[).*?(?=])/)[0].split('').map(char => char === '#' ? 1 : 0).join('');
   const numLights = indicatorLights.length;
   const indicatorLightValue = parseInt(indicatorLights, 2);
-  const buttons = [...line.matchAll(/(?<=\().*?(?=\))/g)].map(m => m[0].split(',').map(Number));
-  const buttonValueMasks = buttons.map(button => button.reduce((acc, i) => acc | (1 << (numLights - 1 - i)), 0));
+
+  const buttons = [...line.matchAll(/(?<=\().*?(?=\))/g)].map(m => {
+    const definition = m[0].split(',').map(Number);
+    const mask = definition.reduce((acc, i) => acc | (1 << (numLights - 1 - i)), 0);
+    return { definition, mask };
+  });
+
   const joltageTarget = line.match(/(?<=\{).*?(?=})/)[0].split(',').map(Number);
-  return { indicatorLightValue, buttonValueMasks, joltageTarget, buttons };
+  return { indicatorLightValue, joltageTarget, buttons };
 });
 
-const findFastestStartupSequence = ({ indicatorLightValue, buttonValueMasks }) => {
+const findFastestStartupSequence = ({ indicatorLightValue, buttons }) => {
   const queue = [[0, 0]];
   const seen = new Set([0]);
 
   while (queue.length) {
     const [cur, presses] = queue.shift();
     if (cur === indicatorLightValue) return presses;
-    for (const mask of buttonValueMasks) {
-      const next = cur ^ mask;
+    for (const button of buttons) {
+      const next = cur ^ button.mask;
       if (!seen.has(next)) {
         seen.add(next);
         queue.push([next, presses + 1]);
@@ -30,82 +35,46 @@ const findFastestStartupSequence = ({ indicatorLightValue, buttonValueMasks }) =
 const startupTime = inputData.map(findFastestStartupSequence).reduce((acc, cur) => acc + cur, 0);
 console.log(`Part 1: ${startupTime}`);
 
-class PriorityQueue {
-  #heap = [];
+/**
+ * @see: https://www.reddit.com/r/adventofcode/comments/1pk87hl/2025_day_10_part_2_bifurcate_your_way_to_victory/
+ */
 
-  push(obj) {
-    this.#heap.push(obj);
-    this.#bubbleUp();
-  }
-
-  pop() {
-    if (!this.#heap.length) return null;
-    const min = this.#heap[0];
-    const end = this.#heap.pop();
-    if (this.#heap.length > 0) {
-      this.#heap[0] = end;
-      this.#bubbleDown();
-    }
-    return min;
-  }
-
-  #bubbleUp() {
-    let currentIndex = this.#heap.length - 1;
-    while (currentIndex > 0) {
-      const parentIndex = Math.floor((currentIndex - 1) / 2);
-      if (this.#heap[currentIndex].priority >= this.#heap[parentIndex].priority) break;
-      [this.#heap[currentIndex], this.#heap[parentIndex]] = [this.#heap[parentIndex], this.#heap[currentIndex]];
-      currentIndex = parentIndex;
-    }
-  }
-
-  #bubbleDown() {
-    let currentIndex = 0;
-    const heapSize = this.#heap.length;
-    while (true) {
-      const leftIndex = 2 * currentIndex + 1;
-      const rightIndex = 2 * currentIndex + 2;
-      let smallest = currentIndex;
-      if (leftIndex < heapSize && this.#heap[leftIndex].priority < this.#heap[smallest].priority) smallest = leftIndex;
-      if (rightIndex < heapSize && this.#heap[rightIndex].priority < this.#heap[smallest].priority) smallest = rightIndex;
-      if (smallest === currentIndex) break;
-      [this.#heap[currentIndex], this.#heap[smallest]] = [this.#heap[smallest], this.#heap[currentIndex]];
-      currentIndex = smallest;
-    }
-  }
-}
-
-const findFastestConfiguration = ({ joltageTarget, buttons }) => {
-  const queue = new PriorityQueue();
-  const heuristic = (state) => Math.max(...state.map((v, i) => joltageTarget[i] - v));
-  const startState = Array(joltageTarget.length).fill(0);
-
-  queue.push({ value: [startState, 0], priority: heuristic(startState) });
-
-  const seen = new Map([[startState.join('-'), 0]]);
-
-  while (true) {
-    const { value: [cur, presses] } = queue.pop();
-
-    if (cur.every((num, i) => num === joltageTarget[i])) return presses;
-
-    for (const button of buttons) {
-      const next = [...cur];
-      for (const i of button) next[i] += 1;
-
-      if (next.some((value, i) => value > joltageTarget[i])) continue;
-
-      const nextKey = next.join('-');
-      const nextG = presses + 1;
-
-      if (seen.has(nextKey) && seen.get(nextKey) <= nextG) continue;
-
-      seen.set(nextKey, nextG);
-      queue.push({ value: [next, nextG], priority: nextG + heuristic(next) });
-    }
-  }
+const getAllLegalCombinations = (machine) => {
+  let combos = [[]];
+  for (const button of machine.buttons) combos = [...combos, ...combos.map(s => [...s, button])];
+  return combos.filter(combo => combo.reduce((acc, button) => acc ^ button.mask, 0) === machine.indicatorLightValue);
 };
 
-const configurationTime = inputData.map(findFastestConfiguration).reduce((acc, cur) => acc + cur, 0);
-console.log(`Part 2: ${configurationTime}`);
+const findFastestConfiguration = (machine) => {
+  const memo = new Map();
 
+  const solveSubProblem = (machine) => {
+    const parity = machine.joltageTarget.map(n => n % 2 === 0 ? 0 : 1);
+    const indicatorLightValue = parseInt(parity.join(''), 2);
+
+    const combinations = getAllLegalCombinations({ ...machine, indicatorLightValue });
+    if (!combinations.length) return Infinity;
+
+    const solutions = combinations.map(combination => {
+      const joltageTarget = combination
+        .reduce((acc, button) => {
+          for (const i of button.definition) acc[i] -= 1;
+          return acc;
+        }, [...machine.joltageTarget])
+        .map(n => n / 2);
+
+      let debug = combination.map(({ definition }) => definition); //TODO
+
+      if (joltageTarget.some(n => n < 0)) return Infinity;
+      if (joltageTarget.every(n => n === 0)) return combination.length;
+
+      return solveSubProblem({ ...machine, joltageTarget }) * 2 + combination.length;
+    });
+
+    return solutions.sort((a, b) => a - b).at(0);
+  };
+
+  return solveSubProblem(machine);
+};
+
+findFastestConfiguration(inputData[2]); //?
