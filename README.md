@@ -53,7 +53,7 @@ noise?_"; but **not** "_Generate a function that does X_",  "_Refactor to do X_"
 
 ![Advent of Code](assets/divider.png)
 
-## 🎀 [2025](https://adventofcode.com/2025) ![](https://progress-bar.xyz/21?scale=23&suffix=/23)
+## 🎀 [2025](https://adventofcode.com/2025) ![](https://progress-bar.xyz/22?scale=23&suffix=/23)
 
 [![](https://img.shields.io/badge/Day_01-★★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2025/day_01.mjs)
 [![](https://img.shields.io/badge/Day_02-★★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2025/day_02.mjs)
@@ -66,7 +66,7 @@ noise?_"; but **not** "_Generate a function that does X_",  "_Refactor to do X_"
 [![](https://img.shields.io/badge/Day_09-★★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2025/day_09.mjs)
 [![](https://img.shields.io/badge/Day_10-★☆-silver)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2025/day_10.mjs)
 [![](https://img.shields.io/badge/Day_11-★★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2025/day_11.mjs)
-[![](https://img.shields.io/badge/Day_12-☆-black)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2025/day_12.mjs)
+[![](https://img.shields.io/badge/Day_12-★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2025/day_12.mjs)
 
 ## 🏺️ [2024](https://adventofcode.com/2024) ![](https://progress-bar.xyz/34?scale=49&suffix=/49)
 
