@@ -14,12 +14,12 @@ const tile = {
 };
 
 class Entity {
-  constructor({ x, y, cave, type, enemy }) {
+  constructor({ x, y, cave, type, enemy, attackPower }) {
     this.type = type;
     this.x = x;
     this.y = y;
     this.health = 200;
-    this.attackPower = 3;
+    this.attackPower = attackPower || 3;
     this.enemy = enemy;
     this.cave = cave;
   }
@@ -122,6 +122,7 @@ class Entity {
     if (this.health <= 0) {
       this.cave.positionLookup.delete(`${this.x}|${this.y}`);
       this.cave.entities[this.cave.entities.findIndex(entity => entity === this)] = undefined;
+      if (this.type === entity.ELF) this.cave.hasDeadElves = true;
     }
   }
 }
@@ -130,18 +131,36 @@ class Cave {
   map;
   entities = [];
   positionLookup = new Map();
+  hasDeadElves = false;
 
-  constructor(input) {
+  constructor(input, { haltOnElfDeath, elvenWeaponPower } = {}) {
     this.map = input.trim().split('\n').map(line => line.split(''));
 
     this.map.forEach((line, y) => line.forEach((cell, x) => {
-      if (cell === 'G') this.entities.push(new Entity({ x, y, cave: this, type: entity.GOBLIN, enemy: entity.ELF }));
-      if (cell === 'E') this.entities.push(new Entity({ x, y, cave: this, type: entity.ELF, enemy: entity.GOBLIN }));
+      if (cell === 'G') this.entities.push(new Entity({
+        x,
+        y,
+        cave: this,
+        type: entity.GOBLIN,
+        enemy: entity.ELF,
+      }));
+
+      if (cell === 'E') this.entities.push(new Entity({
+        x,
+        y,
+        cave: this,
+        type: entity.ELF,
+        enemy: entity.GOBLIN,
+        attackPower: elvenWeaponPower,
+      }));
+
       if (cell !== '#') this.map[y][x] = tile.VOID;
       else this.map[y][x] = tile.WALL;
     }));
 
     this.entities.forEach((entity) => this.positionLookup.set(`${entity.x}|${entity.y}`, entity));
+
+    this.haltOnElfDeath = haltOnElfDeath || false;
   }
 
   sortEntities() {
@@ -164,12 +183,15 @@ class Cave {
     this.sortEntities();
     for (const entity of this.entities) {
       if (!entity) continue;
+
+      if (this.haltOnElfDeath && this.hasDeadElves) return { abortSimulation: true };
+
       const areEnemiesLeft = this.entities.some(e => e && e.type !== entity.type);
-      if (!areEnemiesLeft) return false;
+      if (!areEnemiesLeft) return { completed: false };
 
       entity.takeTurn();
     }
-    return true;
+    return { completed: true };
   }
 
   simulate() {
@@ -177,16 +199,23 @@ class Cave {
 
     while (true) {
       i += 1;
-      const completed = this.simulateRound();
+      const { completed, abortSimulation } = this.simulateRound();
+
+      if (abortSimulation) return null;
       if (!completed) break;
-      if (this.entities.every(entity => entity?.type === this.entities[0]?.type)) break;
     }
 
     return (i - 1) * this.entities.reduce((acc, entity) => acc + (entity?.health || 0), 0);
   }
 }
 
-const cave = new Cave(readFileSync('input.txt', 'utf-8'));
+const getOutcome = ({ haltOnElfDeath } = {}) => {
+  for (let i = 3; i <= 200; i++) {
+    const cave = new Cave(readFileSync('input.txt', 'utf-8'), { haltOnElfDeath, elvenWeaponPower: i });
+    const checksum = cave.simulate();
+    if (checksum !== null) return checksum;
+  }
+};
 
-const checksum = cave.simulate();
-console.log(`Part 1: ${checksum}`);
+console.log(`Part 1: ${getOutcome()}`);
+console.log(`Part 2: ${getOutcome({ haltOnElfDeath: true })}`);
