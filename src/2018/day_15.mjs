@@ -209,13 +209,14 @@ class Cave {
   }
 }
 
-const getOutcome = ({ haltOnElfDeath } = {}) => {
+const getOutcome = ({ avoidElfDeath } = {}) => {
   for (let i = 3; i <= 200; i++) {
-    const cave = new Cave(readFileSync('input.txt', 'utf-8'), { haltOnElfDeath, elvenWeaponPower: i });
+    const options = avoidElfDeath && { haltOnElfDeath: true, elvenWeaponPower: i };
+    const cave = new Cave(readFileSync('input.txt', 'utf-8'), options);
     const checksum = cave.simulate();
     if (checksum !== null) return checksum;
   }
 };
 
 console.log(`Part 1: ${getOutcome()}`);
-console.log(`Part 2: ${getOutcome({ haltOnElfDeath: true })}`);
+console.log(`Part 2: ${getOutcome({ avoidElfDeath: true })}`);
