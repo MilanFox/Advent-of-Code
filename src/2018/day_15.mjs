@@ -149,14 +149,15 @@ class Cave {
     this.entities.sort((a, b) => a.y - b.y || a.x - b.x);
   }
 
-  draw(n) {
+  // No longer needed, was written for debugging. Left in because why not.
+  draw() {
     const topView = this.map.map((line, y) => line.map((cell, x) => {
       const entity = this.positionLookup.get(`${x}|${y}`);
       if (entity) return tile[entity.type];
       return cell;
     }).join('')).join('\n');
 
-    fs.writeFileSync(`visualization.txt_${n}`, topView, { flag: 'w+' });
+    fs.writeFileSync(`visualization.txt`, topView, { flag: 'w+' });
   }
 
   simulateRound() {
