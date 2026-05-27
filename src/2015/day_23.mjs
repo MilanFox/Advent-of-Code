@@ -7,11 +7,8 @@ const program = readFileSync('input.txt', 'utf-8')
   .map(([instr, ...params]) => [instr, params]);
 
 class Computer {
-  constructor() {
-    this.memory = {
-      a: 0,
-      b: 0,
-    };
+  constructor(a = 0, b = 0) {
+    this.memory = { a, b };
 
     this.pointer = 0;
 
@@ -59,5 +56,8 @@ class Computer {
 
 const computer = new Computer();
 computer.execute(program);
-
 console.log(`Part 1: ${computer.memory.b}`);
+
+const computer2 = new Computer(1);
+computer2.execute(program);
+console.log(`Part 2: ${computer2.memory.b}`);

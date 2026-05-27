@@ -326,7 +326,7 @@ writeup in the solution code.
 [![](https://img.shields.io/badge/Day_24-☆☆-black)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2016/day_24.mjs)
 [![](https://img.shields.io/badge/Day_25-☆-black)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2016/day_25.mjs)
 
-## 🎄 [2015](https://adventofcode.com/2015) ![](https://progress-bar.xyz/42?scale=49&suffix=/49)
+## 🎄 [2015](https://adventofcode.com/2015) ![](https://progress-bar.xyz/43?scale=49&suffix=/49)
 
 [![](https://img.shields.io/badge/Day_01-★★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2015/day_01.mjs)
 [![](https://img.shields.io/badge/Day_02-★★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2015/day_02.mjs)
@@ -350,6 +350,6 @@ writeup in the solution code.
 [![](https://img.shields.io/badge/Day_20-★★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2015/day_20.mjs)
 [![](https://img.shields.io/badge/Day_21-★★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2015/day_21.mjs)
 [![](https://img.shields.io/badge/Day_22-☆☆-black)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2015/day_22.mjs)
-[![](https://img.shields.io/badge/Day_23-★☆-silver)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2015/day_23.mjs)
+[![](https://img.shields.io/badge/Day_23-★★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2015/day_23.mjs)
 [![](https://img.shields.io/badge/Day_24-☆☆-black)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2015/day_24.mjs)
 [![](https://img.shields.io/badge/Day_25-☆-black)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2015/day_25.mjs)
