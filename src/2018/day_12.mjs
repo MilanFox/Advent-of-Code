@@ -75,5 +75,3 @@ const getStateAfterNGenerations = (numberOfGenerations) => {
 
 console.log(`Part 1: ${getStateAfterNGenerations(20).checksum}`);
 console.log(`Part 2: ${getStateAfterNGenerations(50000000000).checksum}`);
-
-// Not 999999999374
