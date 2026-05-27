@@ -12,7 +12,7 @@ projects.
 To run the solutions, follow these steps:
 
 1. Provide your own `input.txt` file. This input file is not shared in the repository due to Advent of Code's rules.
-   (See section below)
+   The file can be either provided manually or be fetched automatically (See section below)
 2. Use your preferred JavaScript runtime (Node, Deno, Bun) to execute the file. All should work without any issues.
 
 ### Quality of Life / Commands
