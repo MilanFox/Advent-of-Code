@@ -44,10 +44,24 @@ const getStateAfterNGenerations = (numberOfGenerations) => {
   let state = initialState;
   let firstIndex = 0;
 
+  const memo = {};
+
   for (let i = 0; i < numberOfGenerations; i++) {
     const { number, offset } = getNextGeneration(state);
     state = number;
     firstIndex += offset;
+
+    if (memo[state]) {
+      const cycleLength = i - memo[state].loop;
+      const indexOffsetPerCycle = firstIndex - memo[state].firstIndex;
+      const remaining = numberOfGenerations - i - 1;
+      const fullCycles = Math.floor(remaining / cycleLength);
+
+      firstIndex += fullCycles * indexOffsetPerCycle;
+      i += fullCycles * cycleLength;
+    }
+
+    memo[state] = { loop: i, firstIndex };
   }
 
   const checksum = state
@@ -60,3 +74,6 @@ const getStateAfterNGenerations = (numberOfGenerations) => {
 };
 
 console.log(`Part 1: ${getStateAfterNGenerations(20).checksum}`);
+console.log(`Part 2: ${getStateAfterNGenerations(50000000000).checksum}`);
+
+// Not 999999999374
