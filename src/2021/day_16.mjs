@@ -66,8 +66,31 @@ class Packet {
   get value() {
     if (this.#value !== undefined) return this.#value;
 
-    if (this.type === 4) {
-      this.#value = Number(`0b${this.content.join('')}`);
+    switch (this.type) {
+      case 0:
+        this.#value = this.content.reduce((acc, cur) => acc + cur.value, 0);
+        break;
+      case 1:
+        this.#value = this.content.reduce((acc, cur) => acc * cur.value, 1);
+        break;
+      case 2:
+        this.#value = this.content.reduce((acc, cur) => Math.min(acc, cur.value), Infinity);
+        break;
+      case 3:
+        this.#value = this.content.reduce((acc, cur) => Math.max(acc, cur.value), -Infinity);
+        break;
+      case 4:
+        this.#value = this.#value = Number(`0b${this.content.join('')}`);
+        break;
+      case 5:
+        this.#value = this.content[0].value > this.content[1].value ? 1 : 0;
+        break;
+      case 6:
+        this.#value = this.content[0].value < this.content[1].value ? 1 : 0;
+        break;
+      case 7:
+        this.#value = this.content[0].value === this.content[1].value ? 1 : 0;
+        break;
     }
 
     return this.#value;
@@ -82,3 +105,4 @@ class Packet {
 const BITSPacket = new Packet(transmission);
 
 console.log(`Part 1: ${BITSPacket.checksum}`);
+console.log(`Part 2: ${BITSPacket.value}`);
