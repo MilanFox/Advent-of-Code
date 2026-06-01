@@ -178,7 +178,7 @@ writeup in the solution code.
 [![](https://img.shields.io/badge/Day_15-★★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2021/day_15.mjs)
 [![](https://img.shields.io/badge/Day_16-★★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2021/day_16.mjs)
 [![](https://img.shields.io/badge/Day_17-☆☆-black)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2021/day_17.mjs)
-[![](https://img.shields.io/badge/Day_18-☆☆-black)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2021/day_18.mjs)
+[![](https://img.shields.io/badge/Day_18-★☆-silver)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2021/day_18.mjs)
 [![](https://img.shields.io/badge/Day_19-☆☆-black)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2021/day_19.mjs)
 [![](https://img.shields.io/badge/Day_20-☆☆-black)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2021/day_20.mjs)
 [![](https://img.shields.io/badge/Day_21-☆☆-black)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2021/day_21.mjs)
