@@ -151,3 +151,10 @@ const add = (list) => {
 };
 
 console.log(`Part 1: ${add(homework).magnitude}`);
+
+const getAllCombinations = (arr) => arr.flatMap((a, i) => arr.filter((_, j) => j !== i).map(b => [a, b]));
+
+const pairings = getAllCombinations(homework);
+const highestPossibleMagnitude = pairings.reduce((acc, cur) => Math.max(acc, add(cur).magnitude), 0);
+
+console.log(`Part 2: ${highestPossibleMagnitude}`);
