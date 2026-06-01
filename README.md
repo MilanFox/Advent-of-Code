@@ -159,7 +159,7 @@ writeup in the solution code.
 [![](https://img.shields.io/badge/Day_24-☆☆-black)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2022/day_24.mjs)
 [![](https://img.shields.io/badge/Day_25-★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2022/day_25.mjs)
 
-## 🌊 [2021](https://adventofcode.com/2021) ![](https://progress-bar.xyz/32?scale=49&suffix=/49)
+## 🌊 [2021](https://adventofcode.com/2021) ![](https://progress-bar.xyz/34?scale=49&suffix=/49)
 
 [![](https://img.shields.io/badge/Day_01-★★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2021/day_01.mjs)
 [![](https://img.shields.io/badge/Day_02-★★-gold)](https://github.com/MilanFox/Advent-of-Code/blob/main/src/2021/day_02.mjs)
