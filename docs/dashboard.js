@@ -97,10 +97,16 @@ const START_YEAR = 2015;
 const END_YEAR = 2025;
 const MAX_DAYS = 25;
 
+const REPO = 'MilanFox/Advent-of-Code';
+const BRANCH = 'main';
+const dataUrl = (year) => location.hostname.endsWith('github.io')
+                          ? `https://raw.githubusercontent.com/${REPO}/${BRANCH}/src/${year}/data.json`
+                          : `../src/${year}/data.json`;
+
 const loadYears = async () => {
   const results = await Promise.allSettled(
     Array.from({ length: END_YEAR - START_YEAR + 1 }, (_, i) =>
-      fetch(`../src/${START_YEAR + i}/data.json`, { cache: 'no-store' }).then(r => {
+      fetch(dataUrl(START_YEAR + i), { cache: 'no-store' }).then(r => {
         if (!r.ok) throw new Error(r.status);
         return r.json();
       }),
