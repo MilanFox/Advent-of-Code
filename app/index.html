@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Advent of Code — Progress Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="dashboard.js" defer></script>
+</head>
+<body>
+<canvas id="stars-bg" class="starfield"></canvas>
+
+<div class="wrap">
+  <header class="hero">
+    <h1 class="hero__title"><span class="hero__star">✦</span> Advent of Code <span class="hero__star">✦</span></h1>
+    <div class="hero__subtitle" id="subtitle">Loading the night sky…</div>
+  </header>
+
+  <div id="loading" class="message">
+    <div class="spinner"></div>
+    Reading <code>data.json</code> files…
+  </div>
+
+  <div id="error" class="message message--error hidden"></div>
+
+  <div id="dashboard" class="hidden">
+    <div class="stats-grid" id="statGrid"></div>
+
+    <section class="section">
+      <div class="section-head">
+        <h2 class="section-head__title"><span class="section-head__hash">#</span>The Sky Map</h2>
+        <div class="toggle-group">
+          <button class="toggle toggle--active" id="modeStars" data-mode="stars">★ Stars</button>
+          <button class="toggle" id="modeDiff" data-mode="diff">⛰ Difficulty</button>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="calendar-scroll" id="calWrap"></div>
+        <div class="legend" id="legend"></div>
+      </div>
+    </section>
+
+    <section class="section two-col">
+      <div>
+        <div class="section-head"><h2 class="section-head__title"><span class="section-head__hash">#</span>Stars per
+          Year</h2></div>
+        <div class="panel">
+          <div class="year-bars" id="yearBars"></div>
+        </div>
+      </div>
+      <div>
+        <div class="section-head"><h2 class="section-head__title"><span class="section-head__hash">#</span>Difficulty
+          Breakdown</h2>
+          <span class="section-head__note">solve rate by difficulty</span>
+        </div>
+        <div class="panel" id="diffPanel"></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2 class="section-head__title"><span class="section-head__hash">#</span>Strengths &amp; Weak Spots</h2>
+        <span class="section-head__note">solve rate per technique — sorted strongest → weakest</span>
+      </div>
+      <div class="panel">
+        <div class="pill-row" id="catSummary" style="margin-bottom:18px;"></div>
+        <div class="two-col">
+          <div class="cat-list" id="catLeft"></div>
+          <div class="cat-list" id="catRight"></div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <footer class="footer">
+    Generated live from <code style="background:#0e1626;padding:1px 5px;border-radius:4px;color:var(--text-dim)">/src/&lt;year&gt;/data.json</code>
+    — edit a data file and reload to update. <span id="genTime"></span>
+  </footer>
+</div>
+
+<div id="tip" class="tip"></div>
+</body>
+</html>
