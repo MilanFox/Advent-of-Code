@@ -99,9 +99,7 @@ const MAX_DAYS = 25;
 
 const REPO = 'MilanFox/Advent-of-Code';
 const BRANCH = 'main';
-const dataUrl = (year) => location.hostname.endsWith('github.io')
-                          ? `https://raw.githubusercontent.com/${REPO}/${BRANCH}/src/${year}/data.json`
-                          : `../src/${year}/data.json`;
+const dataUrl = (year) => `https://raw.githubusercontent.com/${REPO}/${BRANCH}/src/${year}/data.json`;
 
 const loadYears = async () => {
   const results = await Promise.allSettled(
