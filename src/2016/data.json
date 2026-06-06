@@ -258,7 +258,7 @@
       "id": "day_22",
       "title": "Grid Computing",
       "url": "https://adventofcode.com/2016/day/22",
-      "stars": 0,
+      "stars": 1,
       "solveStatus": "part1",
       "difficulty": 4,
       "primaryCategory": "Search",
