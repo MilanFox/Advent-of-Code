@@ -126,9 +126,9 @@
       "id": "day_11",
       "title": "Monkey in the Middle",
       "url": "https://adventofcode.com/2022/day/11",
-      "stars": 1,
-      "solveStatus": "part1",
-      "difficulty": 4,
+      "stars": 2,
+      "solveStatus": "complete",
+      "difficulty": 3,
       "primaryCategory": "Simulation",
       "categories": [ "Simulation", "Math", "Scaling" ],
       "essence": "Simulate monkeys inspecting and throwing items by per-monkey operations and divisibility tests to compute monkey business. Part 1 divides worry by 3, but part 2 removes that and runs 10000 rounds, so worry levels must be kept bounded modulo the product of all divisors (the user solved only part 1)."

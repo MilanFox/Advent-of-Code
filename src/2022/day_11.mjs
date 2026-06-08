@@ -19,10 +19,14 @@ class Monkey {
     return eval(`${num1}${op}${num2}`);
   }
 
-  throwNextItem(monkeys) {
+  throwNextItem(monkeys, relief = true, modulo = Infinity) {
     this.inspectedItems += 1;
     const item = this.items.shift();
-    const worryLevel = Math.floor(this.getNewWorryLevel(item) / 3);
+
+    let worryLevel = this.getNewWorryLevel(item);
+    if (relief) worryLevel = Math.floor(worryLevel / 3);
+    worryLevel %= modulo;
+
     const nextMonkey = worryLevel % this.test === 0 ? this.ifTrue : this.ifFalse;
     monkeys.find(monkey => monkey.id === nextMonkey).addItem(worryLevel);
   }
@@ -36,15 +40,18 @@ let inputData = fs
   .readFileSync('input.txt', 'utf-8')
   .split('\n\n');
 
-const simulateRounds = (rounds) => {
-  let monkeys = inputData.map(monkeyData => new Monkey(monkeyData));
+const simulateRounds = (rounds, relief = true) => {
+  const monkeys = inputData.map(monkeyData => new Monkey(monkeyData));
+  const modulo = monkeys.reduce((acc, monkey) => acc * monkey.test, 1);
+
   for (let i = 0; i < rounds; i++) {
     monkeys.forEach(monkey => {
       while (monkey.items.length) {
-        monkey.throwNextItem(monkeys);
+        monkey.throwNextItem(monkeys, relief, modulo);
       }
     });
   }
+
   return monkeys;
 };
 
@@ -54,3 +61,4 @@ const getMonkeyBusiness = (monkeys) => {
 };
 
 console.log(`Part 1: ${getMonkeyBusiness(simulateRounds(20))}`);
+console.log(`Part 2: ${getMonkeyBusiness(simulateRounds(10000, false))}`);
