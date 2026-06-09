@@ -16,7 +16,10 @@ const getChecksum = (sequence) => {
   return checksum.join('');
 };
 
-const dragonString = expand(inputData, 272).join('');
+const dragonString = expand(inputData, 272);
 const checksum = getChecksum(dragonString);
-
 console.log(`Part 1: ${checksum}`);
+
+const dragonString2 = expand(inputData, 35651584);
+const checksum2 = getChecksum(dragonString2);
+console.log(`Part 2: ${checksum2}`);
