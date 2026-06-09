@@ -124,8 +124,7 @@ class Map {
   #draw() {
     fs.writeFileSync('visualization.txt', this.grid.map(line => line
       .map(node => {
-        if (!node) return ' ';
-        if (node.isWall) return '█';
+        if (!node || node.isWall) return '█';
         if (node.isOxygen) return 'O';
         if (node.isStart) return 'S';
         return ' ';
