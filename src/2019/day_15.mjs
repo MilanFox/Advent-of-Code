@@ -176,6 +176,32 @@ class Map {
 
     return null;
   }
+
+  get timeToFill() {
+    const start = Object.values(this.nodes).find(node => node.isOxygen);
+    const queue = [[start, 0]];
+    const visited = new Set();
+    let totalTime = 0;
+
+    while (queue.length) {
+      const [node, localTime] = queue.shift();
+
+      const hash = `${node.x}|${node.y}`;
+      if (visited.has(hash)) continue;
+      visited.add(hash);
+
+      totalTime = Math.max(totalTime, localTime);
+
+      dirs.forEach(({ offset: [dx, dy] }) => {
+        const nextNode = this.nodes[`${node.x + dx}|${node.y + dy}`];
+        if (nextNode && !nextNode.isWall) {
+          queue.push([nextNode, localTime + 1]);
+        }
+      });
+    }
+
+    return totalTime;
+  }
 }
 
 const program = readFileSync('input.txt', 'utf-8').trim().split(',').map(Number);
@@ -185,3 +211,4 @@ const map = new Map({ vm: computer });
 await map.chart();
 
 console.log(`Part 1: ${map.fastestOxygenRoute}`);
+console.log(`Part 2: ${map.timeToFill}`);
